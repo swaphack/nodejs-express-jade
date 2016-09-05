@@ -1,0 +1,456 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    
+
+
+
+<!-- 其他部门公示信息行政许可查询类型 --><!-- 其他部门公示信息行政处罚查询类型 -->
+
+
+<script type="text/javascript">
+	// 常量类
+	var constants = constants || {};
+	
+	// 是或否
+	constants.yes = "1";
+	constants.no = "0";
+		
+	// 即时公示已公示修改：业务类型
+	constants.othAppSubType = {
+		alt: "1",
+		repeal: "2",
+		revoke: "3",
+		other: "4"
+	};
+	
+	// 出资方式字典
+	constants.dicInvtType = new Object();
+	
+		constants.dicInvtType["1"] = "货币";
+	
+		constants.dicInvtType["2"] = "实物";
+	
+		constants.dicInvtType["3"] = "知识产权";
+	
+		constants.dicInvtType["4"] = "债权";
+	
+		constants.dicInvtType["5"] = "高新技术成果";
+	
+		constants.dicInvtType["6"] = "土地使用权";
+	
+		constants.dicInvtType["7"] = "股权";
+	
+		constants.dicInvtType["8"] = "劳务";
+	
+		constants.dicInvtType["9"] = "其他";
+	
+	
+	// 公示状态
+	constants.dicNoticeState = new Object();
+	
+		constants.dicNoticeState["1"] = "已公示";
+	
+		constants.dicNoticeState["2"] = "未公示";
+	
+		constants.dicNoticeState["3"] = "未公示";
+	
+	
+	// 登记信息状态字典
+	constants.dicRegStatus = new Object();
+	
+		constants.dicRegStatus["1"] = "有效";
+	
+		constants.dicRegStatus["2"] = "无效";
+	
+
+	// 配置常量
+	constants.config = {
+		// 默认错误描述
+		"err.default": "无法完成操作，请刷新页面后重试！"
+	};
+	
+	// 全局变量类
+	var global = global || {};
+	
+	// 当前服务器根路径
+	global.base = "http://wsgs.fjaic.gov.cn/creditpub/";
+	
+	// 当前服务器时间
+	global.current = '2016-09-05';
+	
+	// 当前年份
+	global.year = '2016';
+	
+	// 当前令牌对象
+	global.token = {
+		name: "session.token",
+		code: "84fef9a8-00d1-4fad-82e2-d818c2bb4b8e",
+		data: {
+			"session.token": "84fef9a8-00d1-4fad-82e2-d818c2bb4b8e"
+		}
+	};
+</script>
+<script type="text/javascript" src="http://wsgs.fjaic.gov.cn/creditpub/js/datepicker/WdatePicker.js?t=20160122-01"></script>
+<base href="http://wsgs.fjaic.gov.cn/creditpub/" />
+<link type="text/css" rel="stylesheet" href="js/ui/skin/smoothness/jquery-ui.css?t=20160122-01" />
+<link type="text/css" rel="stylesheet" href="css/base.css?t=20160122-01" />
+
+<script type="text/javascript" src="js/jquery.min.js?t=20160122-01"></script>
+<script type="text/javascript" src="js/jquery.bgiframe.js?t=20160122-01"></script>
+<script type="text/javascript" src="js/ui/jquery-ui.min.js?t=20160122-01"></script>
+<script type="text/javascript" src="js/validate/jquery.validate.min.js?t=20160122-01"></script>
+<script type="text/javascript" src="js/validate/validate.common.js?t=20160122-01"></script>
+<script type="text/javascript" src="js/datepicker/WdateInit.js?t=20160122-01"></script>
+<script type="text/javascript" src="js/loading/loading.js?t=20160122-01"></script>
+<script type="text/javascript" src="js/loading/loading.bind.ajax.js?t=20160122-01"></script>
+<script type="text/javascript" src="js/security/md5.min.js?t=20160122-01"></script>
+<script type="text/javascript" src="js/math/BigDecimal-all-last.min.js?t=20160122-01"></script>
+<script type="text/javascript" src="js/common.js?t=20160122-01"></script>
+<script type="text/javascript" src="js/security/captcha.js?t=20160122-01"></script>
+<script type="text/javascript" src="js/user/login.conf.fj.js?t=20160122-01"></script>
+<script type="text/javascript" src="js/user/login.js?t=20160122-01"></script>
+<script type="text/javascript" src="js/page/page.js?t=20160122-01" ></script>
+<script type="text/javascript" src="js/search/search.js?t=20160122-01"></script>
+<script type="text/javascript" src="js/json2.js?t=20160122-01"></script>
+
+<!--[if lt IE 10]>
+<script type="text/javascript" src="js/PIE.js?t=20160122-01"></script>
+<script type="text/javascript" src="js/class.js?t=20160122-01"></script>
+<![endif]-->
+<!--[if lt IE 9]>
+<script type="text/javascript" src="js/html5.js?t=20160122-01"></script>
+<![endif]-->
+<!--[if lt IE 7]>
+<script type="text/javascript" src="js/DD_belatedPNG.js?t=20160122-01"></script> 
+<script type="text/javascript">
+	DD_belatedPNG.fix("img");
+</script> 
+<![endif]-->
+
+	
+
+
+
+<title>
+	
+		
+		全国企业信用信息公示系统
+	
+</title>
+    
+    <style type="text/css">
+    	.layout .header { background-image:url(images/layout/header-fj.png); } 
+    </style>
+    
+	<script type="text/javascript">
+		// 自适应工作区域高度（通用页面）
+		var autofitCommon = function() {
+		};
+		
+		// 自适应工作区域高度（自适应事件调用）
+		var autofit = autofitCommon;
+		
+		$(function() {
+			// 初始化及页面大小变化时自适应工作区域高度
+			$(window).resize(function() {
+				autofit();
+			}).load(function() {
+				autofit();
+				$(".layout").css("visibility", "visible");
+			});
+		});
+	</script>
+</head>
+<body class="layout">
+	<script type="text/javascript" src="js/loading/loading.bind.js?t=20160122-01"></script>
+
+	<div class="header">
+		
+
+
+
+<script type="text/javascript" src="js/fjlocal/warning.apply.js"></script>
+<span id="removeLoading"></span>
+<ul class="nav">
+	<li rel="nav-01" class="hide"><a href="http://gsxt.saic.gov.cn/">全国首页</a></li>
+	
+		
+		
+			<li rel="nav-02" class="hide"><a href="http://wsgs.fjaic.gov.cn/creditpub/home">地方局首页</a></li>
+		
+	
+	<li rel="nav-06" class="hide"><a href="javascript:" onclick="popNotice();return false;">使用帮助</a></li>
+	<li rel="nav-03" class="hide"><a href="javascript:" onclick="login.clear();return false;">退出</a></li>
+	<li rel="nav-04" class="hide"><a href="http://wsgs.fjaic.gov.cn/creditpub/report/home">返回</a></li>
+	<li rel="nav-05" class="hide"><a href="http://wsgs.fjaic.gov.cn/creditpub/report/home?menu=offline">返回</a></li>
+	
+	
+</ul>
+
+<script type="text/javascript">
+	$(function() {
+		// 预设当前需显示的导航链接
+		var navs = new Array();
+		
+			navs.push("01");
+		
+			navs.push("06");
+		
+
+		// 初始化导航栏显示
+		toggleNav(navs);
+	});
+	
+	// 切换导航栏链接显示
+	function toggleNav(navs) {
+		// 隐藏所有导航链接
+		$(".nav li[rel]").hide();
+		// 显示预设导航链接
+		for(var i in navs) {
+			$(".nav li[rel='nav-" + navs[i] + "']").show();
+		}
+	}
+	
+	// 下载使用帮助
+	function help() {
+		var iframe = $("iframe#download");
+		
+		if(iframe.size() == 0) {
+			iframe = elem('<iframe src="javascript:" class="hide" id="download"></iframe>').appendTo("body");
+		}
+		
+		iframe.attr("src", "http://wsgs.fjaic.gov.cn/creditpub/download/handbook?name=help.doc");
+	}
+	
+	// 下载电子营业执照
+	function licenceEx() {
+		var iframe = $("iframe#download");
+		
+		if(iframe.size() == 0) {
+			iframe = elem('<iframe src="javascript:" class="hide" id="download"></iframe>').appendTo("body");
+		}
+		
+		iframe.attr("src", "http://wsgs.fjaic.gov.cn/creditpub/download/licenceEx?entId="+'');
+	}
+	
+		// 下载使用帮助
+	function helpFile(filename) {
+		if(!filename){
+			return false;
+		}
+	
+		var iframe = $("iframe#download");
+		
+		if(iframe.size() == 0) {
+			iframe = elem('<iframe src="javascript:" class="hide" id="download"></iframe>').appendTo("body");
+		}
+		
+		iframe.attr("src", "http://wsgs.fjaic.gov.cn/creditpub/download/handbook?name="+filename);
+	}
+</script>
+	</div>
+	
+	<div class="main">
+		
+
+
+
+
+
+
+<link type="text/css" rel="stylesheet" href="css/portal_global.css?t=20160122-01" />
+<script type="text/javascript">
+	if(window.top != window.self){
+		top.location = self.location;
+	}
+	if('' == constants.yes){
+		
+		login.popup_quick('http://wsgs.fjaic.gov.cn/creditpub/report/home', '_self', undefined, '');
+	}
+	
+	$(function() {
+		//年报倒计时
+		var nowDate = new Date();
+		var year = nowDate.getFullYear();
+		var month = nowDate.getMonth() + 1;
+	    var date = nowDate.getDate();
+	    
+	    if (month >= 1 && month <= 9) {
+	    	month = "0" + month;
+	    }
+	    if (date >= 0 && date <= 9) {
+	    	date = "0" + date;
+	    }
+
+	    var currentdate = year + "-" + month + "-" + date;
+	    var reportStartDate="2016-01-01";
+		var reportEndDate="2016-06-30";
+		
+		var toReportStart=daysBetween(currentdate,reportStartDate);
+		var toReportEnd=daysBetween(reportEndDate,currentdate)+1;
+		
+		//处于年报时间范围内
+		if(toReportStart>0 && toReportEnd>0){
+			if("1" == constants.yes){
+				$("#countdownDiv").show();
+				if(toReportEnd<=10){
+					$("#videoSpan").hide();
+					$("#countdown_picture").show();
+					$("#pictureImg").attr("src","images/report/countdown/"+toReportEnd+".jpg");
+				} else {
+					$("#countdown_picture").hide();
+					$("#videoSpan").show();
+				}
+			}else{
+				if(toReportEnd<=10){
+					$("#countdownDiv").show();
+					$("#pictureImg").attr("src","images/report/countdown/"+toReportEnd+".jpg");
+					$("#videoSpan").hide();
+				}else{
+					$("#countdownDiv").hide();
+				}
+			}
+		}else{
+			$("#countdownDiv").hide();
+		}
+	});
+
+	// 计算日期差
+	function daysBetween(DateOne,DateTwo){
+        var OneMonth = DateOne.substring(5,DateOne.lastIndexOf ('-'));  
+        var OneDay = DateOne.substring(DateOne.length,DateOne.lastIndexOf ('-')+1);  
+        var OneYear = DateOne.substring(0,DateOne.indexOf ('-'));  
+      
+        var TwoMonth = DateTwo.substring(5,DateTwo.lastIndexOf ('-'));  
+        var TwoDay = DateTwo.substring(DateTwo.length,DateTwo.lastIndexOf ('-')+1);  
+        var TwoYear = DateTwo.substring(0,DateTwo.indexOf ('-'));  
+      
+        var cha=((Date.parse(OneMonth+'/'+OneDay+'/'+OneYear)- Date.parse(TwoMonth+'/'+TwoDay+'/'+TwoYear))/86400000);   
+        return cha;
+    }
+	
+	function closeCountdownDiv(){
+		$("#countdownDiv").hide();
+	}
+</script>
+
+<style type="text/css">
+	/*悬浮*/
+	.countdown { position:fixed; top:124px;right:5px; }
+	.countdown_picture { position:relative;}
+	.countdown_picture span { position:absolute; top:0; right:0; cursor:pointer;}
+	.countdown_video { margin-top:4px;}
+	.countdown_video span { position:absolute; top:5px; right:2px; cursor:pointer;}
+</style>
+<div class="countdown" id="countdownDiv" display="none">
+	<div class="countdown_picture" id="countdown_picture">
+		<span id="pictureSpan" onclick="closeCountdownDiv();"><img src="images/report/countdown/close_pic.png" /></span>
+		<img id="pictureImg" src="" width="180px" height="265px" />
+	</div>
+	<div class="countdown_video" id="countdown_video">
+		<span id="videoSpan" onclick="closeCountdownDiv();" display="none"><img src="images/report/countdown/close.png" /></span>
+		<a href="http://v.qq.com/page/h/k/o/h0305ptnwko.html"><img src="images/report/countdown/img_b.png" width="180px" height="103px"/></a>
+	</div>
+</div>
+
+<div class="portal">
+	<div class="top">
+		企业信用信息 &nbsp;&nbsp;
+		<!-- <a href="javascript:" onclick="qry.search('#keyword', '2');return false;">经营异常名录</a> 
+		<a href="javascript:" onclick="qry.search('#keyword', '3');return false;">严重违法企业名单 </a> &nbsp;&nbsp; 
+        <a href="javascript:" onclick="qry.search('#keyword', '4');return false;">抽查检查公示</a>&nbsp;&nbsp;
+        <a href="javascript:" onclick="qry.search('#keyword', '5');return false;">信息公告</a> --> 
+		<a href="javascript:" onclick="window.open('http://wsgs.fjaic.gov.cn/creditpub/search/ent_except_list');return false;">经营异常名录</a>&nbsp;&nbsp;
+		<!-- <a href="javascript:" onclick="window.open('http://wsgs.fjaic.gov.cn/creditpub/search/ent_black_list');return false;">严重违法企业名单 </a> &nbsp;&nbsp;  -->严重违法企业名单 &nbsp;&nbsp;
+        <a href="javascript:" onclick="window.open('http://wsgs.fjaic.gov.cn/creditpub/search/ent_spot_check_list');return false;">抽查检查公示</a>&nbsp;&nbsp;
+        <a href="javascript:" onclick="window.open('http://wsgs.fjaic.gov.cn/creditpub/search/ent_announce');return false;">信息公告</a>
+	</div>
+	<div class="middle">
+		<form id="formInfo" method="post">
+			<!-- 搜索类型：1企业信用信息， 2经营异常名录， 3严重违法企业名单， 4严重违法企业名单  -->
+			<input type="hidden" name="searchType" id="searchType" />
+			<input type="hidden" name="captcha" id="captcha" />
+			<input type="hidden" name="session.token" value="84fef9a8-00d1-4fad-82e2-d818c2bb4b8e" />
+			<div class="inp-wrap">
+				<input type="text" id="keyword" name="condition.keyword" value="请输入企业名称或注册号或统一社会信用代码" class="inp" onmouseover="this.focus();this.select();" onclick="if(value==defaultValue) {value='';}" onBlur="if(!value){value=defaultValue;}" onkeydown="if(event.keyCode==13) return false;" />
+			</div> 
+			<div class="inp-btn"><a href="javascript:" onclick="qry.search('#keyword', '1',constants.yes,constants.yes);return false;"><img src="images/notice/sou.png" /></a></div>
+		</form>
+	</div>
+	<div class="bottom">
+		 <a href="javascript:" onclick="login.popup('http://wsgs.fjaic.gov.cn/creditpub/report/home', '_self', '0|1|2|6|8|0|1|8');return false;">企业公示信息填报</a>&nbsp;&nbsp;&nbsp;&nbsp;
+		 
+			 
+			 	 
+		         <a href="http://wsgs.fjaic.gov.cn/creditpub/otherDept/toOtherDept" target="_blank">相关部门信息交换</a>&nbsp;&nbsp;&nbsp;&nbsp; 
+			
+			 
+		 
+    	 <a href="http://gsxt.saic.gov.cn/xwqy/home?df=35" target="_blank">小微企业名录</a>
+         <span class="tips"><img src="images/notice/tips_01.png" width="163" height="111" /></span>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(function() {
+		// 初始化提示信息显示
+		tips();
+	});
+	
+	// 提示信息闪烁显示
+	function tips() {
+		// 闪烁函数
+		var blink = function() {
+			$(".tips").animate({
+				opacity: "show"
+			}, 500).animate({
+				opacity: "hide"
+			}, 500);
+		};
+		
+		// 5次闪烁
+		for(var i=0; i<5; i++) {
+			blink();
+		}
+	}
+</script>
+	</div>
+	
+	<div class="footer">
+		<p>
+			<span>版权所有：福建省工商行政管理局</span>
+			<span>地址：福建省福州市鼓楼区五四路358号</span>
+			<span>邮政编码：350000</span>
+		</p>
+		<p>
+			
+			
+			
+			
+			
+				
+				
+				
+					<!-- <span>联系电话：<a href="http://www.fjaic.gov.cn/Service/" target="_blank">业务咨询电话</a></span> -->
+				
+			
+				<span>办公时间：法定工作日　上午8:30—12:00　下午2:30—5:30（夏令时间下午3:00—6:00）</span>
+			
+			
+			技术故障申报电话：18144071802
+		</p>
+		<!-- <p><a href="http://www.fjaic.gov.cn/Service/" target="_blank">年报业务咨询电话</a> 年报业务咨询电话：0591-87725945/0591-87760773(内资)、0591-87724215/0591-87716200(外资)
+			
+				<span>技术故障申报电话：18144071802</span>
+			
+		</p>-->
+	</div>
+	<div class="footer2">
+		<p><span style="color:#FF0000">省局</span>：0591-87760773、0591-87725945；<span style="color:#FF0000">福州</span>：0591-22032062、0591-12315；<span style="color:#FF0000">漳州</span>：0596-2935541；<span style="color:#FF0000">南平</span>：0599-8849431；</p>
+		<p><span style="color:#FF0000">泉州</span>：0595-22118708&nbsp;、晋江市：85659738&nbsp;、丰泽区：22150321&nbsp;、石狮市：83051203&nbsp;、南安市：86383713&nbsp;、鲤城区：22255708；</p>
+		<p><span style="color:#FF0000">三明</span>：0598-8224463；<span style="color:#FF0000">龙岩</span>：0597-2529028、0597-2326402；<span style="color:#FF0000">莆田</span>：0594-2263118；<span style="color:#FF0000">宁德</span>：0593-2954252 <span style="color:#FF0000">平潭</span>：0591-24311117；</p>
+	</div>
+	
+</body>
+</html>
