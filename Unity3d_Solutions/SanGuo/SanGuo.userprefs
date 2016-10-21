@@ -1,0 +1,18 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Layer\UILayerLogin.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Game\UI\UILayer.cs" Line="51" Column="16" />
+      <File FileName="Assets\Scripts\Layer\UILayerLogin.cs" Line="36" Column="2" />
+      <File FileName="Assets\Scripts\Game\GameInstance.cs" Line="107" Column="8" NotebookId="1" />
+      <File FileName="Assets\Scripts\Game\Touch\TouchCenter.cs" Line="44" Column="4" NotebookId="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Game\Local\FilePath.cs" line="62" column="1" />
+      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Game\Touch\TouchCenter.cs" line="64" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
