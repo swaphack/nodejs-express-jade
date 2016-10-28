@@ -1,13 +1,16 @@
 # -*- coding:utf-8 -*-
 
+import re
 from HTMLParser import HTMLParser
 
 class EntListPicker(HTMLParser):
     """docstring for EntListPicker"""
-    def __init__(self, arg):
+    def __init__(self):
         HTMLParser.__init__(self)
         self.links = []
         self.listinfo = False
+        self.javascript = False
+        self.token = ""
 
     def handle_starttag(self, tag, attrs):
         if tag == "list-info":
@@ -17,13 +20,21 @@ class EntListPicker(HTMLParser):
                 for k in attrs:
                     if k == "href":
                         self.links.append(attrs[k])
-
+        elif tag == "script" and self.token == "" and self.javascript == False:
+            if len(attrs) > 0:
+                for k in attrs:
+                    if k == "type" and attrs[k] == "text/javascript":
+                        self.javascript = True
 
     def handle_endtag(self, tag):
        if tag == "list-info":
             self.listinfo = False
 
-    def getLinks():
+    def handle_data(self, data):
+        if self.javascript != False:
+            self.javascript = False        
+
+    def getLinks(self):
         return self.links
 
 ##########################################################################
