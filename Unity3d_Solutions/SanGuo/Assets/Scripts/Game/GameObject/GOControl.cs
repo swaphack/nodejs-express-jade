@@ -20,6 +20,15 @@ namespace Game
 		/// 是否可点击
 		/// </summary>
 		private bool _TouchEnabled = false;
+		/// <summary>
+		/// 动作状态
+		/// </summary>
+		private ActionStatus _ActionStatus;
+		/// <summary>
+		/// 动作
+		/// </summary>
+		private SpawnActions _Actions;
+
 
 		/// <summary>
 		/// 触摸事件
@@ -33,6 +42,8 @@ namespace Game
 		public GOControl (GameObject target)
 		{
 			_Target = target;
+			_Actions = new SpawnActions ();
+			_ActionStatus = ActionStatus.Pause;
 		}
 
 		/// <summary>
@@ -42,7 +53,7 @@ namespace Game
 		/// <typeparam name="T">The 1st type parameter.</typeparam>
 		public T GetComponet<T> ()
 		{
-			return _Target.GetComponent<T>() ;
+			return _Target.GetComponent<T> ();
 		}
 
 		/// <summary>
@@ -50,8 +61,12 @@ namespace Game
 		/// </summary>
 		/// <value>The target.</value>
 		public GameObject Target {
-			set { _Target = value; }
-			get { return _Target; }
+			set { 
+				_Target = value; 
+			}
+			get { 
+				return _Target; 
+			}
 		}
 
 		/// <summary>
@@ -77,6 +92,39 @@ namespace Game
 		}
 
 		/// <summary>
+		/// 动作状态
+		/// </summary>
+		/// <value>The status.</value>
+		public ActionStatus Status {
+			set { 
+				if (_ActionStatus == value) {
+					return;
+				}
+
+				if (value == ActionStatus.Pause) {
+					GameInstance.GetInstance ().Action.AddAction (_Actions);
+				} else if (value == ActionStatus.Running) {
+					GameInstance.GetInstance ().Action.RemoveAction (_Actions);
+				}
+
+				_ActionStatus = value;
+			}
+			get { 
+				return _ActionStatus;
+			}
+		}
+
+		/// <summary>
+		/// 动作
+		/// </summary>
+		/// <value>The action.</value>
+		public SpawnActions Actions {
+			get { 
+				return _Actions;
+			}
+		}
+
+		/// <summary>
 		/// 点击生效
 		/// </summary>
 		/// <param name="state">点击状态</param>
@@ -84,6 +132,15 @@ namespace Game
 		public void OnDispatchTouch (TouchPhase state, Vector2 vector)
 		{
 			OnTouch (this, state, vector);
+		}
+
+		/// <summary>
+		/// 释放
+		/// </summary>
+		public void Disponse()
+		{
+			IsTouchEnable = false;
+			Status = ActionStatus.Pause;
 		}
 	}
 }

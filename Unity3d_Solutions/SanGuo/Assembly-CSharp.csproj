@@ -45,17 +45,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Config\ServerConfig.cs" />
      <Compile Include="Assets\Scripts\Foundation\Base\ConvertHelp.cs" />
-     <Compile Include="Assets\Scripts\Foundation\Base\XmlConfig.cs" />
-     <Compile Include="Assets\Scripts\Foundation\DataBase\DB.cs" />
-     <Compile Include="Assets\Scripts\Foundation\DataBase\DBRecord.cs" />
-     <Compile Include="Assets\Scripts\Foundation\DataBase\DBStep.cs" />
-     <Compile Include="Assets\Scripts\Foundation\DataBase\DBTable.cs" />
-     <Compile Include="Assets\Scripts\Foundation\DataBase\IDB.cs" />
-     <Compile Include="Assets\Scripts\Foundation\DataBase\IDBRecord.cs" />
-     <Compile Include="Assets\Scripts\Foundation\DataBase\IDBStep.cs" />
-     <Compile Include="Assets\Scripts\Foundation\DataBase\IDBTable.cs" />
+     <Compile Include="Assets\Scripts\Foundation\Base\Instance.cs" />
+     <Compile Include="Assets\Scripts\Foundation\DataBase\DataBase.cs" />
+     <Compile Include="Assets\Scripts\Foundation\DataBase\DataLoadStep.cs" />
+     <Compile Include="Assets\Scripts\Foundation\DataBase\DataRecord.cs" />
+     <Compile Include="Assets\Scripts\Foundation\DataBase\DataTable.cs" />
+     <Compile Include="Assets\Scripts\Foundation\DataBase\IDataBase.cs" />
+     <Compile Include="Assets\Scripts\Foundation\DataBase\IDataLoadStep.cs" />
+     <Compile Include="Assets\Scripts\Foundation\DataBase\IDataRecord.cs" />
+     <Compile Include="Assets\Scripts\Foundation\DataBase\IDataTable.cs" />
      <Compile Include="Assets\Scripts\Foundation\Net\Client.cs" />
      <Compile Include="Assets\Scripts\Foundation\Net\IPacket.cs" />
      <Compile Include="Assets\Scripts\Foundation\Net\NetCenter.cs" />
@@ -63,6 +62,13 @@
      <Compile Include="Assets\Scripts\Foundation\Net\PacketHeader.cs" />
      <Compile Include="Assets\Scripts\Foundation\Net\Protocols.cs" />
      <Compile Include="Assets\Scripts\Foundation\Net\Remote.cs" />
+     <Compile Include="Assets\Scripts\Game\Action\Action.cs" />
+     <Compile Include="Assets\Scripts\Game\Action\ActionCenter.cs" />
+     <Compile Include="Assets\Scripts\Game\Action\ActionStatus.cs" />
+     <Compile Include="Assets\Scripts\Game\Action\IAction.cs" />
+     <Compile Include="Assets\Scripts\Game\Action\SequenceActions.cs" />
+     <Compile Include="Assets\Scripts\Game\Action\SpawnActions.cs" />
+     <Compile Include="Assets\Scripts\Game\Action\Timer.cs" />
      <Compile Include="Assets\Scripts\Game\GameInstance.cs" />
      <Compile Include="Assets\Scripts\Game\GameObject\GOControl.cs" />
      <Compile Include="Assets\Scripts\Game\Local\FilePath.cs" />
@@ -70,15 +76,35 @@
      <Compile Include="Assets\Scripts\Game\Local\Message.cs" />
      <Compile Include="Assets\Scripts\Game\Touch\ITouchDispatcher.cs" />
      <Compile Include="Assets\Scripts\Game\Touch\TouchCenter.cs" />
-     <Compile Include="Assets\Scripts\Game\UI\UILayer.cs" />
-     <Compile Include="Assets\Scripts\Game\UI\UINet.cs" />
+     <Compile Include="Assets\Scripts\Game\UILayer\UILayer.cs" />
+     <Compile Include="Assets\Scripts\Game\UILayer\UINet.cs" />
+     <Compile Include="Assets\Scripts\Game\UIWidget\UIEnum.cs" />
+     <Compile Include="Assets\Scripts\Game\UIWidget\UIWidget.cs" />
      <Compile Include="Assets\Scripts\Layer\GOModel.cs" />
+     <Compile Include="Assets\Scripts\Layer\UIHomeLayer.cs" />
      <Compile Include="Assets\Scripts\Layer\UILayerLogin.cs" />
-     <Compile Include="Assets\Scripts\Protocols\PacketID.cs" />
-     <Compile Include="Assets\Scripts\Protocols\Packets.cs" />
+     <Compile Include="Assets\Scripts\Logic\Config\IConfig.cs" />
+     <Compile Include="Assets\Scripts\Logic\Config\ServerConfig.cs" />
+     <Compile Include="Assets\Scripts\Logic\DataStruct\Resource.cs" />
+     <Compile Include="Assets\Scripts\Logic\LogicInstance.cs" />
+     <Compile Include="Assets\Scripts\Logic\Player\Player.cs" />
+     <Compile Include="Assets\Scripts\Logic\Protocols\PacketID.cs" />
+     <Compile Include="Assets\Scripts\Logic\Protocols\Packets.cs" />
+     <Compile Include="Assets\Scripts\UIBuilder\IUIControl.cs" />
+     <Compile Include="Assets\Scripts\UIBuilder\UICanvas.cs" />
+     <Compile Include="Assets\Scripts\UIBuilder\UIControl.cs" />
+     <Compile Include="Assets\Scripts\UIBuilder\UIProperty.cs" />
+     <Compile Include="Assets\Scripts\UIBuilder\UIProxy.cs" />
+     <None Include="Assets\DataBase\Data\ResourceType.xml" />
      <None Include="Assets\DataBase\Config\Remote.xml" />
+     <None Include="Assets\DataBase\Data\BuildProperty.xml" />
+     <None Include="Assets\DataBase\Data\AdminLevel.xml" />
+     <None Include="Assets\DataBase\Data\BuildType.xml" />
+     <None Include="Assets\DataBase\Data\BuildLevel.xml" />
      <None Include="Assets\DataBase\Language\Lan_ZH.xml" />
+     <None Include="Assets\DataBase\Data\RoleLevel.xml" />
      <None Include="Assets\DataBase\Config\Language.xml" />
+     <None Include="Assets\Shaders\OutLight.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

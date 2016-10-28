@@ -5,11 +5,11 @@ using UnityEngine;
 namespace Game
 {
 	/// <summary>
-	/// 文件路径
+	/// 文件路径工具
 	/// </summary>
 	public class FilePathUtility
 	{
-		public FilePathUtility ()
+		private FilePathUtility ()
 		{
 		}
 

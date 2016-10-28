@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Game
 {
-
 	/// <summary>
 	/// 触摸管理
 	/// </summary>

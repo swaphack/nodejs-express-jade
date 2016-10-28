@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <root>
-	<Text ID="1">登录</Text>
+	<Text ID="1">木材</Text>
+	<Text ID="2">食物</Text>
+	<Text ID="3">矿物</Text>
+	<Text ID="4">人口</Text>
+
+	<Text ID="101">伐木场</Text>
+	<Text ID="102">采矿场</Text>
+	<Text ID="103">粮田</Text>
+	<Text ID="104">渔场</Text>
+	<Text ID="105">仓库</Text>
+	<Text ID="106">主城</Text>
+	<Text ID="107">民房</Text>
+
+	<Text ID="201">伐木工</Text>
+	<Text ID="202">矿工</Text>
+	<Text ID="203">农民</Text>
+	<Text ID="204">渔夫</Text>
+	<Text ID="205">采集者</Text>
+
+	<Text ID="301">村</Text>
+	<Text ID="302">镇</Text>
+	<Text ID="303">市</Text>
+	<Text ID="304">省</Text>
+	<Text ID="305">国</Text>
 </root>

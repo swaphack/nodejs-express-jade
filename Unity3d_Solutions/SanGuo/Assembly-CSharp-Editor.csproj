@@ -46,9 +46,16 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Editor\Resolution.cs" />
+     <None Include="Assets\DataBase\Data\ResourceType.xml" />
      <None Include="Assets\DataBase\Config\Remote.xml" />
+     <None Include="Assets\DataBase\Data\BuildProperty.xml" />
+     <None Include="Assets\DataBase\Data\AdminLevel.xml" />
+     <None Include="Assets\DataBase\Data\BuildType.xml" />
+     <None Include="Assets\DataBase\Data\BuildLevel.xml" />
      <None Include="Assets\DataBase\Language\Lan_ZH.xml" />
+     <None Include="Assets\DataBase\Data\RoleLevel.xml" />
      <None Include="Assets\DataBase\Config\Language.xml" />
+     <None Include="Assets\Shaders\OutLight.shader" />
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>

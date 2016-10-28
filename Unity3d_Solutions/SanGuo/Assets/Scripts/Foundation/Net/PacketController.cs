@@ -8,7 +8,7 @@ namespace Foundation.Net
 	/// <summary>
 	/// 报文派发处理
 	/// </summary>
-	public delegate void DispatchPacketHandler(byte[] bytes);
+	public delegate void DispatchPacketHandler (byte[] bytes);
 
 	/// <summary>
 	/// 报文控制中心
@@ -32,7 +32,7 @@ namespace Foundation.Net
 			_OnDispatchPacket = new Dictionary<int, DispatchPacketHandler> ();
 		}
 
-		~PacketController()
+		~PacketController ()
 		{
 			_Stream.Close ();
 		}
@@ -42,40 +42,37 @@ namespace Foundation.Net
 		/// </summary>
 		/// <param name="buffer">数据</param>
 		/// <param name="size">长度</param>
-		public void AddBuffer(byte[] buffer, int size)
+		public void AddBuffer (byte[] buffer, int size)
 		{
-			if (buffer == null || size == 0) 
-			{
+			if (buffer == null || size == 0) {
 				return;
 			}
 
 			_Stream.Write (buffer, 0, size);
 
 			FliterPacket ();
-		} 
+		}
 
 		/// <summary>
 		/// 添加报文派发处理
 		/// </summary>
 		/// <param name="packetID">报文编号</param>
 		/// <param name="handler">处理</param>
-		public void AddDispatcher(int packetID, DispatchPacketHandler handler)
+		public void AddDispatcher (int packetID, DispatchPacketHandler handler)
 		{
-			if (handler == null) 
-			{
+			if (handler == null) {
 				return;
 			}
-			_OnDispatchPacket[packetID] = handler;
+			_OnDispatchPacket [packetID] = handler;
 		}
 
 		/// <summary>
 		/// 移除报文派发处理
 		/// </summary>
 		/// <param name="packetID">报文编号</param>
-		public void RemoveDispatcher(int packetID)
+		public void RemoveDispatcher (int packetID)
 		{
-			if (_OnDispatchPacket.ContainsKey (packetID)) 
-			{
+			if (_OnDispatchPacket.ContainsKey (packetID)) {
 				_OnDispatchPacket.Remove (packetID);
 			}
 		}
@@ -85,10 +82,9 @@ namespace Foundation.Net
 		/// </summary>
 		/// <param name="packetID">报文编号</param>
 		/// <param name="bytes">报文内容</param>
-		public void DispatchPacket(int packetID, byte[] bytes)
+		public void DispatchPacket (int packetID, byte[] bytes)
 		{
-			if (_OnDispatchPacket.ContainsKey (packetID) == false) 
-			{
+			if (_OnDispatchPacket.ContainsKey (packetID) == false) {
 				return;
 			}
 
@@ -98,10 +94,9 @@ namespace Foundation.Net
 		/// <summary>
 		/// 过滤包
 		/// </summary>
-		private void FliterPacket()
+		private void FliterPacket ()
 		{
-			if (_Stream.Length < 2 * sizeof(uint)) 
-			{ // 数据长度不够
+			if (_Stream.Length < 2 * sizeof(uint)) { // 数据长度不够
 				return;
 			}
 
@@ -110,8 +105,7 @@ namespace Foundation.Net
 			int length = BitConverter.ToInt32 (buffer, 0);
 			int packetID = BitConverter.ToInt32 (buffer, sizeof(int));
 
-			if (buffer.Length < length) 
-			{ // 报文长度不足
+			if (buffer.Length < length) { // 报文长度不足
 				return;
 			}
 

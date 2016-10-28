@@ -7,7 +7,7 @@ namespace Foundation.Net
 	/// <summary>
 	/// 连接状态
 	/// </summary>
-	public enum ConnectState 
+	public enum ConnectState
 	{
 		/// <summary>
 		/// 连接中
@@ -22,21 +22,22 @@ namespace Foundation.Net
 	/// <summary>
 	/// 断开连接处理
 	/// </summary>
-	public delegate void ConnectStateHandler(ConnectState state);
+	public delegate void ConnectStateHandler (ConnectState state);
 	/// <summary>
 	/// 接受数据处理
 	/// </summary>
-	public delegate void ReceiveHandler(byte[] data, int size);
+	public delegate void ReceiveHandler (byte[] data, int size);
 
 	/// <summary>
 	/// 客户端
 	/// </summary>
-	public class Client 
+	public class Client
 	{
 		internal class ReceiveObject
 		{
 			public NetworkStream Stream;
 		}
+
 		/// <summary>
 		/// 每次读取数据长度
 		/// </summary>
@@ -55,7 +56,7 @@ namespace Foundation.Net
 		/// </summary>
 		private Remote _Remote;
 
-		public Client()
+		public Client ()
 		{
 			_TcpClient = new TcpClient ();
 			_TcpClient.ReceiveTimeout = 20;
@@ -79,7 +80,7 @@ namespace Foundation.Net
 		/// </summary>
 		/// <param name="ip">地址</param>
 		/// <param name="port">端口</param>
-		public bool Connect(string ip, int port)
+		public bool Connect (string ip, int port)
 		{
 			_Remote.IP = ip;
 			_Remote.Port = port;
@@ -90,22 +91,17 @@ namespace Foundation.Net
 		/// <summary>
 		/// 重连
 		/// </summary>
-		public bool Reconnect()
+		public bool Reconnect ()
 		{
-			if (String.IsNullOrEmpty (_Remote.IP) == true || _Remote.Port <= 0) 
-			{
+			if (String.IsNullOrEmpty (_Remote.IP) == true || _Remote.Port <= 0) {
 				return false;
 			}
 
-			_TcpClient.BeginConnect (_Remote.IP, _Remote.Port, (IAsyncResult ar)=>{
-				if (ar.IsCompleted)
-				{
-					if (this.IsConnected == true)
-					{
+			_TcpClient.BeginConnect (_Remote.IP, _Remote.Port, (IAsyncResult ar) => {
+				if (ar.IsCompleted) {
+					if (this.IsConnected == true) {
 						OnConnect (ConnectState.Connected);
-					}
-					else
-					{
+					} else {
 						OnConnect (ConnectState.Disconnected);
 					}
 				}
@@ -120,12 +116,10 @@ namespace Foundation.Net
 		/// <param name="buffer">消息数据</param>
 		public void Send (byte[] data)
 		{
-			if (data == null) 
-			{
+			if (data == null) {
 				return;
 			}
-			if (IsConnected == false) 
-			{
+			if (IsConnected == false) {
 				return;
 			}
 			_TcpClient.GetStream ().BeginWrite (data, 0, data.Length, null, null);
@@ -134,36 +128,29 @@ namespace Foundation.Net
 		/// <summary>
 		/// 定时更新，用于数据接收处理
 		/// </summary>
-		public void Update()
+		public void Update ()
 		{
-			if (IsConnected == false) 
-			{
-				// 接收到数据
-				OnConnect(ConnectState.Disconnected);
+			if (IsConnected == false) {
+				OnConnect (ConnectState.Disconnected);
 				return;
 			}
 
-			Array.Clear(_ReceiveBuffer, 0, _ReceiveBuffer.Length);
+			Array.Clear (_ReceiveBuffer, 0, _ReceiveBuffer.Length);
 
-			try
-			{
-				ReceiveObject obj = new ReceiveObject();
-				obj.Stream = _TcpClient.GetStream();
-				_TcpClient.GetStream().BeginRead(_ReceiveBuffer, 0, ReadBufferSize, (IAsyncResult ar)=>{
-					if (ar.IsCompleted)
-					{
+			try {
+				ReceiveObject obj = new ReceiveObject ();
+				obj.Stream = _TcpClient.GetStream ();
+				_TcpClient.GetStream ().BeginRead (_ReceiveBuffer, 0, ReadBufferSize, (IAsyncResult ar) => {
+					if (ar.IsCompleted) {
 						ReceiveObject receiveObj = ar.AsyncState as ReceiveObject;
-						int size = receiveObj.Stream.EndRead(ar);
-						if (size > 0)
-						{
+						int size = receiveObj.Stream.EndRead (ar);
+						if (size > 0) {
 							// 接收到数据
-							OnReceive(_ReceiveBuffer, size);
+							OnReceive (_ReceiveBuffer, size);
 						}	
 					}
 				}, obj);
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 				throw e;
 			}
 		}
@@ -171,7 +158,7 @@ namespace Foundation.Net
 		/// <summary>
 		/// 断开连接
 		/// </summary>
-		public void Disconnect()
+		public void Disconnect ()
 		{
 			_TcpClient.EndConnect (null);
 			_TcpClient.Close ();
@@ -183,9 +170,8 @@ namespace Foundation.Net
 		/// 是否连接
 		/// </summary>
 		/// <value><c>true</c> if this instance is connected; otherwise, <c>false</c>.</value>
-		public bool IsConnected 
-		{
-			get {  return _TcpClient.Connected; }			
+		public bool IsConnected {
+			get { return _TcpClient.Connected; }			
 		}
-	}	
+	}
 }

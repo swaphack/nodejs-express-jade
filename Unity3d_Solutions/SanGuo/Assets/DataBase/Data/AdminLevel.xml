@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Root>
+	<Item Name="村" ID="1" Level="1" NameID="301" Wood="1000" Food="1000" People="1000" Mineral="1000" Time="60" />
+	<Item Name="镇" ID="2" Level="2" NameID="302" Wood="100000" Food="100000" People="100000" Mineral="100000" Time="3600" />
+	<Item Name="市" ID="3" Level="3" NameID="303" Wood="1000000" Food="1000000" People="1000000" Mineral="1000000" Time="86400" />
+	<Item Name="省" ID="4" Level="4" NameID="304" Wood="10000000" Food="10000000" People="10000000" Mineral="10000000" Time="2592000" />
+	<Item Name="国" ID="5" Level="5" NameID="305" Wood="1000000000" Food="1000000000" People="1000000000" Mineral="1000000000" Time="31104000" />
+</Root>
+
+<!-- 
+	行政属性
+	ID 编号
+	Level 等级
+
+	Wood 木材
+	Food 食物
+	People 人口
+	Mineral 矿工
+
+	Time 升级时间(单位：s)
+-->
