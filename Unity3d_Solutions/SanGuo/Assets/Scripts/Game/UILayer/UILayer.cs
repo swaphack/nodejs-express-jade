@@ -14,6 +14,10 @@ namespace Game
 		/// 网络
 		/// </summary>
 		private static UINet _Net;
+		/// <summary>
+		/// 是否设置文本了
+		/// </summary>
+		private bool _IsInitText;
 
 		/// <summary>
 		/// 网络
@@ -29,23 +33,27 @@ namespace Game
 
 		public UILayer ()
 		{
+			_IsInitText = false;
 		}
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
-		void Start ()
+		protected virtual void Start ()
 		{
 			InitUI ();
-			InitText ();
 			InitPacket ();
 		}
 
 		/// <summary>
 		/// 定时更新
 		/// </summary>
-		void Update ()
+		protected virtual void Update ()
 		{
+			if (_IsInitText == false) {
+				InitText ();
+				_IsInitText = true;
+			}
 		}
 
 		/// <summary>

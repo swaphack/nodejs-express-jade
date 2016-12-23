@@ -69,13 +69,13 @@ namespace UI
 		/// <param name="filepath">Filepath.</param>
 		public Behaviour Load(string filepath)
 		{
-			string fullpath = FilePathUtility.GetFullPath (filepath);
-			if (fullpath == "") {
+			string fileData = FilePathUtility.GetXmlFileData (filepath);
+			if (string.IsNullOrEmpty (fileData) == true) {
 				return null;
 			}
 
 			XmlDocument doc = new XmlDocument ();
-			doc.Load (fullpath);
+			doc.LoadXml (fileData);
 
 			return LoadXmlDocument(doc);
 		}

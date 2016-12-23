@@ -68,7 +68,7 @@ namespace Game
 			}
 
 			foreach (ITouchDispatcher dispather in _TouchDispatchers) {
-				if (hitInfo.transform.gameObject == dispather.Target) {
+				if (hitInfo.collider == dispather.Target) {
 					dispather.OnDispatchTouch (phase, position);
 				}
 			}
@@ -84,7 +84,7 @@ namespace Game
 			phase = TouchPhase.Began;
 			position = new Vector2 ();
 
-			if (Input.touchSupported == true) {
+			if (Input.touchSupported == true && Input.touchSupported == true) {
 				if (Input.touchCount == 0) {
 					return false;
 				}

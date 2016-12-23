@@ -2,6 +2,9 @@
 
 namespace Game
 {
+	/// <summary>
+	/// 语言种类
+	/// </summary>
 	public enum LanguagueType
 	{
 		NONE,

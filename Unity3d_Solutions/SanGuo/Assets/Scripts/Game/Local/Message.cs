@@ -27,7 +27,7 @@ namespace Game
 		/// 配置文件
 		/// </summary>
 		/// <value>The config path.</value>
-		public string ConfigPath { get { return  "DataBase/Config/Language.xml"; } }
+		public string ConfigPath { get { return  "DataBase/Config/Language" ; } }
 
 
 		public Message ()
@@ -81,14 +81,13 @@ namespace Game
 		{
 			_FilePaths.Clear ();
 
-			string fullpath = FilePathUtility.GetFullPath (ConfigPath);
-
-			if (string.IsNullOrEmpty (fullpath)) {
+			string fileData = FilePathUtility.GetXmlFileData (ConfigPath);
+			if (string.IsNullOrEmpty (fileData) == true) {
 				return;
 			}
 
 			XmlDocument doc = new XmlDocument ();
-			doc.Load (fullpath);
+			doc.LoadXml (fileData);
 
 			XmlNode root = doc.FirstChild;
 			if (root == null) 
@@ -118,6 +117,8 @@ namespace Game
 
 				_FilePaths [(LanguagueType)id] = value;
 			}
+
+			Log.Write ("Load Message Config Succesful");
 		}
 
 		/// <summary>
@@ -132,13 +133,13 @@ namespace Game
 			_Messages.Clear ();
 
 			string xmlUrl = _FilePaths [_LanguagueType];
-			string fullpath = FilePathUtility.GetFullPath (xmlUrl);
-			if (string.IsNullOrEmpty (fullpath)) {
+			string fileData = FilePathUtility.GetXmlFileData (xmlUrl);
+			if (string.IsNullOrEmpty (fileData) == true) {
 				return;
 			}
 
 			XmlDocument doc = new XmlDocument ();
-			doc.Load (fullpath);
+			doc.LoadXml (fileData);
 
 			XmlNode root = doc.FirstChild;
 			if (root == null) 
@@ -162,6 +163,8 @@ namespace Game
 					_Messages [key] = element.InnerText;
 				}
 			}
+
+			Log.Write ("Load Message Language Succesful");
 		}
 	}
 }

@@ -12,7 +12,7 @@ namespace Game
 		/// 点击对象
 		/// </summary>
 		/// <value>The target.</value>
-		GameObject Target { get; set; }
+		Collider Target { get; set; }
 
 		/// <summary>
 		/// 点击生效

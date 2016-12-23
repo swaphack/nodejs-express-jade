@@ -4,7 +4,7 @@
 namespace Foundation.Net
 {
 	/// <summary>
-	/// 最后尝试连接处理
+	/// 超出尝试连接次数后的处理
 	/// </summary>
 	public delegate void FinalTryConnectHandler ();
 	/// <summary>
@@ -29,7 +29,7 @@ namespace Foundation.Net
 		/// </summary>
 		private int _TryConnectCount;
 		/// <summary>
-		/// 最后尝试连接处理
+		/// 超出尝试连接次数后的处理
 		/// </summary>
 		public FinalTryConnectHandler FinalConnectHandler;
 

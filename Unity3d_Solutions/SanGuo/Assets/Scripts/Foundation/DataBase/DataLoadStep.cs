@@ -93,7 +93,7 @@ namespace Foundation.DataBase
 					record.SetProperty (attribute.Name, attribute.Value);
 
 					if (attribute.Name.Equals (_UniqueName)) {
-						id = Convert.ToInt32 ("attribute.Value");
+						id = Convert.ToInt32 (attribute.Value);
 					}
 				}
 

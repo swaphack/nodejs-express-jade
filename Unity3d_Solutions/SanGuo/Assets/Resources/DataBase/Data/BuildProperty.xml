@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Root>
+	<Item Name="伐木场" ID="1" NameID="101" Level="1" Resource="1" Increase="10" Reserve="1000" Worker="10" Time="60" />
+	<Item Name="采矿场" ID="2" NameID="102" Level="1" Resource="3" Increase="10" Reserve="1000" Worker="10" Time="60" />
+	<Item Name="粮田" ID="3" NameID="103" Level="1" Resource="2" Increase="10" Reserve="1000" Worker="10" Time="60" />
+	<Item Name="渔场" ID="4" NameID="104" Level="1" Resource="2" Increase="10" Reserve="1000" Worker="10" Time="60" />
+	<Item Name="仓库" ID="5" NameID="105" Level="1" Reserve="10000" Worker="10"/>
+	<Item Name="主城" ID="6" NameID="106" Level="1" Resource="4" Increase="10" Reserve="1000" Worker="0" Time="3600"/>
+	<Item Name="民房" ID="7" NameID="107" Level="1" Resource="4" Increase="2" Reserve="4" Worker="0" Time="3600"/>
+</Root>
+
+
+<!-- 
+	建筑属性
+	ID 建筑编号
+	Level 等级
+
+	Resource 资源类型
+	Increase 产量
+	Worker 所需工人数
+	Time 生产时间(单位：s)
+
+	Reserve 储量
+-->

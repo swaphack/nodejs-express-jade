@@ -13,15 +13,15 @@ namespace Logic
 		/// </summary>
 		public int Wood;
 		/// <summary>
-		/// The food.
+		/// 食物
 		/// </summary>
 		public int Food;
 		/// <summary>
-		/// The iron.
+		/// 矿物
 		/// </summary>
 		public int Iron;
 		/// <summary>
-		/// The people.
+		/// 人口
 		/// </summary>
 		public int People;
 

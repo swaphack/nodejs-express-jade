@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Root>
+	<Server IP="127.0.0.1" Port="9547"/>
+	<Socket enable="false"/>
+</Root>

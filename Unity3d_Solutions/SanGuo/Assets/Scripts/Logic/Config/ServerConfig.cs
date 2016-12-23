@@ -86,5 +86,4 @@ namespace Logic
 			return true;
 		}
 	}
-
 }

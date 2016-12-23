@@ -13,7 +13,7 @@ namespace Game
 		/// <summary>
 		/// 服务器地址
 		/// </summary>
-		public const string SERVER_IP = "10.0.22.63";
+		public const string SERVER_IP = "127.0.0.1";
 		/// <summary>
 		/// 服务器端口
 		/// </summary>
@@ -79,6 +79,7 @@ namespace Game
 		
 		public GameInstance ()
 		{
+			// 网络
 			_NetCenter = new NetCenter ();
 			_NetCenter.TryConnectMaxCount = TryConnectCount;
 			_NetCenter.FinalConnectHandler = FinalConnectHandler;
@@ -86,11 +87,16 @@ namespace Game
 
 			IsNetEnable = false;
 
+			// 触摸
 			_TouchCenter = new TouchCenter ();
-
+			// 语言文本
 			_Text = new Message ();
-
+			// 动作
 			_Action = new ActionCenter ();
+			// 日志
+			Log.Init();
+
+			// 更新时间
 			_LastUpdateTime = DateTime.MinValue;
 
 			s_GameInstance = this;
@@ -108,7 +114,7 @@ namespace Game
 		/// 初始化
 		/// </summary>
 		public void Start()
-		{			
+		{				
 			_NetCenter.Init (SERVER_IP, SERVER_PORT);
 
 			_Text.InitConfig ();
@@ -154,11 +160,11 @@ namespace Game
 		{
 			if (state == ConnectState.Disconnected) 
 			{
-				Debug.Log ("Disconnect Server");
+				Log.Write ("Disconnect Server");
 			} 
 			else
 			{
-				Debug.Log ("Connect Server");
+				Log.Write ("Connect Server");
 			}
 		}
 
@@ -167,7 +173,7 @@ namespace Game
 		/// </summary>
 		private void FinalConnectHandler()
 		{
-			Debug.Log ("Over Connect Server Count");
+			Log.Write ("Over Connect Server Count");
 		}
 	}
 }

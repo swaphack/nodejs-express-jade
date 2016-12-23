@@ -34,17 +34,12 @@ public class UILayerLogin : UILayer
 		text.text = GetLocalText (1);
 	}
 
-	void Update()
-	{
-		
-	}
-
 	/// <summary>
 	/// 初始化报文监听
 	/// </summary>
 	protected override void InitPacket()
 	{
-		Net.RegisterPacket (PacketID.PlayerInfo, OnReceivePacket_Login);
+		Net.RegisterPacket (PacketID.Login, OnReceivePacket_Login);
 	}
 
 	private void OnClick(Button sender)	
@@ -60,8 +55,8 @@ public class UILayerLogin : UILayer
 
 	private void OnReceivePacket_Login(byte[] bytes)
 	{
-		RespPacketPlayerInfo packet = Net.GetResponsePacket<RespPacketPlayerInfo> (bytes);
+		ReqPacketLogin packet = Net.GetResponsePacket<ReqPacketLogin> (bytes);
 
-		Debug.Log ("Player ID " + packet.PlayerID.ToString());
+		Log.Write ("Player ID " + packet.Name.ToString());
 	}
 }
