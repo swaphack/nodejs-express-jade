@@ -73,7 +73,10 @@
      <Compile Include="Assets\Scripts\Game\GameInstance.cs" />
      <Compile Include="Assets\Scripts\Game\Listener\ActionListener.cs" />
      <Compile Include="Assets\Scripts\Game\Listener\CameraListener.cs" />
+     <Compile Include="Assets\Scripts\Game\Listener\FirstPersonListener.cs" />
      <Compile Include="Assets\Scripts\Game\Listener\RotateListener.cs" />
+     <Compile Include="Assets\Scripts\Game\Listener\ThirdPersonListener.cs" />
+     <Compile Include="Assets\Scripts\Game\Listener\TipLisener.cs" />
      <Compile Include="Assets\Scripts\Game\Listener\TouchListener.cs" />
      <Compile Include="Assets\Scripts\Game\Local\FilePathUtility.cs" />
      <Compile Include="Assets\Scripts\Game\Local\LanguagueType.cs" />
