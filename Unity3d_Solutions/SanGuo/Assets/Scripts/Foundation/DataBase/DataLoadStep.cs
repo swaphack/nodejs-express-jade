@@ -3,6 +3,13 @@ using System.Xml;
 
 namespace Foundation.DataBase
 {
+	/// <summary>
+	/// 数据加载回调
+	/// </summary>
+	public delegate string DataLoadHandler(string filepath);
+	/// <summary>
+	/// 数据加载步骤
+	/// </summary>
 	public class DataLoadStep : IDataLoadStep
 	{
 		/// <summary>
@@ -22,6 +29,10 @@ namespace Foundation.DataBase
 		/// </summary>
 		private IDataTable _Table;
 		/// <summary>
+		/// 数据加载处理
+		/// </summary>
+		private DataLoadHandler _DataLoadHandler;
+		/// <summary>
 		/// 主键名称
 		/// </summary>
 		private string _UniqueName;
@@ -33,9 +44,9 @@ namespace Foundation.DataBase
 		public string TableName { get { return _TableName; } }
 
 		/// <summary>
-		/// 获取配置路径
+		/// 获取表名称
 		/// </summary>
-		/// <returns>配置路径</returns>
+		/// <returns>表名称</returns>
 		public string ConfigPath { get { return _ConfigPath; } }
 
 		/// <summary>
@@ -51,11 +62,12 @@ namespace Foundation.DataBase
 		/// <param name="configPath">配置路径</param>
 		/// <param name="table">表</param>
 		/// <param name="uniqueName">主键名称</param>
-		public DataLoadStep (string tableName, string configPath, IDataTable table, string uniqueName = "")
+		public DataLoadStep (string tableName, string configPath, IDataTable table, DataLoadHandler handler, string uniqueName = "")
 		{
 			this._TableName = tableName;
 			this._ConfigPath = configPath;
 			this._Table = table;
+			this._DataLoadHandler = handler;
 			this._UniqueName = uniqueName;
 			this._IsLoaded = false;
 		}
@@ -64,23 +76,41 @@ namespace Foundation.DataBase
 		/// 加载配置
 		/// </summary>
 		/// <returns><c>true</c> if this instance was loaded successfully; otherwise, <c>false</c>.</returns>
-		public void Load ()
+		public bool Load ()
 		{
 			if (_IsLoaded == true) {
-				return;
+				return true;
+			}
+
+			if (_DataLoadHandler == null) {
+				return false;
+			}
+
+			string data = _DataLoadHandler (_ConfigPath);
+			if (data == null) {
+				return false;
 			}
 
 			_IsLoaded = true;
-			_Table.ClearRecords ();
 
 			XmlDocument documnet = new XmlDocument ();
-			documnet.Load (ConfigPath);
+			documnet.LoadXml (data);
 			XmlNode root = documnet.FirstChild;
 			if (root == null) {
-				return;			
+				return false;		
 			}
 
-			XmlNode node = root.FirstChild;
+			XmlNode node = root.NextSibling;
+			if (node == null) {
+				return false;		
+			}
+
+			node = node.FirstChild;
+			if (node == null) {
+				return false;		
+			}
+
+			_Table.ClearRecords ();
 
 			while (node != null) {
 				IDataRecord record = new DataRecord ();
@@ -98,9 +128,14 @@ namespace Foundation.DataBase
 				}
 
 				record.ID = id;
+				record.InnerText = node.InnerText;
 
 				_Table.AddRecord (record);
+
+				node = node.NextSibling;
 			}
+
+			return true;
 		}
 	}
 }

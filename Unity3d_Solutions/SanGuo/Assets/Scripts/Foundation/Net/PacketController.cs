@@ -50,7 +50,7 @@ namespace Foundation.Net
 
 			_Stream.Write (buffer, 0, size);
 
-			FliterPacket ();
+			//FliterPacket ();
 		}
 
 		/// <summary>
@@ -94,7 +94,7 @@ namespace Foundation.Net
 		/// <summary>
 		/// 过滤包
 		/// </summary>
-		private void FliterPacket ()
+		public void FliterPacket ()
 		{
 			if (_Stream.Length < 2 * sizeof(uint)) { // 数据长度不够
 				return;

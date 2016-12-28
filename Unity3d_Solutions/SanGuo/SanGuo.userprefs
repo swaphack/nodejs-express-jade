@@ -1,14 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Game\Touch\TouchCenter.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Game\Listener\TipLisener.cs">
     <Files>
-      <File FileName="Assets\Scripts\Game\Touch\TouchCenter.cs" Line="67" Column="12" />
-      <File FileName="Assets\Scripts\Logic\DataStruct\Resource.cs" Line="21" Column="17" NotebookId="1" />
+      <File FileName="Assets\Scripts\Layer\UIHomeLayer.cs" Line="43" Column="11" />
+      <File FileName="Assets\Scripts\Game\Listener\TipLisener.cs" Line="21" Column="40" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Foundation\Net\Client.cs" line="133" column="1" />
+      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Game\Local\FilePathUtility.cs" line="140" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

@@ -78,7 +78,7 @@ namespace Foundation.DataBase
 		/// 移除表
 		/// </summary>
 		/// <param name="name">表名称</param>
-		public void RemovetTable (string name)
+		public void RemoveTable (string name)
 		{
 			if (_Tables.ContainsKey (name) == true) {
 				_Tables.Remove (name);

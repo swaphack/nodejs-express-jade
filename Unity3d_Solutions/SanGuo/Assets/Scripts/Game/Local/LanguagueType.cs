@@ -7,6 +7,9 @@ namespace Game
 	/// </summary>
 	public enum LanguagueType
 	{
+		/// <summary>
+		/// 未设置
+		/// </summary>
 		NONE,
 		/// <summary>
 		/// 中文

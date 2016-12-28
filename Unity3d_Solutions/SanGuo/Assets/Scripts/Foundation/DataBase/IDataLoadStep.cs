@@ -25,7 +25,7 @@ namespace Foundation.DataBase
 		/// <summary>
 		/// 加载配置
 		/// </summary>
-		void Load();
+		bool Load();
 	}
 }
 

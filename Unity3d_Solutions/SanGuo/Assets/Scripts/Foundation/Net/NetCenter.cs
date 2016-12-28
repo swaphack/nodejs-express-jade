@@ -33,15 +33,6 @@ namespace Foundation.Net
 		/// </summary>
 		public FinalTryConnectHandler FinalConnectHandler;
 
-		/// <summary> 
-		/// 报文控制中心
-		/// </summary>
-		public PacketController Packet {
-			get { 
-				return _PacketController; 
-			}
-		}
-
 		/// <summary>
 		/// 最大尝试连接次数 
 		/// 负数标识不判断，每次断开都会重新连接
@@ -49,13 +40,6 @@ namespace Foundation.Net
 		public int TryConnectMaxCount {
 			get { return _TryConnectMaxCount; }
 			set { _TryConnectMaxCount = value; }
-		}
-
-		/// <summary>
-		/// 客户端
-		/// </summary>
-		public Client Client {
-			get { return _Client; }
 		}
 
 		/// <summary>
@@ -94,7 +78,8 @@ namespace Foundation.Net
 			} else {
 				_Client.Update ();
 			}
-			 
+
+			_PacketController.FliterPacket ();
 		}
 
 		/// <summary>
@@ -111,6 +96,14 @@ namespace Foundation.Net
 		}
 
 		/// <summary>
+		/// 重置尝试连接次数
+		/// </summary>
+		public void ResetTryConnectCount()
+		{
+			_TryConnectCount = 0;
+		}
+
+		/// <summary>
 		/// 接收数据
 		/// </summary>
 		/// <param name="data">数据</param>
@@ -118,6 +111,54 @@ namespace Foundation.Net
 		private void OnReceiveBuffer (byte[] data, int size)
 		{
 			_PacketController.AddBuffer (data, size);
+		}
+
+		/// <summary>
+		/// 添加报文派发处理
+		/// </summary>
+		/// <param name="packetID">Packet I.</param>
+		/// <param name="handler">Handler.</param>
+		public void AddPacketDispatcher(int packetID, DispatchPacketHandler handler)
+		{
+			if (handler == null) {
+				return;
+			}
+			_PacketController.AddDispatcher (packetID, handler);
+		}
+
+		/// <summary>
+		/// 添加报文派发处理
+		/// </summary>
+		/// <param name="packetID">Packet I.</param>
+		public void RemovePacketDispatcher(int packetID)
+		{
+			_PacketController.RemoveDispatcher (packetID);
+		}
+
+		/// <summary>
+		/// 发送消息
+		/// </summary>
+		/// <param name="bytes">Bytes.</param>
+		public void SendMessage(byte[] bytes)
+		{
+			if (bytes == null) {
+				return;
+			}
+
+			_Client.Send (bytes);
+		}
+
+		/// <summary>
+		/// 添加连接状态改变时的回调
+		/// </summary>
+		/// <param name="handler">Handler.</param>
+		public void AddConnectStateListener(ConnectStateHandler handler)
+		{
+			if (handler == null) {
+				return;
+			}
+
+			_Client.OnConnect += handler;
 		}
 	}
 }

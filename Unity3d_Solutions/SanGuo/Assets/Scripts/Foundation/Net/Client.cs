@@ -67,11 +67,11 @@ namespace Foundation.Net
 		}
 
 		/// <summary>
-		/// 断开事件
+		/// 连接状态改变时的事件
 		/// </summary>
 		public event ConnectStateHandler OnConnect;
 		/// <summary>
-		/// 收到数据
+		/// 收到数据时的事件
 		/// </summary>
 		public event ReceiveHandler OnReceive;
 

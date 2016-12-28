@@ -14,10 +14,15 @@ namespace Foundation.DataBase
 		/// 成员
 		/// </summary>
 		private Dictionary<string, string> _Members;
+		/// <summary>
+		/// 内部文本
+		/// </summary>
+		private string _InnerText;
 
 		public DataRecord ()
 		{
 			_ID = 0;
+			_InnerText = "";
 			_Members = new Dictionary<string, string> ();
 		}
 
@@ -49,23 +54,6 @@ namespace Foundation.DataBase
 		}
 
 		/// <summary>
-		/// 获取属性值
-		/// </summary>
-		/// <returns>值</returns>
-		/// <param name="name">名称</param>
-		public T GetProperty<T> (string name)
-		{
-			string value = GetProperty (name);
-			if (string.IsNullOrEmpty (value)) {
-				return default(T);
-			}
-
-			byte[] data = Encoding.UTF8.GetBytes (value);
-
-			return (T)ConvertHelp.BytesToStruct (data, typeof(T));
-		}
-
-		/// <summary>
 		/// 设置属性
 		/// </summary>
 		/// <param name="name">名称</param>
@@ -73,6 +61,20 @@ namespace Foundation.DataBase
 		public void SetProperty (string name, string value)
 		{
 			_Members [name] = value;
+		}
+
+		/// <summary>
+		/// 内部文本
+		/// </summary>
+		/// <value>The inner text.</value>
+		public string InnerText 
+		{ 
+			get { 
+				return _InnerText;
+			}
+			set {
+				_InnerText = value;
+			} 
 		}
 
 		/// <summary>

@@ -36,7 +36,7 @@ namespace Foundation.DataBase
 		/// 移除表
 		/// </summary>
 		/// <param name="name">表名称</param>
-		void RemovetTable (string name);
+		void RemoveTable (string name);
 
 		/// <summary>
 		/// 清空表

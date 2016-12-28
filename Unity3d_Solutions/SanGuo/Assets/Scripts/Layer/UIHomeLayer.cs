@@ -4,7 +4,7 @@ using System;
 using Game;
 using Logic;
 
-public class UIHomeLayer : UILayer
+public class UIHomeLayer : Layer
 {
 	/// <summary>
 	/// 食物标签
@@ -44,17 +44,19 @@ public class UIHomeLayer : UILayer
 	/// </summary>
 	protected override void InitUI()
 	{
+		/*
 		_LabelFood = FindCanvas<Text> ("Canvas.CanvasResource.CanvasFood.Text");
 		_LabelWood = FindCanvas<Text> ("Canvas.CanvasResource.CanvasWood.Text");
 		_LabelIron = FindCanvas<Text> ("Canvas.CanvasResource.CanvasIron.Text");
+		*/
 
 		_BtnFood = FindCanvas<Button> ("Canvas.CanvasButton.CanvasFood.Button");
 		_BtnWood = FindCanvas<Button> ("Canvas.CanvasButton.CanvasWood.Button");
 		_BtnIron = FindCanvas<Button> ("Canvas.CanvasButton.CanvasIron.Button");
 
 		_BtnFood.onClick.AddListener(delegate() {
-			_MainPlayer.Food += 1;
-			_LabelFood.text = _MainPlayer.Food.ToString();
+			_MainPlayer.Currency.Food += 1;
+			_LabelFood.text = _MainPlayer.Currency.Food.ToString();
 
 			/*
 			ReqPacketLogin packet = Net.GetRequestPacket<ReqPacketLogin>(PacketID.Login);
@@ -66,13 +68,13 @@ public class UIHomeLayer : UILayer
 		});
 
 		_BtnWood.onClick.AddListener(delegate() {
-			_MainPlayer.Wood += 1;
-			_LabelWood.text = _MainPlayer.Wood.ToString();
+			_MainPlayer.Currency.Wood += 1;
+			_LabelWood.text = _MainPlayer.Currency.Wood.ToString();
 		});
 
 		_BtnIron.onClick.AddListener(delegate() {
-			_MainPlayer.Iron += 1;
-			_LabelIron.text = _MainPlayer.Iron.ToString();
+			_MainPlayer.Currency.Iron += 1;
+			_LabelIron.text = _MainPlayer.Currency.Iron.ToString();
 		});
 	}
 
@@ -81,9 +83,11 @@ public class UIHomeLayer : UILayer
 	/// </summary>
 	protected override void InitText()
 	{
-		_LabelFood.text = _MainPlayer.Food.ToString();
-		_LabelWood.text = _MainPlayer.Wood.ToString();
-		_LabelIron.text = _MainPlayer.Iron.ToString();
+		/*
+		_LabelFood.text = _MainPlayer.Currency.Food.ToString();
+		_LabelWood.text = _MainPlayer.Currency.Wood.ToString();
+		_LabelIron.text = _MainPlayer.Currency.Iron.ToString();
+		*/
 
 		_BtnFood.GetComponentInChildren<Text>().text = GetLocalText (2);
 		_BtnWood.GetComponentInChildren<Text>().text = GetLocalText (1);
@@ -95,14 +99,22 @@ public class UIHomeLayer : UILayer
 	/// </summary>
 	protected override void InitPacket()
 	{
-		Net.RegisterPacket (PacketID.Login, OnReceivePacket_Login);
+		PacketDispatcher.RegisterPacket (PacketID.Login, OnReceivePacket_Login);
 	}
 
 	private void OnReceivePacket_Login(byte[] bytes)
 	{
-		ReqPacketLogin packet = Net.GetResponsePacket<ReqPacketLogin> (bytes);
+		ReqPacketLogin packet = PacketDispatcher.GetResponsePacket<ReqPacketLogin> (bytes);
 
-		Log.Write ("Player ID " + Net.GetStringText (packet.Name));
+		Log.Write ("Player ID " + PacketDispatcher.GetStringText (packet.Name));
+	}
+
+	/// <summary>
+	/// 返回键处理
+	/// </summary>
+	protected override void OnEscapeHandler()
+	{
+		Log.Write ("Press Escape Key");
 	}
 }
 

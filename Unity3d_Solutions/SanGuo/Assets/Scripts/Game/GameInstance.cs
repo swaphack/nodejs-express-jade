@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
-
 using Foundation.Net;
+using Logic;
 
 namespace Game
 {
@@ -40,6 +40,10 @@ namespace Game
 		/// </summary>
 		private Message _Text;
 		/// <summary>
+		/// 平台
+		/// </summary>
+		private Platform _Platform;
+		/// <summary>
 		/// 动作
 		/// </summary>
 		private ActionCenter _Action;
@@ -76,6 +80,12 @@ namespace Game
 		/// </summary>
 		/// <value>The action.</value>
 		public ActionCenter Action { get {  return _Action; } }
+
+		public Platform Platform { 
+			get { 
+				return _Platform;
+			}
+		}
 		
 		public GameInstance ()
 		{
@@ -83,7 +93,7 @@ namespace Game
 			_NetCenter = new NetCenter ();
 			_NetCenter.TryConnectMaxCount = TryConnectCount;
 			_NetCenter.FinalConnectHandler = FinalConnectHandler;
-			_NetCenter.Client.OnConnect += OnConnectState;
+			_NetCenter.AddConnectStateListener (OnConnectState);
 
 			IsNetEnable = false;
 
@@ -93,6 +103,8 @@ namespace Game
 			_Text = new Message ();
 			// 动作
 			_Action = new ActionCenter ();
+			// 平台
+			_Platform = new Platform ();
 			// 日志
 			Log.Init();
 
@@ -114,8 +126,15 @@ namespace Game
 		/// 初始化
 		/// </summary>
 		public void Start()
-		{				
-			_NetCenter.Init (SERVER_IP, SERVER_PORT);
+		{	
+			ServerConfig config = new ServerConfig ();
+			if (config.Load () == true) {
+				IsNetEnable = config.IsSocketEnable;
+				if (IsNetEnable) {
+					_NetCenter.Init (config.IPAddress, config.Port);		
+				} else {
+				}
+			}
 
 			_Text.InitConfig ();
 			_Text.SetLanguage (LanguagueType.CHINA);
@@ -131,7 +150,7 @@ namespace Game
 			}
 
 			_TouchCenter.Update ();
-
+			_Platform.Update ();
 			_Action.Update ( GetDeltaTime() );
 
 		}

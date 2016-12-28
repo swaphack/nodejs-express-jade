@@ -61,7 +61,6 @@ namespace Game
 		{
 			string filepath;
 
-
 			if (Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXPlayer ||
 			     Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer)
 				filepath = Application.dataPath + "/StreamingAssets/" + filename;
@@ -132,7 +131,7 @@ namespace Game
 			}
 
 			string fullpath = GetFullPath (filepath);
-			if (string.IsNullOrEmpty (fullpath) == false) {
+			if (string.IsNullOrEmpty (fullpath) == true) {
 				return null;
 			} else {
 				Log.Write ("Read Text File Data From Outter Failure : " + filepath);

@@ -2,6 +2,7 @@
 using System.Xml;
 using System.Collections;
 using System.Collections.Generic;
+using Foundation.DataBase;
 
 namespace Game
 {
@@ -24,15 +25,13 @@ namespace Game
 		private Dictionary<int, string> _Messages;
 
 		/// <summary>
-		/// 配置文件
+		/// 配置所在路径
 		/// </summary>
-		/// <value>The config path.</value>
-		public string ConfigPath { get { return  "DataBase/Config/Language" ; } }
-
+		public const string ConfigPath = "DataBase/Config/Language";
 
 		public Message ()
 		{
-			_LanguagueType = LanguagueType.CHINA;
+			_LanguagueType = LanguagueType.NONE;
 			_FilePaths = new Dictionary<LanguagueType, string> ();
 			_Messages = new Dictionary<int, string> ();
 		}
@@ -43,6 +42,9 @@ namespace Game
 		/// <param name="eLan">E lan.</param>
 		public void SetLanguage (LanguagueType eLanguagueType)
 		{
+			if (_LanguagueType == eLanguagueType) {
+				return;
+			}
 			_LanguagueType = eLanguagueType;
 			initLanguage ();
 		}
@@ -81,36 +83,20 @@ namespace Game
 		{
 			_FilePaths.Clear ();
 
-			string fileData = FilePathUtility.GetXmlFileData (ConfigPath);
-			if (string.IsNullOrEmpty (fileData) == true) {
+			DataTable table = XmlHelp.LoadXml (ConfigPath);
+			if (table == null) {
 				return;
 			}
-
-			XmlDocument doc = new XmlDocument ();
-			doc.LoadXml (fileData);
-
-			XmlNode root = doc.FirstChild;
-			if (root == null) 
-			{
-				return;
-			}
-
-			root = root.NextSibling;
-			if (root == null) 
-			{
-				return;
-			}
-			XmlNodeList nodeList = root.ChildNodes;
 
 			string value;
 			int id = 0;
-			foreach (XmlNode node in nodeList) {
-				XmlElement element = (XmlElement)node;
-				value = element.GetAttribute ("ID");
+			for (int i = 0; i < table.Count; i++) {
+				IDataRecord record = table.At (i);
+				value = record.GetProperty ("ID");
 				if (int.TryParse (value, out id) == false) {
 					continue;
 				}
-				value = element.GetAttribute ("Path");
+				value = record.GetProperty ("Path");
 				if (value == null) {
 					continue;
 				}
@@ -133,35 +119,25 @@ namespace Game
 			_Messages.Clear ();
 
 			string xmlUrl = _FilePaths [_LanguagueType];
-			string fileData = FilePathUtility.GetXmlFileData (xmlUrl);
-			if (string.IsNullOrEmpty (fileData) == true) {
+			DataTable table = XmlHelp.LoadXml (xmlUrl);
+			if (table == null) {
 				return;
 			}
-
-			XmlDocument doc = new XmlDocument ();
-			doc.LoadXml (fileData);
-
-			XmlNode root = doc.FirstChild;
-			if (root == null) 
-			{
-				return;
-			}
-
-			root = root.NextSibling;
-			if (root == null) 
-			{
-				return;
-			}
-			XmlNodeList nodeList = root.ChildNodes;
 
 			int key = 0;
 			string value = null;
-			foreach (XmlNode node in nodeList) {
-				XmlElement element = (XmlElement)node;
-				value = element.GetAttribute ("ID");
-				if (int.TryParse (value, out key)) {
-					_Messages [key] = element.InnerText;
+			for (int i = 0; i < table.Count; i++) {
+				IDataRecord record = table.At (i);
+				value = record.GetProperty ("ID");
+				if (int.TryParse (value, out key) == false) {
+					continue;
 				}
+				value = record.InnerText;
+				if (value == null) {
+					continue;
+				}
+
+				_Messages [key] = value;
 			}
 
 			Log.Write ("Load Message Language Succesful");

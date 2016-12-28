@@ -3,6 +3,9 @@ using System.Collections;
 
 namespace Logic
 {
+	/// <summary>
+	/// 逻辑管理实例
+	/// </summary>
 	public class LogicInstance
 	{
 		/// <summary>

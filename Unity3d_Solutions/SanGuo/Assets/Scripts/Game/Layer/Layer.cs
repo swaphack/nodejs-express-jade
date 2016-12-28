@@ -8,30 +8,14 @@ namespace Game
 	/// <summary>
 	/// UI层
 	/// </summary>
-	public class UILayer : MonoBehaviour
+	public class Layer : MonoBehaviour
 	{
-		/// <summary>
-		/// 网络
-		/// </summary>
-		private static UINet _Net;
 		/// <summary>
 		/// 是否设置文本了
 		/// </summary>
 		private bool _IsInitText;
 
-		/// <summary>
-		/// 网络
-		/// </summary>
-		public UINet Net {
-			get { 
-				if (_Net == null) {
-					_Net = new UINet ();
-				}
-				return _Net; 
-			}
-		}
-
-		public UILayer ()
+		public Layer ()
 		{
 			_IsInitText = false;
 		}
@@ -39,7 +23,7 @@ namespace Game
 		/// <summary>
 		/// 初始化
 		/// </summary>
-		protected virtual void Start ()
+		void Start ()
 		{
 			InitUI ();
 			InitPacket ();
@@ -48,7 +32,7 @@ namespace Game
 		/// <summary>
 		/// 定时更新
 		/// </summary>
-		protected virtual void Update ()
+		void Update ()
 		{
 			if (_IsInitText == false) {
 				InitText ();
@@ -87,11 +71,34 @@ namespace Game
 
 		}
 
+		public virtual void Show()
+		{
+			if (GameInstance.GetInstance ().Platform != null) {
+				GameInstance.GetInstance ().Platform.AddEscKeyHandler (EscapeKeyHandler);
+			}
+		}
+
 		/// <summary>
 		/// 关闭
 		/// </summary>
-		protected virtual void Close ()
+		public virtual void Close ()
 		{
+			if (GameInstance.GetInstance ().Platform != null) {
+				GameInstance.GetInstance ().Platform.AddEscKeyHandler (EscapeKeyHandler);
+			}
+		}
+
+		/// <summary>
+		/// 返回键处理
+		/// </summary>
+		public void EscapeKeyHandler()
+		{
+			OnEscapeHandler ();
+		}
+
+		protected virtual void OnEscapeHandler ()
+		{
+			
 		}
 
 		/// <summary>

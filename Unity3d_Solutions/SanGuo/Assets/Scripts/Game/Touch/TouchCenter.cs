@@ -68,7 +68,7 @@ namespace Game
 			}
 
 			foreach (ITouchDispatcher dispather in _TouchDispatchers) {
-				if (hitInfo.collider == dispather.Target) {
+				if (dispather.Target.enabled == true && hitInfo.collider == dispather.Target) {
 					dispather.OnDispatchTouch (phase, position);
 				}
 			}

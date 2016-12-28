@@ -1,21 +1,14 @@
 ﻿using System;
 using Foundation.DataBase;
+using Game;
 
 namespace Logic
 {
 	/// <summary>
 	/// 服务器配置
 	/// </summary>
-	public class ServerConfig : IConfig
+	public class ServerConfig
 	{
-		/// <summary>
-		/// 是否已加载
-		/// </summary>
-		private bool _IsLoad;
-		/// <summary>
-		/// 配置是否有误
-		/// </summary>
-		private bool _IsError;
 		/// <summary>
 		/// 服务器地址
 		/// </summary>
@@ -24,53 +17,33 @@ namespace Logic
 		/// 服务器端口
 		/// </summary>
 		public int Port;
-
 		/// <summary>
-		/// 配置文件路径
+		/// socket 是否可用
 		/// </summary>
-		/// <value>The filepath.</value>
-		public string FilePath { get { return "DataBase/Config/Remote.xml"; } }
-
+		public bool IsSocketEnable;
 		/// <summary>
-		/// 是否已加载
+		/// 配置所在路径
 		/// </summary>
-		/// <value><c>true</c> if this instance is load; otherwise, <c>false</c>.</value>
-		public bool IsLoad { get { return _IsLoad; } }
-
-		/// <summary>
-		/// 配置是否有错误
-		/// </summary>
-		/// <value><c>true</c> if this instance is error; otherwise, <c>false</c>.</value>
-		public bool IsError { get { return _IsError; } }
-
-		public ServerConfig ()
-		{
-		
-		}
+		public const string ConfigPath = "DataBase/Config/Remote";
 
 		/// <summary>
 		/// 加载
 		/// </summary>
 		public bool Load ()
 		{
-			if (_IsLoad == true) {
-				return _IsError;
+			DataTable table = XmlHelp.LoadXml (ConfigPath);
+			if (table == null) {
+				return false;
 			}
-
-			_IsLoad = true;
-
-			string tableName = "ServerConfig";
-
-			DataTable table = new DataTable (tableName);
-			DataLoadStep loadStep = new DataLoadStep (tableName, FilePath, table);
-			loadStep.Load ();
 
 			IDataRecord record = table.At (0);
 			IPAddress = record.GetProperty ("IP");
-			Port = record.GetProperty<int> ("Port");
-			_IsError = false;
+			Port = int.Parse(record.GetProperty ("Port"));
 
-			return _IsError;
+			record = table.At (1);
+			IsSocketEnable = record.GetProperty ("enable") == "true";
+
+			return true;
 		}
 
 		/// <summary>
@@ -80,8 +53,7 @@ namespace Logic
 		{
 			IPAddress = "";
 			Port = 0;
-			_IsLoad = false;
-			_IsError = false;
+			IsSocketEnable = false;
 
 			return true;
 		}

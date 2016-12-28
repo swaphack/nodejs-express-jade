@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System;
 using Game;
 
-public class UILayerLogin : UILayer 
+public class UILayerLogin : Layer 
 {
 	/// <summary>
 	/// 登录按钮
@@ -39,23 +39,23 @@ public class UILayerLogin : UILayer
 	/// </summary>
 	protected override void InitPacket()
 	{
-		Net.RegisterPacket (PacketID.Login, OnReceivePacket_Login);
+		PacketDispatcher.RegisterPacket (PacketID.Login, OnReceivePacket_Login);
 	}
 
 	private void OnClick(Button sender)	
 	{
 		string name = _InputUserName.text;
 		
-		ReqPacketLogin packet = Net.GetRequestPacket<ReqPacketLogin>(PacketID.Login);
-		packet.Name = Net.GetByteText(name, 15);
-		packet.Password = Net.GetByteText("123", 20);
+		ReqPacketLogin packet = PacketDispatcher.GetRequestPacket<ReqPacketLogin>(PacketID.Login);
+		packet.Name = PacketDispatcher.GetByteText(name, 15);
+		packet.Password = PacketDispatcher.GetByteText("123", 20);
 
-		this.Net.Send (packet);
+		PacketDispatcher.Send (packet);
 	}
 
 	private void OnReceivePacket_Login(byte[] bytes)
 	{
-		ReqPacketLogin packet = Net.GetResponsePacket<ReqPacketLogin> (bytes);
+		ReqPacketLogin packet = PacketDispatcher.GetResponsePacket<ReqPacketLogin> (bytes);
 
 		Log.Write ("Player ID " + packet.Name.ToString());
 	}

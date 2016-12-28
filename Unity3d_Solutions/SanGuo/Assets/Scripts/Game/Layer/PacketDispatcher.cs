@@ -12,32 +12,35 @@ namespace Game
 	/// <summary>
 	/// UI网络部分
 	/// </summary>
-	public class UINet
+	public class PacketDispatcher
 	{
+		private PacketDispatcher()
+		{
+		}
 		/// <summary>
 		/// 注册报文解析
 		/// </summary>
 		/// <param name="packetID">报文编号</param>
 		/// <param name="handler">解析处理</param>
-		public void RegisterPacket (PacketID packetID, DispatchPacketHandler handler)
+		public static void RegisterPacket (PacketID packetID, DispatchPacketHandler handler)
 		{
-			GameInstance.GetInstance ().Net.Packet.AddDispatcher ((int)packetID, handler);
+			GameInstance.GetInstance ().Net.AddPacketDispatcher ((int)packetID, handler);
 		}
 
 		/// <summary>
 		/// 注销报文解析
 		/// </summary>
 		/// <param name="packetID">报文编号</param>
-		public void UnregisterPacketHandler (int packetID)
+		public static void UnregisterPacketHandler (int packetID)
 		{
-			GameInstance.GetInstance ().Net.Packet.RemoveDispatcher (packetID);
+			GameInstance.GetInstance ().Net.RemovePacketDispatcher (packetID);
 		}
 
 		/// <summary>
 		/// 发送报文消息
 		/// </summary>
 		/// <param name="header">报文消息</param>
-		public void Send (IPacket packet)
+		public static void Send (IPacket packet)
 		{
 			if (packet == null) {
 				return;
@@ -62,7 +65,7 @@ namespace Game
 		/// 发送消息
 		/// </summary>
 		/// <param name="msg">消息</param>
-		public void Send (string msg)
+		public static void Send (string msg)
 		{
 			if (msg == null || msg.Length == 0) {
 				return;
@@ -77,13 +80,13 @@ namespace Game
 		/// 发送消息
 		/// </summary>
 		/// <param name="data">消息</param>
-		public void Send (byte[] bytes)
+		public static void Send (byte[] bytes)
 		{
 			if (bytes == null || bytes.Length == 0) {
 				return;
 			}
 
-			GameInstance.GetInstance ().Net.Client.Send (bytes);
+			GameInstance.GetInstance ().Net.SendMessage (bytes);
 		}
 
 		/// <summary>
@@ -92,7 +95,7 @@ namespace Game
 		/// <returns>网络字节数组</returns>
 		/// <param name="value">字符串</param>
 		/// <param name="size">数组长度</param>
-		public byte[] GetByteText (string value, int size = 20)
+		public static byte[] GetByteText (string value, int size = 20)
 		{
 			return ConvertHelp.GetByteText (value, size);
 		}
@@ -103,7 +106,7 @@ namespace Game
 		/// <returns>网络字节数组</returns>
 		/// <param name="value">字符串</param>
 		/// <param name="size">数组长度</param>
-		public char[] GetCharText (string value, int size = 20)
+		public static char[] GetCharText (string value, int size = 20)
 		{
 			return ConvertHelp.GetCharText (value, size);
 		}
@@ -113,7 +116,7 @@ namespace Game
 		/// </summary>
 		/// <returns>字符串</returns>
 		/// <param name="bytes">字节数组</param>
-		public string GetStringText (byte[] bytes)
+		public static string GetStringText (byte[] bytes)
 		{
 			return ConvertHelp.GetStringText (bytes);
 		}
@@ -123,7 +126,7 @@ namespace Game
 		/// </summary>
 		/// <returns>字符串</returns>
 		/// <param name="bytes">字节数组</param>
-		public string GetStringText (char[] bytes)
+		public static string GetStringText (char[] bytes)
 		{
 			return new string (bytes);
 		}
@@ -134,7 +137,7 @@ namespace Game
 		/// <returns>The request packet.</returns>
 		/// <param name="packetID">Packet I.</param>
 		/// <typeparam name="T">The 1st type parameter.</typeparam>
-		public T GetRequestPacket<T> (PacketID packetID) where T : IPacket
+		public static T GetRequestPacket<T> (PacketID packetID) where T : IPacket
 		{
 			return Protocols.GetPacket<T> (packetID);
 		}
@@ -145,7 +148,7 @@ namespace Game
 		/// <returns>结构体</returns>
 		/// <param name="bytes">二进制数组</param>
 		/// <typeparam name="T">The 1st type parameter.</typeparam>
-		public T GetResponsePacket<T> (byte[] bytes)
+		public static T GetResponsePacket<T> (byte[] bytes)
 		{
 			return ConvertHelp.BytesToStruct<T> (bytes);
 		}

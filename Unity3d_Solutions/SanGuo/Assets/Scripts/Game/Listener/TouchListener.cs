@@ -30,10 +30,6 @@ namespace Game
 			}
 		}
 
-		public TouchListener ()
-		{
-		}
-
 		/// <summary>
 		/// 是否可点击
 		/// </summary>
@@ -70,6 +66,11 @@ namespace Game
 			} else if (state == TouchPhase.Ended) {
 				OnTouchEnded (vector);
 			}
+		}
+
+		void OnDestory()
+		{
+			IsTouchEnable = false;
 		}
 
 		/// <summary>
