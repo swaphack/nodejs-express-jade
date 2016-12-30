@@ -17,16 +17,16 @@ namespace Foundation.Net
 		/// 获取指定包
 		/// </summary>
 		/// <returns>The packet.</returns>
-		/// <param name="packetID">Packet I.</param>
 		/// <typeparam name="T">The 1st type parameter.</typeparam>
-		public static T GetPacket<T> (PacketID packetID) where T : IPacket
+		public static T GetPacket<T> () where T : IPacket
 		{
 			PacketHeader header;
-			header.PacketID = (int)packetID;
+			header.PacketID = 0;
 			header.Length = 0;
 
 			T t = default(T);
 			t.Header = header;
+			
 			return t;
 		}
 	}

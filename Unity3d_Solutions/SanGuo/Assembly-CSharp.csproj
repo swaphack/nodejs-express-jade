@@ -72,7 +72,7 @@
      <Compile Include="Assets\Scripts\Game\Action\Timer.cs" />
      <Compile Include="Assets\Scripts\Game\GameInstance.cs" />
      <Compile Include="Assets\Scripts\Game\Layer\Layer.cs" />
-     <Compile Include="Assets\Scripts\Game\Layer\PacketDispatcher.cs" />
+     <Compile Include="Assets\Scripts\Game\Layer\PacketHelp.cs" />
      <Compile Include="Assets\Scripts\Game\Listener\ActionListener.cs" />
      <Compile Include="Assets\Scripts\Game\Listener\CameraListener.cs" />
      <Compile Include="Assets\Scripts\Game\Listener\FaceCameraLisener.cs" />
@@ -84,6 +84,7 @@
      <Compile Include="Assets\Scripts\Game\Local\LanguagueType.cs" />
      <Compile Include="Assets\Scripts\Game\Local\Log.cs" />
      <Compile Include="Assets\Scripts\Game\Local\Message.cs" />
+     <Compile Include="Assets\Scripts\Game\Local\UserDefault.cs" />
      <Compile Include="Assets\Scripts\Game\Local\XmlHelp.cs" />
      <Compile Include="Assets\Scripts\Game\Notify\Notifition.cs" />
      <Compile Include="Assets\Scripts\Game\Notify\NotifyListener.cs" />

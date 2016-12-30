@@ -12,9 +12,9 @@ namespace Game
 	/// <summary>
 	/// UI网络部分
 	/// </summary>
-	public class PacketDispatcher
+	public class PacketHelp
 	{
-		private PacketDispatcher()
+		private PacketHelp()
 		{
 		}
 		/// <summary>
@@ -46,12 +46,13 @@ namespace Game
 				return;
 			}
 
-
+			/*
 			PacketHeader header;
 			header = packet.Header;
 			header.Length = Marshal.SizeOf (packet);
-			
 			packet.Header = header;
+			*/
+			packet.Init ();
 
 			byte[] bytes = ConvertHelp.StructToBytes (packet);
 			if (bytes == null || bytes.Length == 0) {
@@ -135,11 +136,11 @@ namespace Game
 		/// 获取发送包
 		/// </summary>
 		/// <returns>The request packet.</returns>
-		/// <param name="packetID">Packet I.</param>
 		/// <typeparam name="T">The 1st type parameter.</typeparam>
-		public static T GetRequestPacket<T> (PacketID packetID) where T : IPacket
+		public static T GetRequestPacket<T> () where T : IPacket
 		{
-			return Protocols.GetPacket<T> (packetID);
+			T t = Protocols.GetPacket<T> ();
+			return t;
 		}
 
 		/// <summary>

@@ -56,25 +56,23 @@ public class UIHomeLayer : Layer
 
 		_BtnFood.onClick.AddListener(delegate() {
 			_MainPlayer.Currency.Food += 1;
-			_LabelFood.text = _MainPlayer.Currency.Food.ToString();
+			//_LabelFood.text = _MainPlayer.Currency.Food.ToString();
 
-			/*
-			ReqPacketLogin packet = Net.GetRequestPacket<ReqPacketLogin>(PacketID.Login);
-			packet.Name = Net.GetByteText("1212", 15);
-			packet.Password = Net.GetByteText("123", 20);
+			ReqPacketLogin packet = PacketHelp.GetRequestPacket<ReqPacketLogin>();
+			packet.Name = PacketHelp.GetByteText("1212", 15);
+			packet.Password = PacketHelp.GetByteText("123", 20);
 
-			this.Net.Send (packet);
-			*/
+			PacketHelp.Send (packet);
 		});
 
 		_BtnWood.onClick.AddListener(delegate() {
 			_MainPlayer.Currency.Wood += 1;
-			_LabelWood.text = _MainPlayer.Currency.Wood.ToString();
+			//_LabelWood.text = _MainPlayer.Currency.Wood.ToString();
 		});
 
 		_BtnIron.onClick.AddListener(delegate() {
 			_MainPlayer.Currency.Iron += 1;
-			_LabelIron.text = _MainPlayer.Currency.Iron.ToString();
+			//_LabelIron.text = _MainPlayer.Currency.Iron.ToString();
 		});
 	}
 
@@ -99,14 +97,14 @@ public class UIHomeLayer : Layer
 	/// </summary>
 	protected override void InitPacket()
 	{
-		PacketDispatcher.RegisterPacket (PacketID.Login, OnReceivePacket_Login);
+		PacketHelp.RegisterPacket (PacketID.Login, OnReceivePacket_Login);
 	}
 
 	private void OnReceivePacket_Login(byte[] bytes)
 	{
-		ReqPacketLogin packet = PacketDispatcher.GetResponsePacket<ReqPacketLogin> (bytes);
+		ReqPacketLogin packet = PacketHelp.GetResponsePacket<ReqPacketLogin> (bytes);
 
-		Log.Write ("Player ID " + PacketDispatcher.GetStringText (packet.Name));
+		Log.Write ("Player ID " + PacketHelp.GetStringText (packet.Name));
 	}
 
 	/// <summary>

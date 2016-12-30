@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 
 /// <summary>
 /// 登录请求
+/// 100
 /// </summary>
 [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
 public struct ReqPacketLogin: IPacket
@@ -27,10 +28,17 @@ public struct ReqPacketLogin: IPacket
 	/// </summary>
 	[MarshalAs(UnmanagedType.ByValArray, SizeConst=20)]
 	public byte[] Password;
+
+	public void Init()
+	{
+		PacketHeader.PacketID = 100;
+		PacketHeader.Length = Marshal.SizeOf (this);
+	}
 }
 
 /// <summary>
 /// 返回玩家信息
+/// 101
 /// </summary>
 [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
 public struct RespPacketPlayerInfo: IPacket
@@ -55,4 +63,10 @@ public struct RespPacketPlayerInfo: IPacket
 	/// 玩家经验
 	/// </summary>
 	public int Experience;
+
+	public void Init()
+	{
+		PacketHeader.PacketID = 101;
+		PacketHeader.Length = Marshal.SizeOf (this);
+	}
 }

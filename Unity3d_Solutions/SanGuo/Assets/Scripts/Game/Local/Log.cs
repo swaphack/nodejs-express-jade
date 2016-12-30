@@ -11,9 +11,9 @@ namespace Game
 	{
 		/// <summary>
 		/// 文档名称
-		///  在WindowsPlayer模式下,是保存到本地文档中
+		/// 在WindowsPlayer模式下,是保存到本地文档中
 		/// </summary>
-		private static string _FilePath = "Logger.txt";
+		private const string _FilePath = "Logger.txt";
 		
 		private Log ()
 		{

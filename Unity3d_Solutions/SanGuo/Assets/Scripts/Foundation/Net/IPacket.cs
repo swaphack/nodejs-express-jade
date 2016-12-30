@@ -12,5 +12,9 @@ namespace Foundation.Net
 		/// </summary>
 		/// <value>报文头部</value>
 		PacketHeader Header { get ; set; }
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		void Init();
 	}
 }

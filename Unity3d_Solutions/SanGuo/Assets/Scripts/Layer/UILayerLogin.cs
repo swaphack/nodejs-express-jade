@@ -39,23 +39,23 @@ public class UILayerLogin : Layer
 	/// </summary>
 	protected override void InitPacket()
 	{
-		PacketDispatcher.RegisterPacket (PacketID.Login, OnReceivePacket_Login);
+		PacketHelp.RegisterPacket (PacketID.Login, OnReceivePacket_Login);
 	}
 
 	private void OnClick(Button sender)	
 	{
 		string name = _InputUserName.text;
 		
-		ReqPacketLogin packet = PacketDispatcher.GetRequestPacket<ReqPacketLogin>(PacketID.Login);
-		packet.Name = PacketDispatcher.GetByteText(name, 15);
-		packet.Password = PacketDispatcher.GetByteText("123", 20);
+		ReqPacketLogin packet = PacketHelp.GetRequestPacket<ReqPacketLogin>();
+		packet.Name = PacketHelp.GetByteText(name, 15);
+		packet.Password = PacketHelp.GetByteText("123", 20);
 
-		PacketDispatcher.Send (packet);
+		PacketHelp.Send (packet);
 	}
 
 	private void OnReceivePacket_Login(byte[] bytes)
 	{
-		ReqPacketLogin packet = PacketDispatcher.GetResponsePacket<ReqPacketLogin> (bytes);
+		ReqPacketLogin packet = PacketHelp.GetResponsePacket<ReqPacketLogin> (bytes);
 
 		Log.Write ("Player ID " + packet.Name.ToString());
 	}
