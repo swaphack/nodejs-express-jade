@@ -90,6 +90,9 @@ public class UIHomeLayer : Layer
 		_BtnFood.GetComponentInChildren<Text>().text = GetLocalText (2);
 		_BtnWood.GetComponentInChildren<Text>().text = GetLocalText (1);
 		_BtnIron.GetComponentInChildren<Text>().text = GetLocalText (3);
+
+		UserDefault.GetInstance ().Set ("Name", "LinGan");
+		UserDefault.GetInstance ().Set ("Password", "123456");
 	}
 
 	/// <summary>
@@ -104,7 +107,7 @@ public class UIHomeLayer : Layer
 	{
 		ReqPacketLogin packet = PacketHelp.GetResponsePacket<ReqPacketLogin> (bytes);
 
-		Log.Write ("Player ID " + PacketHelp.GetStringText (packet.Name));
+		Log.Info ("Player ID " + PacketHelp.GetStringText (packet.Name));
 	}
 
 	/// <summary>
@@ -112,7 +115,7 @@ public class UIHomeLayer : Layer
 	/// </summary>
 	protected override void OnEscapeHandler()
 	{
-		Log.Write ("Press Escape Key");
+		Log.Info ("Press Escape Key");
 	}
 }
 

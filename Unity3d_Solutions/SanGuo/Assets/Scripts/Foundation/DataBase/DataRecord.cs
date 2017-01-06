@@ -84,6 +84,25 @@ namespace Foundation.DataBase
 		{
 			_Members.Clear ();
 		}
+
+		/// <summary>
+		/// 关键字
+		/// </summary>
+		/// <value>The keys.</value>
+		public List<string> Keys { 
+			get {
+				return new List<string> (_Members.Keys);		
+			}
+		}
+		/// <summary>
+		/// 属性值
+		/// </summary>
+		/// <value>The values.</value>
+		public List<string> Values { 
+			get {
+				return new List<string> (_Members.Values);		
+			}
+		}
 	}
 }
 

@@ -96,6 +96,9 @@ namespace Game
 			OnEscapeHandler ();
 		}
 
+		/// <summary>
+		/// 返回键处理，需重写
+		/// </summary>
 		protected virtual void OnEscapeHandler ()
 		{
 			

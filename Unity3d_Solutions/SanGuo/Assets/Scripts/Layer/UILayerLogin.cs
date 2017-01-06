@@ -57,6 +57,6 @@ public class UILayerLogin : Layer
 	{
 		ReqPacketLogin packet = PacketHelp.GetResponsePacket<ReqPacketLogin> (bytes);
 
-		Log.Write ("Player ID " + packet.Name.ToString());
+		Log.Info ("Player ID " + packet.Name.ToString());
 	}
 }

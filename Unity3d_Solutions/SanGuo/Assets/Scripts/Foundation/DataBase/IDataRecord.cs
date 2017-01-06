@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Foundation.DataBase
 {
@@ -32,6 +33,16 @@ namespace Foundation.DataBase
 		/// 清空所有属性
 		/// </summary>
 		void ClearProperties();
+		/// <summary>
+		/// 关键字
+		/// </summary>
+		/// <value>The keys.</value>
+		List<string> Keys { get;}
+		/// <summary>
+		/// 属性值
+		/// </summary>
+		/// <value>The values.</value>
+		List<string> Values { get;}
 	}
 }
 

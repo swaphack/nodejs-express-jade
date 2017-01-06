@@ -18,9 +18,9 @@ namespace Game
 
 		void Update()
 		{
-			Transform transform = this.GetComponent<Transform> ();
+			//Transform transform = this.GetComponent<Transform> ();
 
-			Camera camera = Camera.main;
+			//Camera camera = Camera.main;
 
 
 		}

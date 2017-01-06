@@ -104,7 +104,7 @@ namespace Game
 				_FilePaths [(LanguagueType)id] = value;
 			}
 
-			Log.Write ("Load Message Config Succesful");
+			Log.Info ("Load Message Config Succesful");
 		}
 
 		/// <summary>
@@ -140,7 +140,7 @@ namespace Game
 				_Messages [key] = value;
 			}
 
-			Log.Write ("Load Message Language Succesful");
+			Log.Info ("Load Message Language Succesful");
 		}
 	}
 }

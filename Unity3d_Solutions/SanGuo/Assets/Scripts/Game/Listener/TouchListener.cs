@@ -41,9 +41,9 @@ namespace Game
 				}
 				_TouchEnabled = value;
 				if (_TouchEnabled == true) {
-					GameInstance.GetInstance ().Touch.AddDispatcher (this);
+					GameInstance.GetInstance ().Platform.AddTouchDispatcher (this);
 				} else {
-					GameInstance.GetInstance ().Touch.RemoveDispatcher (this);
+					GameInstance.GetInstance ().Platform.RemoveTouchDispatcher (this);
 				}
 
 			}

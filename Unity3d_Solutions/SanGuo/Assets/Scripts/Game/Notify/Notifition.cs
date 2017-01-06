@@ -11,7 +11,7 @@ namespace Game
 		/// <summary>
 		/// 推送监听器
 		/// </summary>
-		private Dictionary<T, NotifyListener> _NotifyListeners;
+		protected Dictionary<T, NotifyListener> _NotifyListeners;
 
 		public Notifition ()
 		{

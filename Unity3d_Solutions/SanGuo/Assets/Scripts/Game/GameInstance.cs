@@ -31,10 +31,7 @@ namespace Game
 		/// 网络是否可用
 		/// </summary>
 		private bool _IsNetEnable;
-		/// <summary>
-		/// The touch controller.
-		/// </summary>
-		private TouchCenter _TouchCenter;
+
 		/// <summary>
 		/// 文本
 		/// </summary>
@@ -66,11 +63,6 @@ namespace Game
 		/// </summary>
 		/// <value><c>true</c> if this instance is net enable; otherwise, <c>false</c>.</value>
 		public bool IsNetEnable { get { return _IsNetEnable; } set { _IsNetEnable = value;} }
-
-		/// <summary>
-		/// 点击派发中心
-		/// </summary>
-		public TouchCenter Touch { get { return _TouchCenter; } }
 		/// <summary>
 		/// 文本
 		/// </summary>
@@ -97,8 +89,7 @@ namespace Game
 
 			IsNetEnable = false;
 
-			// 触摸
-			_TouchCenter = new TouchCenter ();
+
 			// 语言文本
 			_Text = new Message ();
 			// 动作
@@ -125,8 +116,8 @@ namespace Game
 		/// <summary>
 		/// 初始化
 		/// </summary>
-		public void Start()
-		{	
+		void Start()
+		{
 			ServerConfig config = new ServerConfig ();
 			if (config.Load () == true) {
 				IsNetEnable = config.IsSocketEnable;
@@ -138,18 +129,19 @@ namespace Game
 
 			_Text.InitConfig ();
 			_Text.SetLanguage (LanguagueType.CHINA);
+
+			FilePathUtility.ShowPath ();
 		}
 
 		/// <summary>
 		/// 更新
 		/// </summary>
-		public void Update()
+		void Update()
 		{
 			if (IsNetEnable == true) {
 				_NetCenter.Update ();
 			}
 
-			_TouchCenter.Update ();
 			_Platform.Update ();
 			_Action.Update ( GetDeltaTime() );
 
@@ -179,11 +171,11 @@ namespace Game
 		{
 			if (state == ConnectState.Disconnected) 
 			{
-				Log.Write ("Disconnect Server");
+				Log.Info ("Disconnect Server");
 			} 
 			else
 			{
-				Log.Write ("Connect Server");
+				Log.Info ("Connect Server");
 			}
 		}
 
@@ -192,7 +184,7 @@ namespace Game
 		/// </summary>
 		private void FinalConnectHandler()
 		{
-			Log.Write ("Over Connect Server Count");
+			Log.Info ("Over Connect Server Count");
 		}
 	}
 }

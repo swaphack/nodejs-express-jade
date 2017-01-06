@@ -87,7 +87,7 @@ namespace Game
 			}
 		}
 
-		private void IncreateGameObjectRotation( Vector2 vector){
+		private void IncreateGameObjectRotation( Vector2 vector) {
 			_Target.Rotate (vector.y, vector.x, 0);
 		}
 	}

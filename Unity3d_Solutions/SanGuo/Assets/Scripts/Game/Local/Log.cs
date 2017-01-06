@@ -33,13 +33,72 @@ namespace Game
 		/// 写入消息
 		/// 在WindowsPlayer模式下,是保存到本地文档中
 		/// </summary>
-		/// <param name="obj">Object.</param>
-		public static void Write(string obj)
+		/// <param name="obj">string.</param>
+		public static void Info(string obj)
 		{
 			if (Application.platform == RuntimePlatform.WindowsPlayer) {
-				File.AppendAllText (_FilePath, obj + "\r\n");
+				File.AppendAllText (_FilePath, "[Info]" + obj + "\r\n");
 			} else {
 				Debug.Log (obj);
+			}
+		}
+
+		/// <summary>
+		/// 写入消息
+		/// 在WindowsPlayer模式下,是保存到本地文档中
+		/// </summary>
+		/// <param name="obj">string.</param>
+		public static void Warning(string obj)
+		{
+			if (Application.platform == RuntimePlatform.WindowsPlayer) {
+				File.AppendAllText (_FilePath, "[Warning]" + obj + "\r\n");
+			} else {
+				Debug.LogWarning (obj);
+			}
+		}
+
+		/// <summary>
+		/// 写入消息
+		/// 在WindowsPlayer模式下,是保存到本地文档中
+		/// </summary>
+		/// <param name="exception">Exception.</param>
+		public static void Exception(Exception exception)
+		{
+			if (Application.platform == RuntimePlatform.WindowsPlayer) {
+				File.AppendAllText (_FilePath, "[Exception]" + exception.ToString() + "\r\n");
+			} else {
+				Debug.LogException (exception);
+			}
+		}
+
+		/// <summary>
+		/// 写入消息
+		/// 在WindowsPlayer模式下,是保存到本地文档中
+		/// </summary>
+		/// <param name="condition">boolean.</param>
+		/// <param name="obj">string.</param>
+		public static void Assert(bool condition, string obj)
+		{
+			if (Application.platform == RuntimePlatform.WindowsPlayer) {
+				if (!condition) {
+					File.AppendAllText (_FilePath, "[Exception]" + obj + "\r\n");
+				}
+			} else {
+				Debug.Assert (condition, obj);
+			}
+		}
+
+		/// <summary>
+		/// 写入消息
+		/// 在WindowsPlayer模式下,是保存到本地文档中
+		/// </summary>
+		/// <param name="obj">string.</param>
+		public static void Error(string obj)
+		{
+			if (Application.platform == RuntimePlatform.WindowsPlayer) {
+				File.AppendAllText (_FilePath, "[Error]" + obj + "\r\n");
+			} else {
+				Debug.LogError (obj);
 			}
 		}
 	}

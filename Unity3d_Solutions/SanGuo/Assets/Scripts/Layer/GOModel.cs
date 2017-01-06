@@ -12,7 +12,7 @@ public class GOModel : TouchListener {
 
 		IsTouchEnable = true;
 
-		Log.Write ("Screen Size(" + Screen.width + "," + Screen.height + ")");
+		Log.Info ("Screen Size(" + Screen.width + "," + Screen.height + ")");
 
 		/*
 		this.transform.Translate (0, 1f, 0);

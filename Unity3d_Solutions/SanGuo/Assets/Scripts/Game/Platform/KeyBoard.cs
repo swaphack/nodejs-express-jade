@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game
@@ -10,6 +11,15 @@ namespace Game
 	{
 		public KeyBoard ()
 		{
+		}
+
+		public void Update()
+		{
+			foreach (KeyValuePair<KeyCode, NotifyListener> item in _NotifyListeners) {
+				if (Input.GetKeyDown (item.Key) == true) {
+					Notify(item.Key);
+				}
+			}
 		}
 	}
 }
