@@ -83,7 +83,7 @@ namespace Game
 		{
 			_FilePaths.Clear ();
 
-			DataTable table = XmlHelp.LoadXml (ConfigPath);
+			DataTable table = XmlHelp.LoadSimpleXml (ConfigPath);
 			if (table == null) {
 				return;
 			}
@@ -119,7 +119,7 @@ namespace Game
 			_Messages.Clear ();
 
 			string xmlUrl = _FilePaths [_LanguagueType];
-			DataTable table = XmlHelp.LoadXml (xmlUrl);
+			DataTable table = XmlHelp.LoadSimpleXml (xmlUrl);
 			if (table == null) {
 				return;
 			}

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using Foundation;
+using Foundation.Notify;
 
 namespace Foundation.Net
 {
@@ -23,13 +24,19 @@ namespace Foundation.Net
 		/// <summary>
 		/// 包派发处理
 		/// </summary>
-		private Dictionary<int, DispatchPacketHandler> _OnDispatchPacket;
+		private Notifition<int> _OnPacketNotifition;
+		/// <summary>
+		/// 推送处理关联表
+		/// </summary>
+		private Dictionary<DispatchPacketHandler, NotifyHandlerWithParameter> _NotifyHandlerSheet;
 
 		public PacketController ()
 		{
 			_Stream = new MemoryStream ();
 
-			_OnDispatchPacket = new Dictionary<int, DispatchPacketHandler> ();
+			_OnPacketNotifition = new Notifition<int> ();
+
+			_NotifyHandlerSheet = new Dictionary<DispatchPacketHandler, NotifyHandlerWithParameter> ();
 		}
 
 		~PacketController ()
@@ -49,8 +56,6 @@ namespace Foundation.Net
 			}
 
 			_Stream.Write (buffer, 0, size);
-
-			//FliterPacket ();
 		}
 
 		/// <summary>
@@ -63,18 +68,34 @@ namespace Foundation.Net
 			if (handler == null) {
 				return;
 			}
-			_OnDispatchPacket [packetID] = handler;
+
+			NotifyHandlerWithParameter notifyHandler = delegate (object parameter) {
+				handler ((byte[])parameter);
+			};
+
+			_OnPacketNotifition.AddListener (packetID, notifyHandler);
+
+			_NotifyHandlerSheet [handler] = notifyHandler;
 		}
 
 		/// <summary>
 		/// 移除报文派发处理
 		/// </summary>
 		/// <param name="packetID">报文编号</param>
-		public void RemoveDispatcher (int packetID)
+		/// <param name="handler">处理</param>
+		public void RemoveDispatcher (int packetID, DispatchPacketHandler handler)
 		{
-			if (_OnDispatchPacket.ContainsKey (packetID)) {
-				_OnDispatchPacket.Remove (packetID);
+			if (handler == null) {
+				return;
 			}
+
+			if (_NotifyHandlerSheet.ContainsKey (handler) == false) {
+				return;
+			}
+
+			NotifyHandlerWithParameter notifyHandler = _NotifyHandlerSheet [handler];
+
+			_OnPacketNotifition.RemoveListener (packetID, notifyHandler);
 		}
 
 		/// <summary>
@@ -84,11 +105,7 @@ namespace Foundation.Net
 		/// <param name="bytes">报文内容</param>
 		public void DispatchPacket (int packetID, byte[] bytes)
 		{
-			if (_OnDispatchPacket.ContainsKey (packetID) == false) {
-				return;
-			}
-
-			_OnDispatchPacket [packetID] (bytes);
+			_OnPacketNotifition.Notify (packetID, bytes);
 		}
 
 		/// <summary>
@@ -112,8 +129,14 @@ namespace Foundation.Net
 			byte[] bytes = new byte[length];
 			Array.Copy (buffer, bytes, length);
 
-			_Stream.Flush ();
-			_Stream.Write (buffer, length, buffer.Length - length);
+			_Stream.Seek (0, SeekOrigin.Begin);
+			_Stream.SetLength (0);
+			if (buffer.Length - length > 0) {
+				_Stream.Write (buffer, length, buffer.Length - length);
+			}
+
+			// _Stream = new MemoryStream ();
+			// _Stream.Write (buffer, length, buffer.Length - length);
 	
 			DispatchPacket (packetID, bytes);
 		}

@@ -26,7 +26,7 @@ namespace Game
 		void Start ()
 		{
 			InitUI ();
-			InitPacket ();
+			InitPacketListeners ();
 		}
 
 		/// <summary>
@@ -38,6 +38,14 @@ namespace Game
 				InitText ();
 				_IsInitText = true;
 			}
+		}
+
+		/// <summary>
+		/// 销毁处理
+		/// </summary>
+		void OnDestory()
+		{
+			DisponsePacketListeners ();
 		}
 
 		/// <summary>
@@ -66,7 +74,15 @@ namespace Game
 		/// <summary>
 		/// 初始化报文监听
 		/// </summary>
-		protected virtual void InitPacket ()
+		protected virtual void InitPacketListeners ()
+		{
+
+		}
+
+		/// <summary>
+		/// 移除报文监听
+		/// </summary>
+		protected virtual void DisponsePacketListeners ()
 		{
 
 		}

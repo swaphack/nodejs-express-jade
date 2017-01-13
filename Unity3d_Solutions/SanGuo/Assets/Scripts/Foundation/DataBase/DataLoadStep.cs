@@ -87,15 +87,15 @@ namespace Foundation.DataBase
 			}
 
 			string data = _DataLoadHandler (_ConfigPath);
-			if (data == null) {
+			if (string.IsNullOrEmpty(data) == true) {
 				return false;
 			}
 
 			_IsLoaded = true;
 
-			XmlDocument documnet = new XmlDocument ();
-			documnet.LoadXml (data);
-			XmlNode root = documnet.FirstChild;
+			XmlDocument document = new XmlDocument ();
+			document.LoadXml (data);
+			XmlNode root = document.FirstChild;
 			if (root == null) {
 				return false;		
 			}

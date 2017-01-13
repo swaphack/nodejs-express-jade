@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<Root>
+<root>
 	<Item Name="伐木场" ID="1" Level="1" Wood="100" Food="100" Worker="10" Mineral="10" Time="10" />
 
 	<Item Name="采矿场" ID="2" Level="1" Wood="100" Food="100" Worker="100" Mineral="100" Time="10" />
@@ -13,7 +13,7 @@
 	<Item Name="主城" ID="6" Level="1" Wood="1000" Food="1000" Worker="1000" Mineral="1000" Time="60" />
 
 	<Item Name="民房" ID="7" Level="1" Wood="100" Food="100" Worker="100" Mineral="100" Time="10" />
-<Root>
+<root>
 
 <!--
 	建筑升级

@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Foundation.Notify;
 
 namespace Game
 {
@@ -28,22 +29,58 @@ namespace Game
 		/// 添加返回键点击处理
 		/// </summary>
 		/// <param name="handler">Handler.</param>
-		public void AddEscKeyHandler(NotifyHandler handler) {
+		public void AddEscKeyHandler(NotifyHandler handler) 
+		{
 			if (handler == null) {
 				return;
 			}
-			_KeyBoard.AddListener (KeyCode.Escape, handler);
+			AddKeyHandler (KeyCode.Escape, KeyPhase.Began, handler);
 		}
 
 		/// <summary>
 		/// 移除返回键点击处理
 		/// </summary>
 		/// <param name="handler">Handler.</param>
-		public void RemoveEscKeyHandler(NotifyHandler handler) {
+		public void RemoveEscKeyHandler(NotifyHandler handler) 
+		{
 			if (handler == null) {
 				return;
 			}
-			_KeyBoard.RemoveListener (KeyCode.Escape, handler);
+			RemoveKeyHandler (KeyCode.Escape, KeyPhase.Began, handler);
+		}
+
+		/// <summary>
+		/// 添加按键点击处理
+		/// </summary>
+		/// <param name="code">Code.</param>
+		/// <param name="phase">KeyPhase.</param>
+		/// <param name="handler">Handler.</param>
+		public void AddKeyHandler(KeyCode code, KeyPhase phase, NotifyHandler handler) 
+		{
+			if (handler == null) {
+				return;
+			}
+			KeyPress keyPress;
+			keyPress.Key = code;
+			keyPress.Status = phase;
+			_KeyBoard.AddListener ( keyPress, handler);
+		}
+
+		/// <summary>
+		/// 移除按键点击处理
+		/// </summary>
+		/// <param name="code">Code.</param>
+		/// <param name="phase">KeyPhase.</param>
+		/// <param name="handler">Handler.</param>
+		public void RemoveKeyHandler(KeyCode code, KeyPhase phase, NotifyHandler handler) 
+		{
+			if (handler == null) {
+				return;
+			}
+			KeyPress keyPress = new KeyPress ();
+			keyPress.Key = code;
+			keyPress.Status = phase;
+			_KeyBoard.RemoveListener (keyPress, handler);
 		}
 
 		/// <summary>
@@ -51,23 +88,13 @@ namespace Game
 		/// </summary>
 		/// <param name="code">Code.</param>
 		/// <param name="handler">Handler.</param>
-		public void AddKeyHandler(KeyCode code,NotifyHandler handler) {
+		public void AddKeyDownHandler(KeyCode code, NotifyHandler handler) 
+		{
 			if (handler == null) {
 				return;
 			}
-			_KeyBoard.AddListener (KeyCode.Escape, handler);
-		}
-
-		/// <summary>
-		/// 移除按键点击处理
-		/// </summary>
-		/// <param name="code">Code.</param>
-		/// <param name="handler">Handler.</param>
-		public void RemoveKeyHandler(KeyCode code, NotifyHandler handler) {
-			if (handler == null) {
-				return;
-			}
-			_KeyBoard.RemoveListener (code, handler);
+			AddKeyHandler (code, KeyPhase.Began, handler);
+			AddKeyHandler (code, KeyPhase.Keeped, handler);
 		}
 
 		/// <summary>

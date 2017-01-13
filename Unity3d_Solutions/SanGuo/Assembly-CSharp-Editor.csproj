@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Editor\Resolution.cs" />
+     <None Include="Assets\Resources\DataBase\Map\Trace.xml" />
      <None Include="Assets\Resources\DataBase\Data\ResourceType.xml" />
      <None Include="Assets\Resources\DataBase\Config\Remote.xml" />
      <None Include="Assets\Resources\DataBase\Data\BuildProperty.xml" />

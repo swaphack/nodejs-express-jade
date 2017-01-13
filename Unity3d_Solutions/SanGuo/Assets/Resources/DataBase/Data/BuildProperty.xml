@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<Root>
+<root>
 	<Item Name="伐木场" ID="1" NameID="101" Level="1" Resource="1" Increase="10" Reserve="1000" Worker="10" Time="60" />
 	<Item Name="采矿场" ID="2" NameID="102" Level="1" Resource="3" Increase="10" Reserve="1000" Worker="10" Time="60" />
 	<Item Name="粮田" ID="3" NameID="103" Level="1" Resource="2" Increase="10" Reserve="1000" Worker="10" Time="60" />
@@ -7,7 +7,7 @@
 	<Item Name="仓库" ID="5" NameID="105" Level="1" Reserve="10000" Worker="10"/>
 	<Item Name="主城" ID="6" NameID="106" Level="1" Resource="4" Increase="10" Reserve="1000" Worker="0" Time="3600"/>
 	<Item Name="民房" ID="7" NameID="107" Level="1" Resource="4" Increase="2" Reserve="4" Worker="0" Time="3600"/>
-</Root>
+</root>
 
 
 <!-- 

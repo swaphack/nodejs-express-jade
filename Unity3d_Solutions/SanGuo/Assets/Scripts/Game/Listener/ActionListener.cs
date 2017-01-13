@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Game
+namespace Game.Listener
 {
 	/// <summary>
 	/// 控制GameObject，实现类似UI功能的控件
@@ -13,32 +13,17 @@ namespace Game
 		/// </summary>
 		private ActionStatus _ActionStatus;
 		/// <summary>
-		/// 目标
-		/// </summary>
-		private GameObject _Target = null;
-		/// <summary>
 		/// 动作
 		/// </summary>
 		private SpawnActions _Actions;
 
 		void Start() {
-			_Target = this.GetComponet<GameObject>();
 			_Actions = new SpawnActions ();
 			_ActionStatus = ActionStatus.Pause;	
 		}
 
 		void Update() {
 			
-		}
-
-		/// <summary>
-		/// 获取组件
-		/// </summary>
-		/// <returns>The componet.</returns>
-		/// <typeparam name="T">The 1st type parameter.</typeparam>
-		public T GetComponet<T> ()
-		{
-			return _Target.GetComponent<T> ();
 		}
 
 		/// <summary>

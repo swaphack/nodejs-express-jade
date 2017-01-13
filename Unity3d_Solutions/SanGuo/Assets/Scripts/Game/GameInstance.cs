@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using Foundation.Net;
-using Logic;
+using Control;
 
 namespace Game
 {
@@ -87,8 +87,7 @@ namespace Game
 			_NetCenter.FinalConnectHandler = FinalConnectHandler;
 			_NetCenter.AddConnectStateListener (OnConnectState);
 
-			IsNetEnable = false;
-
+			IsNetEnable = true;
 
 			// 语言文本
 			_Text = new Message ();
@@ -121,16 +120,14 @@ namespace Game
 			ServerConfig config = new ServerConfig ();
 			if (config.Load () == true) {
 				IsNetEnable = config.IsSocketEnable;
-				if (IsNetEnable) {
-					_NetCenter.Init (config.IPAddress, config.Port);		
-				} else {
-				}
+				if (IsNetEnable)
+					_NetCenter.Init (config.IPAddress, config.Port);
 			}
 
 			_Text.InitConfig ();
 			_Text.SetLanguage (LanguagueType.CHINA);
 
-			FilePathUtility.ShowPath ();
+			FilePathHelp.ShowPath ();
 		}
 
 		/// <summary>

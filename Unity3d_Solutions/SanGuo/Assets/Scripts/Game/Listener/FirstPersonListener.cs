@@ -1,10 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Game
+namespace Game.Listener
 {
 	/// <summary>
 	/// 第一人称
+	/// 挂在物体上
 	/// </summary>
 	public class FirstPersonListener : MonoBehaviour
 	{
@@ -14,8 +15,6 @@ namespace Game
 
 		void Start()
 		{
-			Transform transform = this.GetComponent<Transform> ();
-
 			Camera mainCamera = Camera.main;
 			mainCamera.transform.SetParent(null);
 			mainCamera.transform.SetParent (transform);
@@ -24,7 +23,6 @@ namespace Game
 
 		void Update()
 		{
-			
 		}
 	}
 }

@@ -1,10 +1,12 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Game
+namespace Game.Listener
 {
 	/// <summary>
 	/// 点击监听
+	/// 物体须有碰撞器组件
+	/// 挂在物体上
 	/// </summary>
 	public abstract class TouchListener :  MonoBehaviour, ITouchDispatcher
 	{

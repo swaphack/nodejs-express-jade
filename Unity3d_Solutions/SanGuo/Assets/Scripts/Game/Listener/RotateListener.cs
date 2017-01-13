@@ -1,17 +1,29 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Game
+namespace Game.Listener
 {
 	/// <summary>
+	/// 鼠标键
+	/// </summary>
+	public enum MouseKey
+	{
+		/// <summary>
+		/// 鼠标左键
+		/// </summary>
+		Left = 0,
+		/// <summary>
+		/// 鼠标右键
+		/// </summary>
+		Right = 1,
+	}
+	/// <summary>
 	/// 旋转监听
+	/// 
+	/// 挂在物体上
 	/// </summary>
 	public class RotateListener : MonoBehaviour
 	{
-		/// <summary>
-		/// 控制对象
-		/// </summary>
-		private Transform _Target;
 		/// <summary>
 		/// 鼠标右键是否点击
 		/// </summary>
@@ -22,20 +34,15 @@ namespace Game
 		private Vector2 _LastTouchPosition;
 
 		void Start() {
-			_Target = this.GetComponent<Transform> ();
 			_LastTouchPosition = new Vector3 (-1, -1);
 		}
 
 		void Update() {
-			if (_Target == null) {
-				return;
-			}
-
 			CheckGameObjectRotate ();
 		}
 
 		/// <summary>
-		/// 检查摄像头位置
+		/// 检查物体位置
 		/// </summary>
 		internal void CheckGameObjectRotate() {
 			Vector2 rotation = new Vector2();
@@ -57,9 +64,9 @@ namespace Game
 				}
 			} else if(Input.mousePresent == true) {
 				// 右键点击
-				if (Input.GetMouseButtonDown (1)) {
+				if (Input.GetMouseButtonDown ((int)MouseKey.Right)) {
 					_RightMouseDown = true;
-				} else if (Input.GetMouseButtonUp (1)) {
+				} else if (Input.GetMouseButtonUp ((int)MouseKey.Right)) {
 					_RightMouseDown = false;
 				}
 
@@ -88,7 +95,7 @@ namespace Game
 		}
 
 		private void IncreateGameObjectRotation( Vector2 vector) {
-			_Target.Rotate (vector.y, vector.x, 0);
+			transform.Rotate (vector.y, vector.x, 0);
 		}
 	}
 }

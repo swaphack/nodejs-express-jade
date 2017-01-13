@@ -127,12 +127,13 @@ namespace Foundation.Net
 		}
 
 		/// <summary>
-		/// 添加报文派发处理
+		/// 移除报文派发处理
 		/// </summary>
 		/// <param name="packetID">Packet I.</param>
-		public void RemovePacketDispatcher(int packetID)
+		/// <param name="handler">Handler.</param>
+		public void RemovePacketDispatcher(int packetID, DispatchPacketHandler handler)
 		{
-			_PacketController.RemoveDispatcher (packetID);
+			_PacketController.RemoveDispatcher (packetID, handler);
 		}
 
 		/// <summary>

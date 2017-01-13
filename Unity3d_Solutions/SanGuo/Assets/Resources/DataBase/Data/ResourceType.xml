@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<Root>
+<root>
 	<Item Name="木材" ID="1" NameID="1" />
 	<Item Name="食物" ID="2" NameID="2" />
 	<Item Name="矿物" ID="3" NameID="3" />
 	<Item Name="人口" ID="4" NameID="4" />
-</Root>
+</root>
 
 <!--
 	资源类型

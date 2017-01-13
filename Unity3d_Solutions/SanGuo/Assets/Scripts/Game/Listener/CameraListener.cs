@@ -1,22 +1,23 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Game
+namespace Game.Listener
 {
 	/// <summary>
 	/// 摄像头控制
+	/// 挂在摄像机上
 	/// </summary>
 	public class CameraListener : MonoBehaviour
 	{
 		/// <summary>
 		/// 滑轮转化视角系数
 		/// </summary>
-		public static float SrollExchangeViewFieldRate = 0.5f;
+		public float SrollExchangeViewFieldRate = 0.5f;
 
 		/// <summary>
 		/// 触屏转化视角系数
 		/// </summary>
-		public static float TouchExchangeViewFieldRate = 0.1f;
+		public float TouchExchangeViewFieldRate = 0.1f;
 
 		/// <summary>
 		/// 是否可用
@@ -27,8 +28,6 @@ namespace Game
 		/// 保留最近一次两只手指在屏幕的距离
 		/// </summary>
 		private float _LastTowTouchDistance = -1;
-
-
 
 		void Start() {
 			Camera camera = this.GetComponent<Camera> ();
