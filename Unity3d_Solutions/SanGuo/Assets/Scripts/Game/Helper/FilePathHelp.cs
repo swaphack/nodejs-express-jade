@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -36,6 +38,15 @@ namespace Game
 		}
 
 		/// <summary>
+		/// wwww 标记
+		/// </summary>
+#if UNITY_ANDROID
+		public const string WWWMark = "";
+#else
+		public const string WWWMark = "file://";
+#endif
+
+		/// <summary>
 		/// 显示默认路径
 		/// </summary>
 		public static void ShowPath()
@@ -47,16 +58,17 @@ namespace Game
 		}
 
 		/// <summary>
-		/// 可读写路径
+		/// 外部可读写路径
 		/// </summary>
 		/// <returns>The file path.</returns>
 		/// <param name="filename">Filename.</param>
 		public static string GetWritableFilePath(string filename)
 		{
-			string path = "";
+			string path = Application.persistentDataPath + "/" + filename;
 
-			path = Application.persistentDataPath + "/" + filename;
-
+#if UNITY_IPHONE
+			iPhone.SetNoBackupFlag(filepath);
+#endif
 			return path;
 		}
 
@@ -75,163 +87,115 @@ namespace Game
 		}
 
 		/// <summary>
-		/// 游戏数据存储路径
-		/// </summary>
-		/// <returns>The file path.</returns>
-		/// <param name="filename">Filename.</param>
-		public static string GetDataFilePath(string filename)
-		{
-			string path = "";
-
-			path = Application.dataPath + "/" + filename;
-
-			return path;
-		}
-
-		/// <summary>
 		/// 流资源路径
 		/// </summary>
 		/// <returns>The streaming file path.</returns>
 		/// <param name="filename">Filename.</param>
 		public static string GetStreamingFilePath (string filename)
 		{
-			string path = "";
+			string filepath = Application.streamingAssetsPath + "/" + filename;
 
-
-			if (Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXPlayer ||
-			     Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer)
-				path = Application.dataPath + "/StreamingAssets/" + filename;
-			else if (Application.platform == RuntimePlatform.IPhonePlayer)
-				path = Application.dataPath + "/Raw/" + filename;
-			else if (Application.platform == RuntimePlatform.Android)
-				path = "jar:file://" + Application.dataPath + "!/assets/" + filename;
-			else
-				path = Application.dataPath + "/config/" + filename;
-
-
-			return path;
-		}
-
-
-		/// <summary>
-		/// 持久性数据路径
-		/// </summary>
-		/// <returns>The persistent file path.</returns>
-		/// <param name="filename">Filename.</param>
-		public static string GetPersistentFilePath (string filename)
-		{
-			string filepath;
-
-			if (Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXPlayer ||
-			     Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer)
-				filepath = Application.dataPath + "/StreamingAssets/" + filename;
-			else if (Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.Android)
-				filepath = Application.persistentDataPath + "/" + filename;
-			else {
-				filepath = Application.persistentDataPath + "/" + filename;
-			}
-#if UNITY_IPHONE
-    		iPhone.SetNoBackupFlag(filepath);
-#endif
 			return filepath;
 		}
-			
+
 		/// <summary>
-		/// 获取资源完整路径
+		/// 递归创建文件夹
 		/// </summary>
-		/// <returns>The full path.</returns>
-		/// <param name="filename">文件名</param>
-		public static string GetFullPath (string filename)
+		/// <returns>The directory recursive.</returns>
+		/// <param name="relativePath">Relative path.</param>
+		public static string CreateDirectoryRecursive(string relativePath)
 		{
-			string path = GetDataFilePath (filename);
-			if (File.Exists (path)) {
-				return path;
+			string path = relativePath.Replace ('\\', '/');
+			string[] list = path.Split('/');
+			string temp = "";
+			for (int i=0;i<list.Length-1;i++)
+			{
+				string dir = list[i];
+				if (string.IsNullOrEmpty(dir))
+				{
+					continue;
+				}
+				temp += "/" + dir;
+				if (!Directory.Exists(temp))
+				{
+					Directory.CreateDirectory(temp);
+				}
 			}
 
-			path = GetStreamingFilePath (filename);
-			if (File.Exists (path)) {
-				return path;
-			}
-
-			path = GetPersistentFilePath (filename);
-			if (File.Exists (path)) {
-				return path;
-			}
-
-			return "";
+			return temp;
 		}
 
+
 		/// <summary>
-		/// 获取文本文件数据
-		/// 先从内部获取，找不到的话，再读取外部
+		/// 获取指定目录下的所有文件路径
 		/// </summary>
-		/// <returns>The file text data.</returns>
-		/// <param name="filepath">文件路径</param>
+		/// <returns><c>true</c>, if file paths was gotten, <c>false</c> otherwise.</returns>
+		/// <param name="dir">Dir.</param>
+		/// <param name="filepathList">Filepath list.</param>
+		public static void getFilePaths(string dir, List<string> filepathList)
+		{
+			if (string.IsNullOrEmpty (dir) || filepathList == null) {
+				return;
+			}
+
+			if (!Directory.Exists (dir)) {
+				return;
+			}
+
+			string[] filepaths = Directory.GetFiles (dir);			
+			string[] dirpaths = Directory.GetDirectories (dir);
+
+			foreach (string filename in filepaths) {
+				filepathList.Add (dir + "/" + filename);
+			}
+
+			foreach (string dirname in dirpaths) {
+				getFilePaths (dirname, filepathList);
+			}
+		}
+
+
+		/// <summary>
+		/// 获取指定目录下的所有文件路径
+		/// 文件格式
+		/// *.prefab 或 (*.prefab|*.txt)
+		/// </summary>
+		/// <returns><c>true</c>, if file paths was gotten, <c>false</c> otherwise.</returns>
+		/// <param name="dir">Dir.</param>
+		/// <param name="filePathList">Filepath list.</param>
+		/// <param name="baseDir">路径名称要排除的根目录</param>
 		/// <param name="format">文本格式</param>
-		public static string GetTextFileData(string filepath, string format)
+		public static void getFilePathsWithoutBase(string dir, List<string> filePathList, string baseDir, string format)
 		{
-			if (string.IsNullOrEmpty (filepath) == true) {
-				return null;
+			if (string.IsNullOrEmpty (baseDir) || string.IsNullOrEmpty (dir) || filePathList == null) {
+				return;
 			}
 
-			TextAsset asset = Resources.Load<TextAsset> (filepath);
-			if (asset != null) {
-				return asset.text;
+			if (!dir.Contains (baseDir)) {
+				return;
 			}
 
-			if (string.IsNullOrEmpty (format) == false) {
-				filepath = filepath + "." + format;
+			if (!Directory.Exists (dir) || !Directory.Exists (baseDir)) {
+				return;
 			}
 
-			string fullpath = GetWritableFilePath (filepath);
-			if (string.IsNullOrEmpty (fullpath) == true || File.Exists(fullpath) == false) {
-				return null;
+			string[] filePaths;
+			if (string.IsNullOrEmpty (format)) {
+				filePaths = Directory.GetFiles (dir);	
+			} else {
+				filePaths = Directory.GetFiles (dir, format);	
+			}		
+			string[] dirPaths = Directory.GetDirectories (dir);
+
+			foreach (string filename in filePaths) {
+				string realdir = filename.Substring (baseDir.Length);
+				realdir.Replace('\\', '/');
+				filePathList.Add (realdir);
 			}
 
-			Log.Info ("Read Text File Data From Outter : " + fullpath);
-
-			return File.ReadAllText (fullpath);
-		}
-
-		/// <summary>
-		/// 获取字节文件数据
-		/// 先从内部获取，找不到的话，再读取外部
-		/// </summary>
-		/// <returns>The bytes file data.</returns>
-		/// <param name="filepath">文件路径</param>
-		/// <param name="format">文本格式</param>
-		public static byte[] GetBytesFileData(string filepath, string format)
-		{
-			if (string.IsNullOrEmpty (filepath) == true) {
-				return null;
+			foreach (string dirpath in dirPaths) {
+				getFilePathsWithoutBase (dirpath, filePathList, baseDir, format);
 			}
-
-			TextAsset asset = Resources.Load<TextAsset> (filepath);
-			if (asset != null) {
-				return asset.bytes;
-			}
-
-			if (string.IsNullOrEmpty (format) == false) {
-				filepath = filepath + "." + format;
-			}
-			string fullpath = GetWritableFilePath (filepath);
-			if (string.IsNullOrEmpty (fullpath) == true || File.Exists(fullpath) == false) {
-				return null;
-			}
-
-			Log.Info ("Read Byte File Data From Outter : " + fullpath);
-
-			return File.ReadAllBytes (fullpath);
-		}
-
-		/// <summary>
-		/// 获取xml文本数据
-		/// </summary>
-		/// <returns>The xml file data.</returns>
-		/// <param name="filepath">Filepath.</param>
-		public static string GetXmlFileData(string filepath)
-		{
-			return GetTextFileData (filepath, "xml");
 		}
 	}
 }

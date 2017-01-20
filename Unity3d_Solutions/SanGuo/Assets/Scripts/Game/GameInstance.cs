@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using Foundation.Net;
 using Control;
@@ -168,11 +169,11 @@ namespace Game
 		{
 			if (state == ConnectState.Disconnected) 
 			{
-				Log.Info ("Disconnect Server");
+				//Log.Info ("Disconnect Server");
 			} 
 			else
 			{
-				Log.Info ("Connect Server");
+				//Log.Info ("Connect Server");
 			}
 		}
 
@@ -181,7 +182,7 @@ namespace Game
 		/// </summary>
 		private void FinalConnectHandler()
 		{
-			Log.Info ("Over Connect Server Count");
+			//Log.Info ("Over Connect Server Count");
 		}
 	}
 }

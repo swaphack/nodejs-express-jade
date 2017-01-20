@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Game;
 using Game.Listener;
 
-public class GOModel : TouchListener {
+public class GOModel : MonoBehaviour, TouchListener {
 	// Use this for initialization
 	void Start () {
 		Target = this.GetComponent<Collider>();

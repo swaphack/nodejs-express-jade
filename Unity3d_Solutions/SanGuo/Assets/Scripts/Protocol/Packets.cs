@@ -4,7 +4,7 @@ using Foundation.Net;
 using System.Runtime.InteropServices;
 
 /// <summary>
-/// 登录请求
+/// 错误操作返回包
 /// 0
 /// </summary>
 [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]

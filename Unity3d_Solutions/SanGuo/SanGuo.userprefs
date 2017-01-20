@@ -1,25 +1,13 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Foundation\Net\PacketController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Game\Platform\TouchListener.cs">
     <Files>
-      <File FileName="Assets\Scripts\Foundation\Net\PacketController.cs" Line="121" Column="4" />
-      <File FileName="Assets\Scripts\Foundation\Net\NetCenter.cs" Line="51" Column="21" />
-      <File FileName="Assets\Scripts\Foundation\Net\Client.cs" Line="136" Column="5" />
-      <File FileName="Assets\Scripts\Foundation\Notify\Notifition.cs" Line="123" Column="1" />
-      <File FileName="Assets\Scripts\View\Layer\UIHomeLayer.cs" Line="125" Column="15" NotebookId="1" />
-      <File FileName="Assets\Scripts\Game\GameInstance.cs" Line="26" Column="16" NotebookId="1" />
-      <File FileName="Assets\Scripts\Game\Helper\PacketHelp.cs" Line="83" Column="17" NotebookId="1" />
-      <File FileName="Assets\Scripts\Control\Config\ServerConfig.cs" Line="24" Column="3" NotebookId="1" />
+      <File FileName="Assets\Scripts\View\Layer\GOModel.cs" Line="13" Column="24" />
+      <File FileName="Assets\Scripts\Game\Platform\TouchListener.cs" Line="75" Column="26" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Game\Local\UserDefault.cs" line="130" column="1" />
-      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Game\Local\UserDefault.cs" line="134" column="1" />
-      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\View\Layer\UIHomeLayer.cs" line="115" column="80" />
-      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\View\Layer\UIHomeLayer.cs" line="109" column="1" />
-      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Foundation\Net\PacketController.cs" line="98" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

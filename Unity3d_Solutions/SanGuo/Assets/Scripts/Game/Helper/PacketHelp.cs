@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 namespace Game
 {
 	/// <summary>
-	/// UI网络部分
+	/// 报文工具
 	/// </summary>
 	public class PacketHelp
 	{

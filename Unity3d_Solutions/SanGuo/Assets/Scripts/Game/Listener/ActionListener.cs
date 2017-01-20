@@ -23,7 +23,6 @@ namespace Game.Listener
 		}
 
 		void Update() {
-			
 		}
 
 		/// <summary>

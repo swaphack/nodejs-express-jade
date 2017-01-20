@@ -8,7 +8,7 @@ namespace Game.Listener
 	/// 物体须有碰撞器组件
 	/// 挂在物体上
 	/// </summary>
-	public abstract class TouchListener :  MonoBehaviour, ITouchDispatcher
+	public abstract class TouchListener : ITouchDispatcher
 	{
 		/// <summary>
 		/// 是否可点击

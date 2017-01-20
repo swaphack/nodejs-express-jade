@@ -1,0 +1,4 @@
+该目录的资源,用于导出成AssetBundle
+
+说明
+Prefabs 原型资源

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root Des="赛道配置数据">
+	<Prefabs Path="prefabs" Des="原型">
+		<Item ID="1" Path="Prefabs/Map/Pillar.prefab" Des="柱子"/>
+		<Item ID="2" Path="Prefabs/Role/Player.prefab" Des="角色"/>
+	</Prefabs>
+	<Elements Des="元素">
+		<Item Name="Element1" PrefabID="1" Position="1,1,1"/>
+		<Item Name="Element2" PrefabID="1" Position="1,1,2"/>
+		<Item Name="Element3" PrefabID="1" Position="1,1,3"/>
+		<Item Name="Element4" PrefabID="1" Position="1,1,4"/>
+		<Item Name="Element5" PrefabID="1" Position="1,1,5"/>
+		<Item Name="Element6" PrefabID="1" Position="1,1,6"/>
+		<Item Name="Element7" PrefabID="1" Position="1,1,7"/>
+		<Item Name="Element8" PrefabID="1" Position="1,1,8"/>
+		<Item Name="Element9" PrefabID="1" Position="1,1,9"/>
+		<Item Name="Element10" PrefabID="1" Position="1,1,10"/>
+		<Item Name="Element11" PrefabID="1" Position="1,1,11"/>
+		<Item Name="Element12" PrefabID="1" Position="1,1,12"/>
+		<Item Name="Element13" PrefabID="1" Position="1,1,13"/>
+		<Item Name="Element14" PrefabID="1" Position="1,1,14"/>
+		<Item Name="Element15" PrefabID="1" Position="1,1,15"/>
+		<Item Name="Element16" PrefabID="1" Position="1,1,16"/>
+		<Item Name="Element17" PrefabID="1" Position="1,1,17"/>
+		<Item Name="Element18" PrefabID="1" Position="1,1,18"/>
+		<Item Name="Element19" PrefabID="1" Position="1,1,19"/>
+		<Item Name="Element20" PrefabID="1" Position="1,1,20"/>
+		<Item Name="Element21" PrefabID="1" Position="5,1,1"/>
+		<Item Name="Element22" PrefabID="1" Position="5,1,2"/>
+		<Item Name="Element23" PrefabID="1" Position="5,1,3"/>
+		<Item Name="Element24" PrefabID="1" Position="5,1,4"/>
+		<Item Name="Element25" PrefabID="1" Position="5,1,5"/>
+		<Item Name="Element26" PrefabID="1" Position="5,1,6"/>
+		<Item Name="Element27" PrefabID="1" Position="5,1,7"/>
+		<Item Name="Element28" PrefabID="1" Position="5,1,8"/>
+		<Item Name="Element29" PrefabID="1" Position="5,1,9"/>
+		<Item Name="Element30" PrefabID="1" Position="5,1,10"/>
+		<Item Name="Element31" PrefabID="1" Position="5,1,11"/>
+		<Item Name="Element32" PrefabID="1" Position="5,1,12"/>
+		<Item Name="Element33" PrefabID="1" Position="5,1,13"/>
+		<Item Name="Element34" PrefabID="1" Position="5,1,14"/>
+		<Item Name="Element35" PrefabID="1" Position="5,1,15"/>
+		<Item Name="Element36" PrefabID="1" Position="5,1,16"/>
+		<Item Name="Element37" PrefabID="1" Position="5,1,17"/>
+		<Item Name="Element38" PrefabID="1" Position="5,1,18"/>
+		<Item Name="Element39" PrefabID="1" Position="5,1,19"/>
+		<Item Name="Element40" PrefabID="1" Position="5,1,20"/>
+		<Item Name="Role" PrefabID="2" Position="3,3,1"/>
+	</Elements>
+</root>

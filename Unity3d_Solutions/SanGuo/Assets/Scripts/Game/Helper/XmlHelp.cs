@@ -21,7 +21,7 @@ namespace Game
 		{
 			DataTable table = new DataTable (tableName);
 			DataLoadStep loadStep = new DataLoadStep (tableName, configPath, table, delegate (string filepath) {
-				return FilePathHelp.GetXmlFileData(filepath);
+				return FileDataHelp.GetXmlFileData(filepath);
 			});
 			if (loadStep.Load () == false) {
 				return null;
