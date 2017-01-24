@@ -5,7 +5,7 @@ namespace Foundation.Net
 	/// <summary>
 	/// 远程信息
 	/// </summary>
-	public class Remote
+	public class EndPoint
 	{
 		/// <summary>
 		/// IP地址
@@ -16,7 +16,7 @@ namespace Foundation.Net
 		/// </summary>
 		public int Port;
 
-		public Remote()
+		public EndPoint()
 		{
 			IP = "";
 			Port = 0;

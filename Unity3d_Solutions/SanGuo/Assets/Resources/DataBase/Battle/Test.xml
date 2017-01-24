@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<root Des="测试战斗">
+	<Resource Des="资源">
+		<Prefab ID="1" AssetBundlePath="assets.ab" Name="Prefabs/Map/Pillar.prefab" Des="单位" />
+	</Resource>
+	<Field>
+		<Team ID="1" Des="队伍1">
+			<Formation ID="1" Des="方阵1">
+				<Unit ID="1" ResourceID="1" Position="1,1,1" Rotation="0,0,0" Scale="1,1,1" Volume="1,1,1"/>
+				<Unit ID="2" ResourceID="1" Position="2,1,1" Rotation="0,0,0" Scale="1,1,1" Volume="1,1,1"/>
+				<Unit ID="3" ResourceID="1" Position="3,1,1" Rotation="0,0,0" Scale="1,1,1" Volume="1,1,1"/>
+			</Formation>
+			<Formation ID="2" Des="方阵2">
+				<Unit ID="1" ResourceID="1" Position="1,1,2" Rotation="0,0,0" Scale="1,1,1" Volume="1,1,1"/>
+				<Unit ID="2" ResourceID="1" Position="2,1,2" Rotation="0,0,0" Scale="1,1,1" Volume="1,1,1"/>
+				<Unit ID="3" ResourceID="1" Position="3,1,2" Rotation="0,0,0" Scale="1,1,1" Volume="1,1,1"/>
+			</Formation>
+		</Team>
+		<Team ID="2" Des="队伍2">
+			<Formation ID="1" Des="方阵1">
+				<Unit ID="1" ResourceID="1" Position="1,1,11" Rotation="0,0,0" Scale="1,1,1" Volume="1,1,1"/>
+				<Unit ID="2" ResourceID="1" Position="2,1,11" Rotation="0,0,0" Scale="1,1,1" Volume="1,1,1"/>
+				<Unit ID="3" ResourceID="1" Position="3,1,11" Rotation="0,0,0" Scale="1,1,1" Volume="1,1,1"/>
+			</Formation>
+			<Formation ID="2" Des="方阵2">
+				<Unit ID="1" ResourceID="1" Position="1,1,12" Rotation="0,0,0" Scale="1,1,1" Volume="1,1,1"/>
+				<Unit ID="2" ResourceID="1" Position="2,1,13" Rotation="0,0,0" Scale="1,1,1" Volume="1,1,1"/>
+				<Unit ID="3" ResourceID="1" Position="3,1,14" Rotation="0,0,0" Scale="1,1,1" Volume="1,1,1"/>
+			</Formation>
+		</Team>
+	</Field>
+	<Record>
+		<Round ID="1" Src="1,1,1" SpellID="1">
+			<Target ID="2,1,1" Hurt="1" Cure="0" Buff="0"/>
+		</Round>
+	</Record>
+</root>
+
+<!--
+	同组的用‘,’分割，不同组用‘;’分割
+-->
+

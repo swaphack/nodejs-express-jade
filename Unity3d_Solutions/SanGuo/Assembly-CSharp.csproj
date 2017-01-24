@@ -45,7 +45,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Control\Config\ServerConfig.cs" />
+     <Compile Include="Assets\Scripts\Control\Battle\Field.cs" />
+     <Compile Include="Assets\Scripts\Control\Battle\Iidentifier.cs" />
+     <Compile Include="Assets\Scripts\Control\Battle\Team.cs" />
+     <Compile Include="Assets\Scripts\Control\Battle\TranformObject.cs" />
+     <Compile Include="Assets\Scripts\Control\Battle\Unit.cs" />
+     <Compile Include="Assets\Scripts\Control\Battle\UnitSheet.cs" />
      <Compile Include="Assets\Scripts\Control\Player\MainPlayer.cs" />
      <Compile Include="Assets\Scripts\Control\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Control\Player\Resource.cs" />
@@ -53,6 +58,7 @@
      <Compile Include="Assets\Scripts\Data\Enum\LanguagueType.cs" />
      <Compile Include="Assets\Scripts\Data\IConfig.cs" />
      <Compile Include="Assets\Scripts\Data\Message.cs" />
+     <Compile Include="Assets\Scripts\Data\RemoteConfig.cs" />
      <Compile Include="Assets\Scripts\Data\TrackData.cs" />
      <Compile Include="Assets\Scripts\Data\XmlFilePath.cs" />
      <Compile Include="Assets\Scripts\Foundation\Base\ConvertHelp.cs" />
@@ -72,7 +78,7 @@
      <Compile Include="Assets\Scripts\Foundation\Net\PacketController.cs" />
      <Compile Include="Assets\Scripts\Foundation\Net\PacketHeader.cs" />
      <Compile Include="Assets\Scripts\Foundation\Net\Protocols.cs" />
-     <Compile Include="Assets\Scripts\Foundation\Net\Remote.cs" />
+     <Compile Include="Assets\Scripts\Foundation\Net\RemoteConfig.cs" />
      <Compile Include="Assets\Scripts\Foundation\Notify\Notifition.cs" />
      <Compile Include="Assets\Scripts\Foundation\Notify\NotifyEvent.cs" />
      <Compile Include="Assets\Scripts\Foundation\Notify\NotifyHandler.cs" />
@@ -122,13 +128,8 @@
      <Compile Include="Assets\Scripts\Game\Platform\Platform.cs" />
      <Compile Include="Assets\Scripts\Game\Platform\TouchCenter.cs" />
      <Compile Include="Assets\Scripts\Game\Platform\TouchProtocol.cs" />
-     <Compile Include="Assets\Scripts\Model\Formation\Formation.cs" />
-     <Compile Include="Assets\Scripts\Model\Formation\TranformObject.cs" />
-     <Compile Include="Assets\Scripts\Model\Formation\Unit.cs" />
-     <Compile Include="Assets\Scripts\Model\Paper\CircleFormationPaper.cs" />
-     <Compile Include="Assets\Scripts\Model\Paper\FormationPaper.cs" />
-     <Compile Include="Assets\Scripts\Model\Paper\SquareFormationPaper.cs" />
-     <Compile Include="Assets\Scripts\Model\Paper\UnitPaper.cs" />
+     <Compile Include="Assets\Scripts\Model\Battle\Formation.cs" />
+     <Compile Include="Assets\Scripts\Model\Battle\UnitModel.cs" />
      <Compile Include="Assets\Scripts\Protocol\PacketID.cs" />
      <Compile Include="Assets\Scripts\Protocol\Packets.cs" />
      <Compile Include="Assets\Scripts\View\Layer\UIHomeLayer.cs" />
@@ -139,6 +140,7 @@
      <None Include="Assets\Resources\DataBase\Data\AdminLevel.xml" />
      <None Include="Assets\Resources\DataBase\Data\BuildType.xml" />
      <None Include="Assets\Resources\DataBase\Data\BuildLevel.xml" />
+     <None Include="Assets\Resources\DataBase\Battle\Test.xml" />
      <None Include="Assets\Resources\DataBase\Language\Lan_ZH.xml" />
      <None Include="Assets\Resources\DataBase\Data\RoleLevel.xml" />
      <None Include="Assets\Resources\DataBase\Config\Language.xml" />

@@ -118,7 +118,7 @@ namespace Game
 		/// </summary>
 		void Start()
 		{
-			ServerConfig config = new ServerConfig ();
+			RemoteConfig config = new RemoteConfig ();
 			if (config.Load () == true) {
 				IsNetEnable = config.IsSocketEnable;
 				if (IsNetEnable)

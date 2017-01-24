@@ -1,12 +1,12 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Model.Paper
+namespace Model.Battle
 {
 	/// <summary>
 	/// 单位说明
 	/// </summary>
-	public class UnitPaper
+	public class UnitModel
 	{
 		/// <summary>
 		/// 资源包路径

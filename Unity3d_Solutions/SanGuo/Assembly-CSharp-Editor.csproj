@@ -55,6 +55,7 @@
      <None Include="Assets\Resources\DataBase\Data\AdminLevel.xml" />
      <None Include="Assets\Resources\DataBase\Data\BuildType.xml" />
      <None Include="Assets\Resources\DataBase\Data\BuildLevel.xml" />
+     <None Include="Assets\Resources\DataBase\Battle\Test.xml" />
      <None Include="Assets\Resources\DataBase\Language\Lan_ZH.xml" />
      <None Include="Assets\Resources\DataBase\Data\RoleLevel.xml" />
      <None Include="Assets\Resources\DataBase\Config\Language.xml" />

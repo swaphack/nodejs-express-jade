@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Model.Formation
+namespace Control.Battle
 {
 	/// <summary>
 	/// 空间变换对象
@@ -12,6 +12,12 @@ namespace Model.Formation
 		/// The transform.
 		/// </summary>
 		private Transform _Transform;
+
+		public Transform Transform {
+			get { 
+				return _Transform;
+			}
+		}
 		/// <summary>
 		/// 位置
 		/// </summary>

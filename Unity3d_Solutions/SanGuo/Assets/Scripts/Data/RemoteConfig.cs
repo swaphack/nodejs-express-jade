@@ -3,12 +3,12 @@ using Foundation.DataBase;
 using Game;
 using Data;
 
-namespace Control
+namespace Data
 {
 	/// <summary>
 	/// 服务器配置
 	/// </summary>
-	public class ServerConfig : IConfig
+	public class RemoteConfig : IConfig
 	{
 		/// <summary>
 		/// 服务器地址

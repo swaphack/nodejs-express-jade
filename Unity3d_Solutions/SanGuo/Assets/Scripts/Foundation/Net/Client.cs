@@ -54,7 +54,7 @@ namespace Foundation.Net
 		/// <summary>
 		/// 远程信息
 		/// </summary>
-		private Remote _Remote;
+		private EndPoint _Remote;
 
 		public Client ()
 		{
@@ -63,7 +63,7 @@ namespace Foundation.Net
 
 			_ReceiveBuffer = new byte[ReadBufferSize];
 
-			_Remote = new Remote ();
+			_Remote = new EndPoint ();
 		}
 
 		/// <summary>

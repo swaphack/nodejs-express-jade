@@ -1,56 +1,79 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using Model.Paper;
+﻿using System;
+using UnityEngine;
+using Model.Battle;
 using Game;
 
-namespace Model.Formation
-{	
+namespace Control.Battle
+{
 	/// <summary>
-	/// 阵型
+	/// 队伍
 	/// </summary>
-	public class Formation
+	public class Team : Identifier
 	{
-		/// <summary>
-		/// 单位
-		/// </summary>
-		private List<Unit> _Units;
 		/// <summary>
 		/// 布阵信息
 		/// </summary>
-		private FormationPaper _FormationPaper;
+		private Formation _Formation;
 		/// <summary>
 		/// 数据读取索引
 		/// </summary>
-		private int _ReadPaperCursor;
+		private int _ReadUnitCursor;
 		/// <summary>
-		/// 单位个数
+		/// 活着的单位
 		/// </summary>
-		/// <value>The count.</value>
-		public int Count { 
+		private UnitSheet _AliveUnits;
+		/// <summary>
+		/// 死亡的单位
+		/// </summary>
+		private UnitSheet _DeadUnits;
+		/// <summary>
+		/// 是否被摧毁
+		/// </summary>
+		/// <value><c>true</c> if this instance is destory; otherwise, <c>false</c>.</value>
+		public bool IsDestory {
 			get {
-				return _Units.Count;	
-			} 
+				return _AliveUnits.Count == 0;
+			}
 		}
 
-		public Formation()
+		/// <summary>
+		/// 活着的单位
+		/// </summary>
+		public UnitSheet AliveUnits {
+			get { 
+				return _AliveUnits;
+			}
+		}
+
+		/// <summary>
+		/// 死亡的单位
+		/// </summary>
+		private UnitSheet DeadUnits {
+			get { 
+				return _DeadUnits;
+			}
+		}
+
+		public Team()
 		{
-			_Units = new List<Unit> ();
+			_AliveUnits = new UnitSheet ();
+			_DeadUnits = new UnitSheet ();
 		}
 
 		/// <summary>
 		/// 从阵型说明上加载队伍
 		/// </summary>
-		/// <param name="paper">Paper.</param>
-		public void setPaper (FormationPaper paper)
+		/// <param name="formation">Formation.</param>
+		public void SetFormation (Formation formation)
 		{
-			if (paper == null) {
+			if (formation == null) {
 				return;
 			}
 
-			_FormationPaper = paper;
-			_ReadPaperCursor = 0;
+			_Formation = formation;
+			_ReadUnitCursor = 0;
 		}
-			
+
 		/// <summary>
 		/// 定时更新
 		/// </summary>
@@ -67,14 +90,14 @@ namespace Model.Formation
 		/// 加载单位
 		/// </summary>
 		protected void LoadUnits() {
-			if (_FormationPaper == null || _FormationPaper.UnitPapers.Count == 0) {
+			if (_Formation == null || _Formation.UnitModels.Count == 0) {
 				return;
 			}
-			if (_ReadPaperCursor >= _FormationPaper.UnitPapers.Count) {
+			if (_ReadUnitCursor >= _Formation.UnitModels.Count) {
 				return;
 			}
 
-			UnitPaper paper = _FormationPaper.UnitPapers [_ReadPaperCursor];
+			UnitModel paper = _Formation.UnitModels [_ReadUnitCursor];
 			if (string.IsNullOrEmpty (paper.AssetBundlePath)) {
 				FileDataHelp.CreatePrefabFromAsset (paper.FileName, (GameObject gameObj)=>{
 					if (gameObj != null) {
@@ -88,7 +111,7 @@ namespace Model.Formation
 					}
 				});
 			}
-			_ReadPaperCursor++;
+			_ReadUnitCursor++;
 		}
 
 		/// <summary>
@@ -97,19 +120,22 @@ namespace Model.Formation
 		/// <returns><c>true</c>, if units was updated, <c>false</c> otherwise.</returns>
 		/// <param name="dt">Dt.</param>
 		protected void UpdateUnits(float dt) {
-			foreach (Unit unit in _Units) {
-				unit.Update(dt);
-			}
+			_AliveUnits.Update (dt);
 		}
 
 		/// <summary>
 		/// 创建单位回调
 		/// </summary>
 		/// <param name="gameObj">Game object.</param>
-		/// <param name="paper">UnitPaper.</param>
-		private void OnCreateGameObject(GameObject gameObj, UnitPaper paper)
+		/// <param name="paper">UnitModel.</param>
+		private void OnCreateGameObject(GameObject gameObj, UnitModel paper)
 		{
 			if (gameObj == null || paper == null) {
+				return;
+			}
+
+			GameObject newGameObj = GameObject.Instantiate<GameObject> (gameObj);
+			if (newGameObj == null) {
 				return;
 			}
 
@@ -121,12 +147,12 @@ namespace Model.Formation
 				Bounds bounds = collider.bounds;
 				bounds.size = paper.Volume;
 			}
-			
+
 			Unit unit = new Unit ();
-			unit.SetObject (gameObj);
-			_Units.Add (unit);
+			unit.SetObject (newGameObj);
+			unit.SetModel (paper);
+			_AliveUnits.AddUnit (unit);
 		}
 	}
 }
-
 
