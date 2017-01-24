@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine;
 using Foundation.Net;
 using Control;
+using Data;
+using Data.Enum;
 
 namespace Game
 {
@@ -96,8 +98,6 @@ namespace Game
 			_Action = new ActionCenter ();
 			// 平台
 			_Platform = new Platform ();
-			// 日志
-			Log.Init();
 
 			// 更新时间
 			_LastUpdateTime = DateTime.MinValue;
@@ -124,9 +124,14 @@ namespace Game
 				if (IsNetEnable)
 					_NetCenter.Init (config.IPAddress, config.Port);
 			}
-
+			// 文本
 			_Text.InitConfig ();
 			_Text.SetLanguage (LanguagueType.CHINA);
+			// 玩家信息
+			Player.MainPlayer.Init ();
+
+			// 日志
+			Log.Init();
 
 			FilePathHelp.ShowPath ();
 		}

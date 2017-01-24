@@ -66,7 +66,7 @@ namespace Model.Formation
 		/// <summary>
 		/// 加载单位
 		/// </summary>
-		protected bool LoadUnits() {
+		protected void LoadUnits() {
 			if (_FormationPaper == null || _FormationPaper.UnitPapers.Count == 0) {
 				return;
 			}
@@ -82,7 +82,7 @@ namespace Model.Formation
 					}
 				});					
 			} else {
-				AssetBundleLoader.GetInstance ().LoadGameObject (paper.AssetBundlePath, paper.FileName, (GameObject gameObj)=>{
+				FileDataHelp.CreatePrefabFromAssetBundle (paper.AssetBundlePath, paper.FileName, (GameObject gameObj)=>{
 					if (gameObj != null) {
 						OnCreateGameObject(gameObj, paper);
 					}
@@ -96,7 +96,7 @@ namespace Model.Formation
 		/// </summary>
 		/// <returns><c>true</c>, if units was updated, <c>false</c> otherwise.</returns>
 		/// <param name="dt">Dt.</param>
-		protected bool UpdateUnits(float dt) {
+		protected void UpdateUnits(float dt) {
 			foreach (Unit unit in _Units) {
 				unit.Update(dt);
 			}
@@ -116,7 +116,11 @@ namespace Model.Formation
 			gameObj.transform.localPosition = paper.Position;
 			gameObj.transform.localScale = paper.Scale;
 			gameObj.transform.Rotate (paper.Rotation);
-			gameObj.GetComponent<Collider> ().bounds.size = paper.Volume;
+			Collider collider = gameObj.GetComponent<Collider> ();
+			if (collider) {
+				Bounds bounds = collider.bounds;
+				bounds.size = paper.Volume;
+			}
 			
 			Unit unit = new Unit ();
 			unit.SetObject (gameObj);

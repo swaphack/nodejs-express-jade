@@ -88,7 +88,7 @@ namespace Game
 
 			string fullpath = filepath;
 			if (string.IsNullOrEmpty (format) == false) {
-				fullpath = filepath + "." + format;
+				fullpath = filepath + format;
 			}
 
 			fullpath = FilePathHelp.GetWritableFilePath (fullpath);

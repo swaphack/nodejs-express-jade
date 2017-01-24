@@ -1,0 +1,58 @@
+存储：
+    在程序发布后文件的存放有两种，第一种是打包到Uniyt的资源包中(*.unity3D)，第二种就是把文件存放在一个特殊的目录如:StreamingAssets,这个目录的东西Unity不会打包任何资源包中（但让除非你手动打包），但是发布的时候这个文件夹会被打包进程序中，一起发布。
+
+格式:
+    通过WWW加载：
+
+      一种是纯文本格式，如 txt,xml,csv等，这种纯文本试用原始扩展名即可。
+
+      一种是二进制，如果文件需要压缩，加密等等操作，需要把文件的扩展名改为.bytes.
+
+     使用WWW加载时需要注意编码格式为 utf8，如果它不能解析为utf8字符串，文本导入器会尽量带nonascii字。
+
+代码中修改xml编码格式:
+
+byte[] encodingData = Encoding.UTF8.GetBytes(m_strData);
+      System.IO.MemoryStream ms = new System.IO.MemoryStream(encodingData);
+      ms.Flush();
+      ms.Position = 0;
+      document.Load(ms)
+
+通过C#加载：
+
+       任意格式.
+
+读取:
+    第一种:
+
+   这种方法也分两种，一种是放到Resources文件夹下当Untiy 发布的时候会把这个文件夹下的所有资源打包成一个默认资源包一起发布出去，读取时用Resources类读取.
+
+另外一种是自己打包然后通过WWW加载AssetBundle,最后通过AssetBundle中的函数加载与Resources方法类似。
+
+   第二种:
+
+   这种方法需要把文件放到StreamingAssets目录下，在不同的平台上面 (Windows, Ios ,Android),该目录最终发布的位置不同，所以读取的方法也不同。
+
+ 	Windows	Ios	Android
+C#	支持	支持	不支持
+C#路径	Application.streamingAssetsPath+”/Myfile.txt”	Application.streamingAssetsPath+”/Myfile.txt”	 
+ 	 	 	 
+WWW	支持	支持	支持
+WWW路径	"file://"+Application.streamingAssetsPath+”/Myfile.txt”	"file://"+Application.streamingAssetsPath+”/Myfile.txt”	Application.streamingAssetsPath+”/Myfile.txt”
+WWW是异步加载所以执行加载命令式不能直接执行读取解析操作，
+
+===============================================================================================================
+		C#		C#路径							WWW			WWW路径
+Windows		支持		Application.streamingAssetsPath+”/Myfile.txt”		支持			"file://"+Application.streamingAssetsPath+”/Myfile.txt”
+
+Ios		支持		Application.streamingAssetsPath+”/Myfile.txt”		支持			"file://"+Application.streamingAssetsPath+”/Myfile.txt”
+
+Android		不支持									支持			Application.streamingAssetsPath+”/Myfile.txt”
+===============================================================================================================
+要等待
+
+var www = new WWW (filePath);
+
+yield www;
+
+result = www.text;

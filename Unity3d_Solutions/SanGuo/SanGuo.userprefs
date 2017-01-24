@@ -1,13 +1,21 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Game\Platform\TouchListener.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Game\Helper\FilePathHelp.cs">
     <Files>
-      <File FileName="Assets\Scripts\View\Layer\GOModel.cs" Line="13" Column="24" />
-      <File FileName="Assets\Scripts\Game\Platform\TouchListener.cs" Line="75" Column="26" />
+      <File FileName="Assets\Editor\Reources\AssetBundleEditor.cs" Line="52" Column="16" />
+      <File FileName="Assets\Scripts\Game\Constants\AssetBundleConstants.cs" Line="15" Column="14" />
+      <File FileName="Assets\Scripts\Game\Constants\XmlDataConstants.cs" Line="20" Column="16" />
+      <File FileName="Assets\Scripts\Data\XmlFilePath.cs" Line="15" Column="1" />
+      <File FileName="Assets\Editor\Reources\XmlDataEditor.cs" Line="27" Column="25" NotebookId="1" />
+      <File FileName="Assets\Scripts\Game\Helper\FilePathHelp.cs" Line="157" Column="1" NotebookId="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Editor\Reources\XmlDataEditor.cs" line="29" column="1" />
+      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Editor\Reources\XmlDataEditor.cs" line="28" column="1" />
+      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Game\Helper\FilePathHelp.cs" line="154" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

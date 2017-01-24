@@ -24,6 +24,7 @@ namespace Model.Paper
 		
 		public CircleFormationPaper ()
 		{
+			_Radius = 0;
 		}
 	}
 }

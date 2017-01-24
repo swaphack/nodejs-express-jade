@@ -13,7 +13,9 @@ namespace Game
 		/// 文档名称
 		/// 在WindowsPlayer模式下,是保存到本地文档中
 		/// </summary>
-		private const string _FilePath = "Logger.txt";
+		public const string FileName = "Logger.txt";
+
+		public static string _FilePath = "";
 		
 		private Log ()
 		{
@@ -24,6 +26,7 @@ namespace Game
 		/// </summary>
 		public static void Init()
 		{
+			_FilePath = FilePathHelp.GetWritableFilePath(FileName);
 			if (Application.platform == RuntimePlatform.WindowsPlayer) {
 				File.Delete (_FilePath);
 			} 

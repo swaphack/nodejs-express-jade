@@ -1,23 +1,38 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Game.Listener
+namespace Game
 {
 	/// <summary>
 	/// 点击监听
 	/// 物体须有碰撞器组件
 	/// 挂在物体上
 	/// </summary>
-	public abstract class TouchListener : ITouchDispatcher
+	public class TouchProtocol : ITouchDispatcher
 	{
 		/// <summary>
 		/// 是否可点击
 		/// </summary>
-		private bool _TouchEnabled = false;
+		private bool _TouchEnabled;
 		/// <summary>
 		/// 目标
 		/// </summary>
-		protected Collider _Target = null;
+		protected Collider _Target;
+
+		/// <summary>
+		/// 点击开始
+		/// </summary>
+		public OnTouchCallBack OnTouchBegan;
+
+		/// <summary>
+		/// 滑动
+		/// </summary>
+		public OnTouchCallBack OnTouchMoved;
+
+		/// <summary>
+		/// 点击离开
+		/// </summary>
+		public OnTouchCallBack OnTouchEnded;
 
 		/// <summary>
 		/// 获取对象
@@ -62,36 +77,16 @@ namespace Game.Listener
 		public void OnDispatchTouch (TouchPhase state, Vector2 vector)
 		{
 			if (state == TouchPhase.Began) {
-				OnTouchBegan (vector);
+				if (OnTouchBegan != null)
+					OnTouchBegan (vector);
 			} else if (state == TouchPhase.Moved) {
-				OnTouchMoved (vector);
+				if (OnTouchMoved != null)
+					OnTouchMoved (vector);
 			} else if (state == TouchPhase.Ended) {
-				OnTouchEnded (vector);
+				if (OnTouchBegan != null)
+					OnTouchBegan (vector);
 			}
 		}
-
-		void OnDestory()
-		{
-			IsTouchEnable = false;
-		}
-
-		/// <summary>
-		/// 点击开始
-		/// </summary>
-		/// <param name="vector">Vector.</param>
-		protected abstract void OnTouchBegan(Vector2 vector);
-
-		/// <summary>
-		/// 滑动
-		/// </summary>
-		/// <param name="vector">Vector.</param>
-		protected abstract void OnTouchMoved(Vector2 vector);
-
-		/// <summary>
-		/// 点击离开
-		/// </summary>
-		/// <param name="vector">Vector.</param>
-		protected abstract void OnTouchEnded(Vector2 vector);
 	}
 }
 

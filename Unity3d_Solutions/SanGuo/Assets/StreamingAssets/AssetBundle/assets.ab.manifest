@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2456922469
+CRC: 53915648
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 236cbf7086a75781516727c054e94134
+    Hash: c2d2d0ef8eca4b5ce18101b520087824
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5f31f323eaff3b27edbe02b7368e984e
@@ -36,6 +36,6 @@ ClassTypes:
 - Class: 136
   Script: {instanceID: 0}
 Assets:
-- Assets/Output/Prefabs/Map/Pillar.prefab
-- Assets/Output/Prefabs/Role/Player.prefab
+- Assets/AssetBundle/Prefabs/Map/Pillar.prefab
+- Assets/AssetBundle/Prefabs/Role/Player.prefab
 Dependencies: []

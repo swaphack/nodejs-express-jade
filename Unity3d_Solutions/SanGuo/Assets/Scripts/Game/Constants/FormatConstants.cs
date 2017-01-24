@@ -10,11 +10,11 @@ namespace Game
 		/// <summary>
 		/// 原型文件格式
 		/// </summary>
-		public const string PrefabFileFormat = ".prefab";
+		public const string PrefabFormat = ".prefab";
 		/// <summary>
 		/// 原型文件格式
 		/// </summary>
-		public const string XmlFileFormat = ".xml";
+		public const string XmlFormat = ".xml";
 	}
 }
 

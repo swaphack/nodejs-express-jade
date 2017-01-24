@@ -105,10 +105,10 @@ namespace Game
 		/// <param name="relativePath">Relative path.</param>
 		public static string CreateDirectoryRecursive(string relativePath)
 		{
-			string path = relativePath.Replace ('\\', '/');
+			string path = relativePath.Replace (@"\", "/");
 			string[] list = path.Split('/');
 			string temp = "";
-			for (int i=0;i<list.Length-1;i++)
+			for (int i = 0; i < list.Length - 1; i++)
 			{
 				string dir = list[i];
 				if (string.IsNullOrEmpty(dir))
@@ -125,76 +125,41 @@ namespace Game
 			return temp;
 		}
 
-
-		/// <summary>
-		/// 获取指定目录下的所有文件路径
-		/// </summary>
-		/// <returns><c>true</c>, if file paths was gotten, <c>false</c> otherwise.</returns>
-		/// <param name="dir">Dir.</param>
-		/// <param name="filepathList">Filepath list.</param>
-		public static void getFilePaths(string dir, List<string> filepathList)
-		{
-			if (string.IsNullOrEmpty (dir) || filepathList == null) {
-				return;
-			}
-
-			if (!Directory.Exists (dir)) {
-				return;
-			}
-
-			string[] filepaths = Directory.GetFiles (dir);			
-			string[] dirpaths = Directory.GetDirectories (dir);
-
-			foreach (string filename in filepaths) {
-				filepathList.Add (dir + "/" + filename);
-			}
-
-			foreach (string dirname in dirpaths) {
-				getFilePaths (dirname, filepathList);
-			}
-		}
-
-
 		/// <summary>
 		/// 获取指定目录下的所有文件路径
 		/// 文件格式
 		/// *.prefab 或 (*.prefab|*.txt)
 		/// </summary>
-		/// <returns><c>true</c>, if file paths was gotten, <c>false</c> otherwise.</returns>
 		/// <param name="dir">Dir.</param>
 		/// <param name="filePathList">Filepath list.</param>
 		/// <param name="baseDir">路径名称要排除的根目录</param>
-		/// <param name="format">文本格式</param>
-		public static void getFilePathsWithoutBase(string dir, List<string> filePathList, string baseDir, string format)
+		/// <param name="withoutformat">要排除的格式</param>
+		public static void getFilePaths(string dir, List<string> filePathList, string withoutBaseDir, string withoutformat=".meta")
 		{
-			if (string.IsNullOrEmpty (baseDir) || string.IsNullOrEmpty (dir) || filePathList == null) {
+			if (string.IsNullOrEmpty (withoutBaseDir) || string.IsNullOrEmpty (dir) || filePathList == null) {
 				return;
 			}
 
-			if (!dir.Contains (baseDir)) {
+			if (!dir.Contains (withoutBaseDir)) {
 				return;
 			}
 
-			if (!Directory.Exists (dir) || !Directory.Exists (baseDir)) {
+			if (!Directory.Exists (dir) || !Directory.Exists (withoutBaseDir)) {
 				return;
 			}
 
-			string[] filePaths;
-			if (string.IsNullOrEmpty (format)) {
-				filePaths = Directory.GetFiles (dir);	
-			} else {
-				filePaths = Directory.GetFiles (dir, format);	
-			}		
+			string[] filePaths = Directory.GetFiles (dir);	
 			string[] dirPaths = Directory.GetDirectories (dir);
 
 			foreach (string filename in filePaths) {
-				string realdir = filename.Substring (baseDir.Length);
-				realdir.Replace('\\', '/');
-				filePathList.Add (realdir);
+				if (!filename.EndsWith (withoutformat)) {
+					string realdir = filename.Substring (withoutBaseDir.Length);
+					realdir = realdir.Replace (@"\", "/");
+					filePathList.Add (realdir);
+				}
 			}
-
 			foreach (string dirpath in dirPaths) {
-				getFilePathsWithoutBase (dirpath, filePathList, baseDir, format);
+				getFilePaths (dirpath, filePathList, withoutBaseDir, withoutformat);
 			}
 		}
 	}

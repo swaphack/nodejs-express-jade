@@ -3,8 +3,10 @@ using System.Xml;
 using System.Collections;
 using System.Collections.Generic;
 using Foundation.DataBase;
+using Data.Enum;
+using Game;
 
-namespace Game
+namespace Data
 {
 	/// <summary>
 	/// 本地文本
@@ -27,7 +29,7 @@ namespace Game
 		/// <summary>
 		/// 配置所在路径
 		/// </summary>
-		public const string ConfigPath = "DataBase/Config/Language";
+		public const string ConfigPath = XmlFilePath.DataBaseConfigLanguage;
 
 		public Message ()
 		{

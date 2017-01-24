@@ -34,7 +34,7 @@ namespace Game.Listener
 		/// <summary>
 		/// 配置所在路径
 		/// </summary>
-		public const string TrackConfigPath = "DataBase/Map/Track";
+		public const string TrackConfigPath = XmlFilePath.DataBaseMapTrack;
 
 		// Use this for initialization
 		void Start ()

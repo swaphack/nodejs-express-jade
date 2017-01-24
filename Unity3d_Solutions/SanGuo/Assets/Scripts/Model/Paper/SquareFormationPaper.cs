@@ -35,6 +35,8 @@ namespace Model.Paper
 
 		public SquareFormationPaper ()
 		{
+			_Length = 0;
+			_Width = 0;
 		}
 	}
 }

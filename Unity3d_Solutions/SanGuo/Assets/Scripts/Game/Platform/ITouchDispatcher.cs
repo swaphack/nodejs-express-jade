@@ -21,5 +21,10 @@ namespace Game
 		/// <param name="vector">点击点</param>
 		void OnDispatchTouch (TouchPhase state, Vector2 vector);
 	}
+
+	/// <summary>
+	/// 点击回调
+	/// </summary>
+	public delegate void OnTouchCallBack(Vector2 vector);
 }
 

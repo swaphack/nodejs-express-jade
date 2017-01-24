@@ -1,63 +1,47 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Game;
-using Foundation.Notify;
 
 namespace Control
 {
-	/// <summary>
-	/// 资源类型
-	/// </summary>
-	public enum ResType
-	{
-		Food,
-		Wood,
-		Iron,
-	}
 	/// <summary>
 	/// 玩家
 	/// </summary>
 	public class Player
 	{
 		/// <summary>
-		/// 食物
+		/// 资源
 		/// </summary>
-		public int Food;
-		/// <summary>
-		/// 木材
-		/// </summary>
-		public int Wood;
-		/// <summary>
-		/// 矿石
-		/// </summary>
-		public int Iron;
+		private Resource _Resource;
 
 		/// <summary>
-		/// 资源改变时的处理
+		/// 资源
 		/// </summary>
-		private Notifition<ResType> _ResChangeNotifition;
-
-		public Player()
-		{
-			_ResChangeNotifition = new Notifition<ResType> ();
+		public Resource Resource {
+			get { 
+				return _Resource;
+			}
 		}
-
-
 
 		/// <summary>
 		/// 当前玩家
 		/// </summary>
-		private static Player mainPlayer;
+		private static MainPlayer mainPlayer;
 
-		public static Player MainPlayer
+		public static MainPlayer MainPlayer
 		{
 			get { 
 				if (mainPlayer == null) {
-					mainPlayer = new Player ();
+					mainPlayer = new MainPlayer ();
 				}
 
 				return mainPlayer;
 			}
+		}
+
+		public Player()
+		{
+			_Resource = new Resource ();			
 		}
 	}
 }

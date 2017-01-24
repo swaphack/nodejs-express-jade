@@ -108,7 +108,7 @@ namespace Game
 			if (_Configs.ContainsKey (key) == false) {
 				bNeedSave = true;
 			}
-			else if (_Configs [key] == value) {
+			else if (_Configs [key] != value) {
 				bNeedSave = true;
 			}
 			_Configs [key] = value;
@@ -124,14 +124,49 @@ namespace Game
 		public string Get(string key)
 		{
 			if (string.IsNullOrEmpty (key) == true) {
-				return "";
+				return null;
 			}
 
 			if (_Configs.ContainsKey (key) == false) {
-				return "";
+				return null;
 			}
 
 			return _Configs[key];
+		}
+
+		/// <summary>
+		/// 设置值
+		/// </summary>
+		/// <param name="key">Key.</param>
+		/// <param name="value">Value.</param>
+		public void SetInteger(string key, int value) 
+		{
+			Set (key, value.ToString ());
+		}
+
+		/// <summary>
+		/// 获取整形
+		/// </summary>
+		/// <returns>The integer.</returns>
+		/// <param name="key">Key.</param>
+		public int GetInteger(string key) 
+		{
+			string value = Get (key);
+			if (string.IsNullOrEmpty (value)) {
+				return 0;
+			}
+
+			int result = 0;
+			if (int.TryParse (value, out result)) {
+				return result;
+			}
+
+			return 0;
+		}
+
+		public void Flush()
+		{
+			this.Save ();
 		}
 	}
 }

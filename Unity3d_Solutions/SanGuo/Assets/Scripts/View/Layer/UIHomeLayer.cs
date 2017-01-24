@@ -34,6 +34,7 @@ public class UIHomeLayer : Layer
 
 	public UIHomeLayer ()
 	{
+		
 	}
 
 	/// <summary>
@@ -41,35 +42,44 @@ public class UIHomeLayer : Layer
 	/// </summary>
 	protected override void InitUI()
 	{
-		/*
 		_LabelFood = FindCanvas<Text> ("Canvas.CanvasResource.CanvasFood.Text");
 		_LabelWood = FindCanvas<Text> ("Canvas.CanvasResource.CanvasWood.Text");
 		_LabelIron = FindCanvas<Text> ("Canvas.CanvasResource.CanvasIron.Text");
-		*/
 
 		_BtnFood = FindCanvas<Button> ("Canvas.CanvasButton.CanvasFood.Button");
 		_BtnWood = FindCanvas<Button> ("Canvas.CanvasButton.CanvasWood.Button");
 		_BtnIron = FindCanvas<Button> ("Canvas.CanvasButton.CanvasIron.Button");
 
 		_BtnFood.onClick.AddListener(delegate() {
-			Player.MainPlayer.Food += 1;
-			//_LabelFood.text = _MainPlayer.Currency.Food.ToString();
+			Player.MainPlayer.Resource.Food += 1;
 
 			ReqPacketLogin packet = PacketHelp.GetRequestPacket<ReqPacketLogin>();
 			packet.Name = PacketHelp.GetByteText("1212", 15);
 			packet.Password = PacketHelp.GetByteText("123", 20);
-
 			PacketHelp.Send (packet);
 		});
 
 		_BtnWood.onClick.AddListener(delegate() {
-			Player.MainPlayer.Wood += 1;
-			//_LabelWood.text = _MainPlayer.Currency.Wood.ToString();
+			Player.MainPlayer.Resource.Wood += 1;
 		});
 
 		_BtnIron.onClick.AddListener(delegate() {
-			Player.MainPlayer.Iron += 1;
-			//_LabelIron.text = _MainPlayer.Currency.Iron.ToString();
+			Player.MainPlayer.Resource.Iron += 1;
+		});
+
+		Player.MainPlayer.Resource.AddChangedNotify (ResType.Food, () => {
+			_LabelFood.text = Player.MainPlayer.Resource.Food.ToString();
+			UserDefault.GetInstance ().Set ("Food", Player.MainPlayer.Resource.Food.ToString());
+		});
+
+		Player.MainPlayer.Resource.AddChangedNotify (ResType.Wood, () => {
+			_LabelWood.text = Player.MainPlayer.Resource.Wood.ToString();
+			UserDefault.GetInstance ().Set ("Wood", Player.MainPlayer.Resource.Food.ToString());
+		});
+
+		Player.MainPlayer.Resource.AddChangedNotify (ResType.Iron, () => {
+			_LabelIron.text = Player.MainPlayer.Resource.Iron.ToString();
+			UserDefault.GetInstance ().Set ("Iron", Player.MainPlayer.Resource.Food.ToString());
 		});
 	}
 
@@ -78,11 +88,9 @@ public class UIHomeLayer : Layer
 	/// </summary>
 	protected override void InitText()
 	{
-		/*
-		_LabelFood.text = _MainPlayer.Currency.Food.ToString();
-		_LabelWood.text = _MainPlayer.Currency.Wood.ToString();
-		_LabelIron.text = _MainPlayer.Currency.Iron.ToString();
-		*/
+		_LabelFood.text = Player.MainPlayer.Resource.Food.ToString();
+		_LabelWood.text = Player.MainPlayer.Resource.Wood.ToString();
+		_LabelIron.text = Player.MainPlayer.Resource.Iron.ToString();
 
 		_BtnFood.GetComponentInChildren<Text>().text = GetLocalText (2);
 		_BtnWood.GetComponentInChildren<Text>().text = GetLocalText (1);
@@ -119,7 +127,7 @@ public class UIHomeLayer : Layer
 	private void OnReceivePacket_Error(byte[] bytes)
 	{
 		RespPacketError packet = PacketHelp.GetResponsePacket<RespPacketError> (bytes);
-		Log.Info ("Resp Error Packet ");
+		Log.Info ("Resp Error Packet, ID : %d" + packet.Header.PacketID);
 	}
 
 	/// <summary>

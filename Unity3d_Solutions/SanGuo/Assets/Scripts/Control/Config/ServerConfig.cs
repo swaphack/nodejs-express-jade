@@ -27,7 +27,7 @@ namespace Control
 		/// </summary>
 		public string ConfigPath { 
 			get { 
-				return "DataBase/Config/Remote";
+				return XmlFilePath.DataBaseConfigRemote;
 			}
 		}
 
