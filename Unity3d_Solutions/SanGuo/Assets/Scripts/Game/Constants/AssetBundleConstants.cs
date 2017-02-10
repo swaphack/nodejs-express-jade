@@ -1,7 +1,8 @@
 ﻿using System;
 using UnityEngine;
+using Game.Helper;
 
-namespace Game
+namespace Game.Constants
 {
 	/// <summary>
 	/// 资源包常量

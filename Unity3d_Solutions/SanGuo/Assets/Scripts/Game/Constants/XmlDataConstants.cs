@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Game
+namespace Game.Constants
 {
 	/// <summary>
 	/// xml数据常量
@@ -9,13 +9,21 @@ namespace Game
 	public class XmlDataConstants
 	{
 		/// <summary>
-		/// 类名称
+		/// 路径文件类名称
 		/// </summary>
-		public const string ClassName = "XmlFilePath";
+		public const string PathClassName = "XmlFilePath";
 		/// <summary>
-		/// 文件名称
+		/// 路径文件名称
 		/// </summary>
-		public const string FileName = "XmlFilePath.cs";
+		public const string PathFileName = "XmlFilePath.cs";
+		/// <summary>
+		/// 名称文件类名称
+		/// </summary>
+		public const string NameClassName = "XmlFileName";
+		/// <summary>
+		/// 名称文件名称
+		/// </summary>
+		public const string NameFileName = "XmlFileName.cs";
 
 		/// <summary>
 		/// 需要打包的目录
@@ -29,9 +37,18 @@ namespace Game
 		/// <summary>
 		/// 打包后保存的的目录
 		/// </summary>
-		public static string SaveDirectory {
+		public static string SavePathDirectory {
 			get { 
-				return Application.dataPath + "/Scripts/Data/" + FileName;
+				return Application.dataPath + "/Scripts/Data/" + PathFileName;
+			}
+		}
+
+		/// <summary>
+		/// 打包后保存的的目录
+		/// </summary>
+		public static string SaveNameDirectory {
+			get { 
+				return Application.dataPath + "/Scripts/Data/" + NameFileName;
 			}
 		}
 

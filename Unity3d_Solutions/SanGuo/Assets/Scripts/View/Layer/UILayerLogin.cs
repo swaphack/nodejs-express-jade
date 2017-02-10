@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using System;
 using Game;
+using Game.Layer;
+using Game.Helper;
 
 public class UILayerLogin : Layer 
 {

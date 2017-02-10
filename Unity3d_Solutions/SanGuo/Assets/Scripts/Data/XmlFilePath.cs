@@ -2,6 +2,8 @@ using System;
 
 public class XmlFilePath
 {
+	public const string DataBaseBattleTest = "DataBase/Battle/Test";
+	
 	public const string DataBaseConfigLanguage = "DataBase/Config/Language";
 	
 	public const string DataBaseConfigRemote = "DataBase/Config/Remote";

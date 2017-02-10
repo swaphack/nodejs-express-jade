@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Game
+namespace Game.Platform
 {
 	/// <summary>
 	/// 点击派发器

@@ -2,7 +2,7 @@
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace Foundation
+namespace Foundation.Base
 {
 	/// <summary>
 	/// 转换辅助工具

@@ -8,13 +8,23 @@ namespace Foundation.Plugin
 	public interface IPlugin
 	{
 		/// <summary>
+		/// 插件标识
+		/// </summary>
+		/// <value>The I.</value>
+		int ID { get; }
+		/// <summary>
 		/// 初始化
 		/// </summary>
 		void Init();
 		/// <summary>
 		/// 定时更新
 		/// </summary>
-		void Update();
+		/// <param name="dt">Dt.</param>
+		void Update(float dt);
+		/// <summary>
+		/// 销毁
+		/// </summary>
+		void Dispose();
 	}
 }
 

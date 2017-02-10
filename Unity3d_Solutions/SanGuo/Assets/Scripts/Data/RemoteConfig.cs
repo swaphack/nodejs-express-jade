@@ -1,14 +1,13 @@
 ﻿using System;
 using Foundation.DataBase;
-using Game;
-using Data;
+using Game.Helper;
 
 namespace Data
 {
 	/// <summary>
 	/// 服务器配置
 	/// </summary>
-	public class RemoteConfig : IConfig
+	public class RemoteConfig
 	{
 		/// <summary>
 		/// 服务器地址
@@ -23,6 +22,10 @@ namespace Data
 		/// </summary>
 		public bool IsSocketEnable;
 		/// <summary>
+		/// 重连尝试次数
+		/// </summary>
+		public int TryConnectCount;
+		/// <summary>
 		/// 配置所在路径
 		/// </summary>
 		public string ConfigPath { 
@@ -31,12 +34,17 @@ namespace Data
 			}
 		}
 
+		public RemoteConfig()
+		{
+			TryConnectCount = -1;
+		}
+
 		/// <summary>
 		/// 加载
 		/// </summary>
 		public bool Load ()
 		{
-			DataTable table = XmlHelp.LoadSimpleXml (ConfigPath);
+			IDataTable table = XmlHelp.LoadSimpleXml (ConfigPath);
 			if (table == null) {
 				return false;
 			}
@@ -47,6 +55,7 @@ namespace Data
 
 			record = table.At (1);
 			IsSocketEnable = record.GetProperty ("enable") == "true";
+			TryConnectCount = int.Parse(record.GetProperty ("TryConnectCount"));
 
 			return true;
 		}

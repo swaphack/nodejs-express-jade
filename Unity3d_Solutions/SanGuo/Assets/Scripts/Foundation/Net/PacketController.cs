@@ -14,7 +14,7 @@ namespace Foundation.Net
 	/// <summary>
 	/// 报文控制中心
 	/// </summary>
-	public class PacketController
+	public class PacketController : IDisposable
 	{
 		/// <summary>
 		/// 缓存数据流
@@ -37,11 +37,6 @@ namespace Foundation.Net
 			_OnPacketNotifition = new Notifition<int> ();
 
 			_NotifyHandlerSheet = new Dictionary<DispatchPacketHandler, NotifyHandlerWithParameter> ();
-		}
-
-		~PacketController ()
-		{
-			_Stream.Close ();
 		}
 
 		/// <summary>
@@ -93,9 +88,9 @@ namespace Foundation.Net
 				return;
 			}
 
-			NotifyHandlerWithParameter notifyHandler = _NotifyHandlerSheet [handler];
+			_OnPacketNotifition.RemoveListener (packetID, _NotifyHandlerSheet [handler]);
 
-			_OnPacketNotifition.RemoveListener (packetID, notifyHandler);
+			_NotifyHandlerSheet.Remove (handler);
 		}
 
 		/// <summary>
@@ -139,6 +134,14 @@ namespace Foundation.Net
 			// _Stream.Write (buffer, length, buffer.Length - length);
 	
 			DispatchPacket (packetID, bytes);
+		}
+
+		/// <summary>
+		/// Disponse this instance.
+		/// </summary>
+		public void Dispose()
+		{
+			_Stream.Close ();
 		}
 	}
 }

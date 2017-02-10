@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <root>
-	<Item ID="1" EXP="10">
-	<Item ID="2" EXP="20">
-	<Item ID="3" EXP="40">
-	<Item ID="4" EXP="80">
-	<Item ID="5" EXP="160">
-	<Item ID="6" EXP="320">
-	<Item ID="7" EXP="640">
-	<Item ID="8" EXP="1280">
-	<Item ID="9" EXP="2560">
-	<Item ID="10" EXP="5120">
-<root>
+	<Item ID="1" EXP="10"/>
+	<Item ID="2" EXP="20"/>
+	<Item ID="3" EXP="40"/>
+	<Item ID="4" EXP="80"/>
+	<Item ID="5" EXP="160"/>
+	<Item ID="6" EXP="320"/>
+	<Item ID="7" EXP="640"/>
+	<Item ID="8" EXP="1280"/>
+	<Item ID="9" EXP="2560"/>
+	<Item ID="10" EXP="5120"/>
+</root>
 
 <!--
 	角色等级

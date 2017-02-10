@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Helper;
+using Game.Platform;
 
 namespace Game.Listener
 {
@@ -56,12 +58,12 @@ namespace Game.Listener
 		{
 			_Rigidbody = GetComponent<Rigidbody> ();
 
-			GameInstance.GetInstance().Platform.AddKeyDownHandler(KeyCode.UpArrow, OnUpArrow);
-			GameInstance.GetInstance().Platform.AddKeyDownHandler(KeyCode.DownArrow, OnDownArrow);
-			GameInstance.GetInstance().Platform.AddKeyDownHandler(KeyCode.LeftArrow, OnLeftArrow);
-			GameInstance.GetInstance().Platform.AddKeyDownHandler(KeyCode.RightArrow, OnRightArrow);
+			GameInstance.GetInstance().Device.AddKeyDownHandler(KeyCode.UpArrow, OnUpArrow);
+			GameInstance.GetInstance().Device.AddKeyDownHandler(KeyCode.DownArrow, OnDownArrow);
+			GameInstance.GetInstance().Device.AddKeyDownHandler(KeyCode.LeftArrow, OnLeftArrow);
+			GameInstance.GetInstance().Device.AddKeyDownHandler(KeyCode.RightArrow, OnRightArrow);
 
-			GameInstance.GetInstance().Platform.AddKeyHandler(KeyCode.Space, KeyPhase.Began, OnJumpArrow);
+			GameInstance.GetInstance().Device.AddKeyHandler(KeyCode.Space, KeyPhase.Began, OnJumpArrow);
 		}
 
 		void Update()
@@ -153,6 +155,16 @@ namespace Game.Listener
 		void OnTriggerExit(Collider other)
 		{
 			Log.Warning ("[" + DateTime.Now.Ticks.ToString() + "]" + "OnTriggerExit : " + other.name);
+		}
+
+		void OnDestory()
+		{
+			GameInstance.GetInstance().Device.RemoveKeyDownHandler(KeyCode.UpArrow, OnUpArrow);
+			GameInstance.GetInstance().Device.RemoveKeyDownHandler(KeyCode.DownArrow, OnDownArrow);
+			GameInstance.GetInstance().Device.RemoveKeyDownHandler(KeyCode.LeftArrow, OnLeftArrow);
+			GameInstance.GetInstance().Device.RemoveKeyDownHandler(KeyCode.RightArrow, OnRightArrow);
+
+			GameInstance.GetInstance().Device.RemoveKeyHandler(KeyCode.Space, KeyPhase.Began, OnJumpArrow);
 		}
 	}
 }

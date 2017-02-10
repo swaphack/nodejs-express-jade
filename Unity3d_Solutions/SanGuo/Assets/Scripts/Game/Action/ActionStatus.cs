@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Game
+namespace Game.Action
 {
 	/// <summary>
 	/// 动作状态

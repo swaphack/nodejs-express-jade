@@ -39,7 +39,7 @@ namespace Foundation.Notify
 		/// 移除推送处理
 		/// </summary>
 		/// <param name="handler">Handler.</param>
-		public void RemoeNotify(NotifyHandler handler)
+		public void RemoveNotify(NotifyHandler handler)
 		{
 			if (handler != null) {
 				_NotifyEvent.Remove (handler);
@@ -71,7 +71,7 @@ namespace Foundation.Notify
 		/// 移除推送处理
 		/// </summary>
 		/// <param name="handler">Handler.</param>
-		public void RemoeNotify(NotifyHandlerWithParameter handler)
+		public void RemoveNotify(NotifyHandlerWithParameter handler)
 		{
 			if (handler != null) {
 				_NotifyEventWithParameter.Remove (handler);

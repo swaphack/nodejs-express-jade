@@ -1,8 +1,11 @@
 ﻿using System;
 using System.IO;
 using UnityEngine;
+using Game.Helper;
+using Game.Local;
+using Game.Constants;
 
-namespace Game
+namespace Game.Helper
 {
 	/// <summary>
 	/// 文件数据

@@ -1,17 +1,11 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Control\Battle\UnitSheet.cs">
-    <Files>
-      <File FileName="Assets\Scripts\Control\Battle\Team.cs" Line="56" Column="3" />
-      <File FileName="Assets\Scripts\Control\Battle\Unit.cs" Line="43" Column="44" NotebookId="1" />
-      <File FileName="Assets\Scripts\Control\Battle\TranformObject.cs" Line="24" Column="35" NotebookId="1" />
-      <File FileName="Assets\Scripts\Control\Battle\UnitSheet.cs" Line="39" Column="16" NotebookId="1" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Editor\Reources\XmlDataEditor.cs" line="29" column="1" />
-      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Editor\Reources\XmlDataEditor.cs" line="28" column="1" />
+      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Game\Listener\UnitActionListener.cs" line="21" column="37" />
+      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Editor\Reources\XmlDataEditor.cs" line="53" column="1" />
+      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Foundation\DataBase\DataLoadStep.cs" line="133" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

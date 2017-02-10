@@ -13,7 +13,7 @@
 	<Item Name="主城" ID="6" Level="1" Wood="1000" Food="1000" Worker="1000" Mineral="1000" Time="60" />
 
 	<Item Name="民房" ID="7" Level="1" Wood="100" Food="100" Worker="100" Mineral="100" Time="10" />
-<root>
+</root>
 
 <!--
 	建筑升级
@@ -25,3 +25,4 @@
 	Worker 工人
 	Time 时间(单位：s)
 -->
+

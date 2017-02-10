@@ -15,46 +15,81 @@ namespace Foundation.DataBase
 		/// <summary>
 		/// 表名
 		/// </summary>
-		private string _TableName;
+		protected string _TableName;
 		/// <summary>
 		/// 配置路径
 		/// </summary>
-		private string _ConfigPath;
+		protected string _ConfigPath;
 		/// <summary>
 		/// 是否已加载
 		/// </summary>
-		private bool _IsLoaded;
+		protected bool _IsLoaded;
 		/// <summary>
 		/// 表
 		/// </summary>
-		private IDataTable _Table;
+		protected IDataTable _TableData;
 		/// <summary>
 		/// 数据加载处理
 		/// </summary>
-		private DataLoadHandler _DataLoadHandler;
+		protected DataLoadHandler _DataLoadHandler;
 		/// <summary>
 		/// 主键名称
 		/// </summary>
-		private string _UniqueName;
+		protected string _UniqueName;
 
 		/// <summary>
 		/// 获取表名称
 		/// </summary>
 		/// <returns>表名称</returns>
-		public string TableName { get { return _TableName; } }
+		public string TableName { 
+			get { 
+				return _TableName; 
+			} 
+			protected set { 
+				_TableName = value;
+			}
+		}
 
 		/// <summary>
 		/// 获取表名称
 		/// </summary>
 		/// <returns>表名称</returns>
-		public string ConfigPath { get { return _ConfigPath; } }
+		public string ConfigPath { 
+			get { 
+				return _ConfigPath; 
+			} 
+			protected set { 
+				_ConfigPath = value;
+			}
+		}
 
 		/// <summary>
 		/// 是否已加载
 		/// </summary>
 		/// <value><c>true</c> if this instance is loaded; otherwise, <c>false</c>.</value>
-		public bool IsLoaded { get { return _IsLoaded; } }
+		public bool IsLoaded { 
+			get { 
+				return _IsLoaded; 
+			} 
+			protected set { 
+				_IsLoaded = value;
+			}
+		}
 
+		/// <summary>
+		/// 数据表
+		/// </summary>
+		/// <value>The data table.</value>
+		public IDataTable TableData {
+			get { 
+				return _TableData;
+			}
+			protected set { 
+				_TableData = value;
+			}
+		}
+
+		/*
 		/// <summary>
 		/// 构造
 		/// </summary>
@@ -66,11 +101,12 @@ namespace Foundation.DataBase
 		{
 			this._TableName = tableName;
 			this._ConfigPath = configPath;
-			this._Table = table;
+			this._TableData = table;
 			this._DataLoadHandler = handler;
 			this._UniqueName = uniqueName;
 			this._IsLoaded = false;
 		}
+		*/
 
 		/// <summary>
 		/// 加载配置
@@ -82,7 +118,7 @@ namespace Foundation.DataBase
 				return true;
 			}
 
-			if (_DataLoadHandler == null) {
+			if (_DataLoadHandler == null || _TableData == null) {
 				return false;
 			}
 
@@ -110,11 +146,11 @@ namespace Foundation.DataBase
 				return false;		
 			}
 
-			_Table.ClearRecords ();
+			_TableData.Clear ();
 
 			while (node != null) {
 				IDataRecord record = new DataRecord ();
-				int id = _Table.Count + 1;
+				int id = _TableData.Count + 1;
 
 				XmlAttributeCollection attributes = node.Attributes;
 				int count = attributes.Count;
@@ -130,12 +166,20 @@ namespace Foundation.DataBase
 				record.ID = id;
 				record.InnerText = node.InnerText;
 
-				_Table.AddRecord (record);
+				_TableData.AddRecord (record);
 
 				node = node.NextSibling;
 			}
 
 			return true;
+		}
+
+		/// <summary>
+		/// 清空
+		/// </summary>
+		public void Clear ()
+		{
+			_TableData.Clear ();
 		}
 	}
 }

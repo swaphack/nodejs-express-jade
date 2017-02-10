@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-namespace Game
+namespace Game.Helper
 {
 	/// <summary>
 	/// 文件路径工具
@@ -47,25 +47,17 @@ namespace Game
 #endif
 
 		/// <summary>
-		/// 显示默认路径
-		/// </summary>
-		public static void ShowPath()
-		{
-			Log.Info ("Application.dataPath : " + Application.dataPath);
-			Log.Info ("Application.persistentDataPath : " + Application.persistentDataPath);
-			Log.Info ("Application.streamingAssetsPath : " + Application.streamingAssetsPath);
-			Log.Info ("Application.temporaryCachePath : " + Application.temporaryCachePath);
-		}
-
-		/// <summary>
 		/// 外部可读写路径
 		/// </summary>
 		/// <returns>The file path.</returns>
 		/// <param name="filename">Filename.</param>
 		public static string GetWritableFilePath(string filename)
 		{
-			string path = Application.persistentDataPath + "/" + filename;
+			if (string.IsNullOrEmpty (filename)) {
+				return null;
+			}
 
+			string path = Application.persistentDataPath + "/" + filename;
 #if UNITY_IPHONE
 			iPhone.SetNoBackupFlag(filepath);
 #endif
@@ -79,9 +71,11 @@ namespace Game
 		/// <param name="filename">Filename.</param>
 		public static string GetTempFilePath(string filename)
 		{
-			string path = "";
+			if (string.IsNullOrEmpty (filename)) {
+				return null;
+			}
 
-			path = Application.temporaryCachePath + "/" + filename;
+			string path = Application.temporaryCachePath + "/" + filename;
 
 			return path;
 		}
@@ -93,6 +87,10 @@ namespace Game
 		/// <param name="filename">Filename.</param>
 		public static string GetStreamingFilePath (string filename)
 		{
+			if (string.IsNullOrEmpty (filename)) {
+				return null;
+			}
+
 			string filepath = Application.streamingAssetsPath + "/" + filename;
 
 			return filepath;

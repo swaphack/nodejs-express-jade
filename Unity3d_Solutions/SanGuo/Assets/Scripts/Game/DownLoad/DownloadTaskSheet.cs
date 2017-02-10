@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-namespace Game
+namespace Game.DownLoad
 {
 	/// <summary>
 	/// 下载任务

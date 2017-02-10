@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Foundation
+namespace Foundation.Base
 {
 	public class Instance<T> where T : new()
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Game
+namespace Game.Helper
 {
 	/// <summary>
 	/// 参数为www的回调

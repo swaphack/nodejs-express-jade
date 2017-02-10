@@ -61,7 +61,7 @@
      <None Include="Assets\Resources\DataBase\Config\Language.xml" />
      <None Include="Assets\UserDefault.xml" />
      <None Include="Assets\Resources\DataBase\Map\Track.xml" />
-     <None Include="Assets\Shaders\OutLight.shader" />
+     <None Include="Assets\Resources\Shaders\OutLight.shader" />
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>

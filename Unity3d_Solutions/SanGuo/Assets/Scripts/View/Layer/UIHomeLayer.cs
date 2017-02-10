@@ -2,7 +2,9 @@
 using UnityEngine.UI;
 using System;
 using Game;
-using Control;
+using Game.Helper;
+using Game.Layer;
+using Controller.Role;
 
 public class UIHomeLayer : Layer
 {
@@ -67,20 +69,24 @@ public class UIHomeLayer : Layer
 			Player.MainPlayer.Resource.Iron += 1;
 		});
 
-		Player.MainPlayer.Resource.AddChangedNotify (ResType.Food, () => {
-			_LabelFood.text = Player.MainPlayer.Resource.Food.ToString();
-			UserDefault.GetInstance ().Set ("Food", Player.MainPlayer.Resource.Food.ToString());
-		});
+		Player.MainPlayer.Resource.AddChangedNotify (ResType.Food, onFoodChanged);
+		Player.MainPlayer.Resource.AddChangedNotify (ResType.Wood, onWoodChanged);
+		Player.MainPlayer.Resource.AddChangedNotify (ResType.Iron, onIronChanged);
+	}
 
-		Player.MainPlayer.Resource.AddChangedNotify (ResType.Wood, () => {
-			_LabelWood.text = Player.MainPlayer.Resource.Wood.ToString();
-			UserDefault.GetInstance ().Set ("Wood", Player.MainPlayer.Resource.Food.ToString());
-		});
+	private void onFoodChanged() 
+	{
+		_LabelFood.text = Player.MainPlayer.Resource.Food.ToString();
+	}
 
-		Player.MainPlayer.Resource.AddChangedNotify (ResType.Iron, () => {
-			_LabelIron.text = Player.MainPlayer.Resource.Iron.ToString();
-			UserDefault.GetInstance ().Set ("Iron", Player.MainPlayer.Resource.Food.ToString());
-		});
+	private void onWoodChanged()
+	{
+		_LabelWood.text = Player.MainPlayer.Resource.Wood.ToString();
+	}
+
+	private void onIronChanged()
+	{
+		_LabelIron.text = Player.MainPlayer.Resource.Iron.ToString();
 	}
 
 	/// <summary>
@@ -101,7 +107,7 @@ public class UIHomeLayer : Layer
 	}
 
 	/// <summary>
-	/// 初始化报文监听
+	/// 注册报文监听
 	/// </summary>
 	protected override void InitPacketListeners()
 	{
@@ -110,12 +116,16 @@ public class UIHomeLayer : Layer
 	}
 
 	/// <summary>
-	/// 初始化报文监听
+	/// 移除报文监听
 	/// </summary>
 	protected override void DisponsePacketListeners()
 	{
 		PacketHelp.UnregisterPacketHandler (PacketID.Login, OnReceivePacket_Login);
 		PacketHelp.UnregisterPacketHandler (PacketID.Error, OnReceivePacket_Error);
+
+		Player.MainPlayer.Resource.RemoveChangedNotify (ResType.Food, onFoodChanged);
+		Player.MainPlayer.Resource.RemoveChangedNotify (ResType.Wood, onWoodChanged);
+		Player.MainPlayer.Resource.RemoveChangedNotify (ResType.Iron, onIronChanged);
 	}
 
 	private void OnReceivePacket_Login(byte[] bytes)

@@ -110,9 +110,10 @@ namespace Foundation.DataBase
 		/// <summary>
 		/// 清空所有记录
 		/// </summary>
-		public void ClearRecords ()
+		public void Clear ()
 		{
 			_Records.Clear ();
+			_UniqueIDs.Clear ();
 		}
 	}
 }

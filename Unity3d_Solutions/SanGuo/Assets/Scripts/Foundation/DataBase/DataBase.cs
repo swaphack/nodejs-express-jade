@@ -3,16 +3,20 @@ using System.Collections.Generic;
 
 namespace Foundation.DataBase
 {
+	/// <summary>
+	/// 数据库
+	/// </summary>
 	public class DataBase : IDataBase
 	{
-		/// <summary>
-		/// 步骤
-		/// </summary>
-		private List<IDataLoadStep> _Steps;
 		/// <summary>
 		/// 步骤索引
 		/// </summary>
 		private int _StepCursor;
+		/// <summary>
+		/// 步骤
+		/// </summary>
+		private List<IDataLoadStep> _Steps;
+
 		/// <summary>
 		/// 表
 		/// </summary>
@@ -26,17 +30,14 @@ namespace Foundation.DataBase
 		}
 
 		/// <summary>
-		/// 初始化
+		/// 加载下一步配置
 		/// </summary>
-		public void Init ()
-		{
-			_StepCursor = 0;
-
-			while (_StepCursor < _Steps.Count) {
+		public void LoadNextStep() {
+			if (_StepCursor < _Steps.Count) {
 				IDataLoadStep step = _Steps [_StepCursor];
-
-				step.Load ();
-
+				if (step.Load ()) {
+					_Tables [step.TableName] = step.TableData;
+				}
 				_StepCursor++;
 			}
 		}
@@ -46,8 +47,9 @@ namespace Foundation.DataBase
 		/// </summary>
 		public void Clear ()
 		{
-			this.ClearSteps ();
-			this.ClearTables ();
+			_StepCursor = 0;
+			_Steps.Clear ();
+			_Tables.Clear ();
 		}
 
 		/// <summary>
@@ -86,14 +88,6 @@ namespace Foundation.DataBase
 		}
 
 		/// <summary>
-		/// 清空表
-		/// </summary>
-		public void ClearTables ()
-		{
-			_Tables.Clear ();
-		}
-
-		/// <summary>
 		/// 添加加载步骤
 		/// </summary>
 		/// <param name="step">加载步骤</param>
@@ -116,14 +110,6 @@ namespace Foundation.DataBase
 					break;
 				}
 			}
-		}
-
-		/// <summary>
-		/// 清除所有加载步骤
-		/// </summary>
-		public void ClearSteps ()
-		{
-			_Steps.Clear ();
 		}
 	}
 }

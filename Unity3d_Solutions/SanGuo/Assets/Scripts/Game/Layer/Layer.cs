@@ -3,7 +3,7 @@ using UnityEngine;
 using Game;
 using Foundation.Net;
 
-namespace Game
+namespace Game.Layer
 {
 	/// <summary>
 	/// UI层
@@ -89,8 +89,8 @@ namespace Game
 
 		public virtual void Show()
 		{
-			if (GameInstance.GetInstance ().Platform != null) {
-				GameInstance.GetInstance ().Platform.AddEscKeyHandler (EscapeKeyHandler);
+			if (GameInstance.GetInstance ().Device != null) {
+				GameInstance.GetInstance ().Device.AddEscKeyHandler (EscapeKeyHandler);
 			}
 		}
 
@@ -99,8 +99,8 @@ namespace Game
 		/// </summary>
 		public virtual void Close ()
 		{
-			if (GameInstance.GetInstance ().Platform != null) {
-				GameInstance.GetInstance ().Platform.AddEscKeyHandler (EscapeKeyHandler);
+			if (GameInstance.GetInstance ().Device != null) {
+				GameInstance.GetInstance ().Device.AddEscKeyHandler (EscapeKeyHandler);
 			}
 		}
 

@@ -82,10 +82,20 @@ namespace Foundation.Net
 		/// <param name="port">端口</param>
 		public bool Connect (string ip, int port)
 		{
-			_Remote.IP = ip;
-			_Remote.Port = port;
+			SetEndPoint (ip, port);
 
 			return Reconnect ();
+		}
+
+		/// <summary>
+		/// 设置远端信息
+		/// </summary>
+		/// <param name="ip">Ip.</param>
+		/// <param name="port">Port.</param>
+		public void SetEndPoint(string ip, int port)
+		{
+			_Remote.IP = ip;
+			_Remote.Port = port;
 		}
 
 		/// <summary>

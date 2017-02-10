@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Helper;
 
-namespace Game
+namespace Game.Local
 {
 	/// <summary>
 	/// 文件路径加载

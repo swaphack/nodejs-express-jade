@@ -4,7 +4,7 @@ using System.Xml;
 using System.Collections.Generic;
 using Foundation.DataBase;
 
-namespace Game
+namespace Game.Helper
 {
 	/// <summary>
 	/// 用户本地配置
@@ -78,7 +78,7 @@ namespace Game
 		/// </summary>
 		private void Load()
 		{
-			DataTable table = XmlHelp.LoadSimpleXml (FileName);
+			IDataTable table = XmlHelp.LoadSimpleXml (FileName);
 			if (table == null) {
 				return;
 			}

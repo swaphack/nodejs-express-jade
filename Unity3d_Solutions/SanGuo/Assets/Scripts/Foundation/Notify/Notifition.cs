@@ -55,7 +55,7 @@ namespace Foundation.Notify
 
 			NotifyEvent listener = _NotifyListeners[key];
 
-			listener.RemoeNotify (handler);
+			listener.RemoveNotify (handler);
 		}
 
 		/// <summary>
@@ -95,7 +95,7 @@ namespace Foundation.Notify
 
 			NotifyEvent listener = _NotifyListeners[key];
 
-			listener.RemoeNotify (handler);
+			listener.RemoveNotify (handler);
 		}
 
 		/// <summary>

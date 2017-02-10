@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game
+namespace Game.Platform
 {
 	/// <summary>
 	/// 触摸管理
@@ -114,6 +114,11 @@ namespace Game
 			}
 
 			return false;
+		}
+
+		public void Clear()
+		{
+			_TouchDispatchers.Clear ();
 		}
 	}
 }

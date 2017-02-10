@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Game
+namespace Game.Constants
 {
 	/// <summary>
 	/// 格式常量

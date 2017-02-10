@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Foundation.Notify;
 
-namespace Game
+namespace Game.Platform
 {
 	/// <summary>
 	/// 按键状态

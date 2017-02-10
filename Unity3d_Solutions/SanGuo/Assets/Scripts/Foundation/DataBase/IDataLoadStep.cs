@@ -23,6 +23,11 @@ namespace Foundation.DataBase
 		/// <value><c>true</c> if this instance is loaded; otherwise, <c>false</c>.</value>
 		bool IsLoaded { get; }
 		/// <summary>
+		/// 表数据
+		/// </summary>
+		/// <value>The table data.</value>
+		IDataTable TableData { get;}
+		/// <summary>
 		/// 加载配置
 		/// </summary>
 		bool Load();

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
 using UnityEngine;
+using Game.Helper;
 
-namespace Game
+namespace Game.Local
 {
 	/// <summary>
 	/// 普通Assets资源加载

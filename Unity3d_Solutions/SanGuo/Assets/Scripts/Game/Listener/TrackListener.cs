@@ -3,6 +3,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Data;
+using Game.Helper;
 
 namespace Game.Listener
 {
@@ -14,11 +15,11 @@ namespace Game.Listener
 		/// <summary>
 		/// 原型
 		/// </summary>
-		private Dictionary<int, TrackData.PrefabItem> _PrefabItems;
+		private Dictionary<int, TrackConfig.PrefabItem> _PrefabItems;
 		/// <summary>
 		/// 赛道元素
 		/// </summary>
-		private List<TrackData.ElementItem> _ElementItems;
+		private List<TrackConfig.ElementItem> _ElementItems;
 		/// <summary>
 		/// 资源包名称
 		/// </summary>
@@ -39,7 +40,7 @@ namespace Game.Listener
 		// Use this for initialization
 		void Start ()
 		{
-			TrackData data = new TrackData (TrackConfigPath);
+			TrackConfig data = new TrackConfig (TrackConfigPath);
 			if (!data.Load ()) {
 				return;
 			}
@@ -82,12 +83,12 @@ namespace Game.Listener
 				return;
 			}
 
-			TrackData.ElementItem elementItem = _ElementItems [_LoadedCount];
+			TrackConfig.ElementItem elementItem = _ElementItems [_LoadedCount];
 			if (!_PrefabItems.ContainsKey (elementItem.PrefabID)) {
 				_LoadedCount++;
 				return;
 			}
-			TrackData.PrefabItem prefabItem = _PrefabItems [elementItem.PrefabID];
+			TrackConfig.PrefabItem prefabItem = _PrefabItems [elementItem.PrefabID];
 #if USE_ASSET_BUNDLE
 			FileDataHelp.CreatePrefabFromAssetBundle (_AssetBundle, prefabItem.Path, (GameObject gameObj)=>{
 				if (gameObj == null) {

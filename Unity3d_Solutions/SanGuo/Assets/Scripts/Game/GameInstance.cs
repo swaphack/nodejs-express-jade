@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-using Foundation.Net;
-using Control;
-using Data;
-using Data.Enum;
+using Game.Module;
+using Foundation.Plugin;
+using Controller.Role;
+using Game.Helper;
 
 namespace Game
 {
@@ -14,95 +14,30 @@ namespace Game
 	public class GameInstance : MonoBehaviour
 	{
 		/// <summary>
-		/// 服务器地址
-		/// </summary>
-		public const string SERVER_IP = "127.0.0.1";
-		/// <summary>
-		/// 服务器端口
-		/// </summary>
-		public const int SERVER_PORT = 9547;
-		/// <summary>
-		/// 最大尝试连接次数
-		/// </summary>
-		public const int TryConnectCount = -1;
-
-		/// <summary>
-		/// 网络中心
-		/// </summary>
-		private NetCenter _NetCenter;
-		/// <summary>
-		/// 网络是否可用
-		/// </summary>
-		private bool _IsNetEnable;
-
-		/// <summary>
-		/// 文本
-		/// </summary>
-		private Message _Text;
-		/// <summary>
-		/// 平台
-		/// </summary>
-		private Platform _Platform;
-		/// <summary>
-		/// 动作
-		/// </summary>
-		private ActionCenter _Action;
-		/// <summary>
 		/// 上次更新时间
 		/// </summary>
 		private DateTime _LastUpdateTime;
+		/// <summary>
+		/// 插件管理中心
+		/// </summary>
+		private PluginCenter _PluginCenter;
 
 		/// <summary>
 		/// 游戏静态实例
 		/// </summary>
 		private static GameInstance s_GameInstance;
-	
-		/// <summary>
-		/// 网络中心
-		/// </summary>
-		public NetCenter Net { get { return _NetCenter; } }
-		/// <summary>
-		/// 网络是否可用
-		/// </summary>
-		/// <value><c>true</c> if this instance is net enable; otherwise, <c>false</c>.</value>
-		public bool IsNetEnable { get { return _IsNetEnable; } set { _IsNetEnable = value;} }
-		/// <summary>
-		/// 文本
-		/// </summary>
-		public Message Text { get { return _Text; } }
-		/// <summary>
-		/// 动作
-		/// </summary>
-		/// <value>The action.</value>
-		public ActionCenter Action { get {  return _Action; } }
 
-		public Platform Platform { 
-			get { 
-				return _Platform;
-			}
-		}
-		
 		public GameInstance ()
 		{
-			// 网络
-			_NetCenter = new NetCenter ();
-			_NetCenter.TryConnectMaxCount = TryConnectCount;
-			_NetCenter.FinalConnectHandler = FinalConnectHandler;
-			_NetCenter.AddConnectStateListener (OnConnectState);
-
-			IsNetEnable = true;
-
-			// 语言文本
-			_Text = new Message ();
-			// 动作
-			_Action = new ActionCenter ();
-			// 平台
-			_Platform = new Platform ();
-
 			// 更新时间
 			_LastUpdateTime = DateTime.MinValue;
 
 			s_GameInstance = this;
+
+			_PluginCenter = new PluginCenter ();
+
+			// 注册模块
+			RegisterModules ();
 		}
 		/// <summary>
 		/// 游戏实例
@@ -118,22 +53,12 @@ namespace Game
 		/// </summary>
 		void Start()
 		{
-			RemoteConfig config = new RemoteConfig ();
-			if (config.Load () == true) {
-				IsNetEnable = config.IsSocketEnable;
-				if (IsNetEnable)
-					_NetCenter.Init (config.IPAddress, config.Port);
-			}
-			// 文本
-			_Text.InitConfig ();
-			_Text.SetLanguage (LanguagueType.CHINA);
 			// 玩家信息
 			Player.MainPlayer.Init ();
-
 			// 日志
 			Log.Init();
 
-			FilePathHelp.ShowPath ();
+			_PluginCenter.Init ();
 		}
 
 		/// <summary>
@@ -141,13 +66,12 @@ namespace Game
 		/// </summary>
 		void Update()
 		{
-			if (IsNetEnable == true) {
-				_NetCenter.Update ();
-			}
+			_PluginCenter.Update (GetDeltaTime ());
+		}
 
-			_Platform.Update ();
-			_Action.Update ( GetDeltaTime() );
-
+		void OnDestory()
+		{
+			_PluginCenter.Dispose ();
 		}
 
 		/// <summary>
@@ -167,27 +91,63 @@ namespace Game
 		}
 
 		/// <summary>
-		/// 连接状态回调处理
+		/// 获取插件
 		/// </summary>
-		/// <param name="state">连接状态</param>
-		private void OnConnectState(ConnectState state)
+		/// <returns>The plugin.</returns>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public T GetPlugin<T>() where T : IPlugin
 		{
-			if (state == ConnectState.Disconnected) 
-			{
-				//Log.Info ("Disconnect Server");
-			} 
-			else
-			{
-				//Log.Info ("Connect Server");
-			}
+			return _PluginCenter.GetPlugin<T>();
 		}
 
 		/// <summary>
-		/// 尝试连接失败回调处理
+		/// 注册模块
 		/// </summary>
-		private void FinalConnectHandler()
+		private void RegisterModules()
 		{
-			//Log.Info ("Over Connect Server Count");
+			_PluginCenter.AddPlugin (new NetPlugin ());
+			_PluginCenter.AddPlugin (new TextPlugin ());
+			_PluginCenter.AddPlugin (new ActionPlugin ());
+			_PluginCenter.AddPlugin (new DevicePlugin ());
+			_PluginCenter.AddPlugin (new DataBasePlugin ());
+		}
+
+		/// <summary>
+		/// 网络
+		/// </summary>
+		public NetPlugin Net { 
+			get { 
+				return GetPlugin<NetPlugin>(); 
+			} 
+		}
+
+		/// <summary>
+		/// 文本
+		/// </summary>
+		public TextPlugin Text { 
+			get { 
+				return GetPlugin<TextPlugin>(); 
+			} 
+		}
+
+		/// <summary>
+		/// 动作
+		/// </summary>
+		/// <value>The action.</value>
+		public ActionPlugin Action { 
+			get {  
+				return GetPlugin<ActionPlugin>(); 
+			} 
+		}
+
+		/// <summary>
+		/// 设备平台
+		/// </summary>
+		/// <value>The device.</value>
+		public DevicePlugin Device { 
+			get { 
+				return GetPlugin<DevicePlugin>(); 
+			} 
 		}
 	}
 }

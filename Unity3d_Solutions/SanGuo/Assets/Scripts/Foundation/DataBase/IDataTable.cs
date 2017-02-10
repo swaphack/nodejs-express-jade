@@ -40,7 +40,7 @@ namespace Foundation.DataBase
 		/// <summary>
 		/// 清空所有记录
 		/// </summary>
-		void ClearRecords();
+		void Clear();
 	}
 }
 

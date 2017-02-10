@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Game
+namespace Game.Helper
 {
 	/// <summary>
 	/// 一些常用方法

@@ -2,8 +2,9 @@
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Helper;
 
-namespace Game
+namespace Game.Local
 {
 	/// <summary>
 	/// AssetBundle资源包加载

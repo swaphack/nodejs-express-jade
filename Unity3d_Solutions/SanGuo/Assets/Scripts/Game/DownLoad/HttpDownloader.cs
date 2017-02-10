@@ -2,8 +2,9 @@
 using System.IO;
 using System.Net;
 using System.Collections.Generic;
+using Game.Helper;
 
-namespace Game
+namespace Game.DownLoad
 {
 	/// <summary>
 	/// Http 下载.
@@ -29,9 +30,21 @@ namespace Game
 		}
 
 		/// <summary>
+		/// 服务信任
+		/// </summary>
+		public static void Init()
+		{
+			System.Net.ServicePointManager.ServerCertificateValidationCallback += (o, certificate, chain, errors) => true;
+		}
+
+		/// <summary>
 		/// 断点续传读取的标记
 		/// </summary>
 		public const string ReadBlockMark = "bytes";
+		/// <summary>
+		/// 每次读取的长度
+		/// </summary>
+		public const int ReadBlockSize = 1024 * 60;
 		/// <summary>
 		/// 执行任务
 		/// </summary>
@@ -39,7 +52,10 @@ namespace Game
 		public static void RunTask(DownloadTask task)
 		{
 			if (File.Exists (task.Item.FilePath)) {
-				task.BytesDownloaded = File.ReadAllBytes (task.Item.FilePath).Length;
+				FileStream fs = File.OpenWrite (task.Item.FilePath);
+				task.BytesDownloaded = (int)fs.Length;
+				fs.Close ();
+				fs.Dispose ();
 			} else {
 				task.BytesDownloaded = 0;
 				FilePathHelp.CreateDirectoryRecursive (task.Item.FilePath);
@@ -51,50 +67,72 @@ namespace Game
 				return;
 			}
 
-			httpRequest.Timeout = 2000;
+			httpRequest.Timeout = 5000;
 			httpRequest.Method = "GET";
-			httpRequest.AddRange (ReadBlockMark, -task.BytesDownloaded);
+			httpRequest.AddRange (ReadBlockMark, task.BytesDownloaded);
+			httpRequest.Proxy = null;
 
-			httpRequest.BeginGetResponse (Downloading, new HttpRequestItem(task, httpRequest));
+			httpRequest.BeginGetResponse ((IAsyncResult ar) => {
+				try {
+					WebResponse response = httpRequest.EndGetResponse (ar);
+					HttpWebResponse httpResponse = (HttpWebResponse)response;
+					EndDownload(task, httpResponse);	
+				}catch (Exception e) {
+					Log.Warning(e.Message);
+				}
+			}, null);
 		}
 
-		internal static void Downloading(IAsyncResult ar)
+		/// <summary>
+		/// 下载后反馈
+		/// </summary>
+		/// <param name="ar">Ar.</param>
+		internal static void EndDownload(DownloadTask task, HttpWebResponse httpResponse)
 		{
-			HttpRequestItem item = (HttpRequestItem)ar.AsyncState;
-			DownloadTask task = item.Task;
-			HttpWebResponse httpResponse = (HttpWebResponse)item.Request.EndGetResponse (ar);
+			if (task == null) {
+				return;
+			}
 			if (httpResponse == null) {
 				task.IsError = true;
 				return;
 			}
 
 			int status = (int)httpResponse.StatusCode;
-			if (status != 200 || status != 206) {
+			if (status != 200 && status != 206) {
 				task.IsError = true;
 				return;
 			}
 
 			task.Size = (int)httpResponse.ContentLength;
-			task.IsRunning = false;
 
-			bool existsFile = task.BytesDownloaded > 0;
-			int size = (int)httpResponse.GetResponseStream ().Length;
-			using (BinaryReader br = new BinaryReader (httpResponse.GetResponseStream (), System.Text.UTF8Encoding.UTF8)) {
-				if (existsFile) {
-					using (FileStream fs = File.OpenWrite (task.Item.FilePath)) {
-						fs.Seek (task.BytesDownloaded, SeekOrigin.Begin);
-						fs.Write (br.ReadBytes (size), 0, size);
-						fs.Close ();
+			bool existsFile = File.Exists (task.Item.FilePath);
+			FileStream fs;
+			if (existsFile) {
+				fs = File.OpenWrite (task.Item.FilePath);
+				fs.Seek (task.BytesDownloaded, SeekOrigin.Begin);
+			} else {
+				fs = File.Create (task.Item.FilePath);
+			}
+
+			byte[] bytes = new byte[ReadBlockSize];
+			Stream stream = httpResponse.GetResponseStream ();
+			using (BinaryReader br = new BinaryReader (stream, System.Text.UTF8Encoding.UTF8)) {
+				while (true) {
+					int size = br.Read (bytes, 0, ReadBlockSize);
+					if (size <= 0) {
+						break;
 					}
-				} else {
-					using (FileStream fs = File.Create (task.Item.FilePath)) {
-						fs.Write (br.ReadBytes (size), 0, size);
-						fs.Close ();
+					if (task.Size - task.BytesDownloaded > 0) {
+						fs.Write (bytes, 0, size);
 					}
+
+					task.BytesDownloaded += size;
+					// 是否下载完毕
+					task.IsFinish = task.BytesDownloaded >= task.Size;
 				}
-				task.BytesDownloaded += size;
-				// 是否下载完毕
-				task.IsFinish = task.BytesDownloaded == task.Size;
+				fs.Close ();
+				fs.Dispose ();
+				task.IsRunning = false;
 			}
 		}
 	}

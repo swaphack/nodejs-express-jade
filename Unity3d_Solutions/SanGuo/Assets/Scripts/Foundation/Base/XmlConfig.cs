@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml;
 
-namespace Foundation
+namespace Foundation.Base
 {
 	/// <summary>
 	/// xml配置简单获取

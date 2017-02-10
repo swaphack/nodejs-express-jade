@@ -1,13 +1,15 @@
 ﻿using System;
 using UnityEngine;
 using Game;
+using Game.Helper;
 using Foundation;
 using Foundation.Net;
+using Foundation.Base;
 using System.Net;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace Game
+namespace Game.Helper
 {
 	/// <summary>
 	/// 报文工具

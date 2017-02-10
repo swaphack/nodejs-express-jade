@@ -6,19 +6,19 @@ namespace Foundation.Plugin
 	/// <summary>
 	/// 插件中心
 	/// </summary>
-	public class PluginCenter
+	public class PluginCenter : IDisposable
 	{
 		/// <summary>
 		/// 插件集
 		/// </summary>
-		private List<IPlugin> _Plugins;
+		private HashSet<IPlugin> _Plugins;
 
 		/// <summary>
 		/// 构造函数
 		/// </summary>
 		public PluginCenter ()
 		{
-			_Plugins = new List<IPlugin> ();
+			_Plugins = new HashSet<IPlugin> ();
 		}
 
 		/// <summary>
@@ -30,10 +30,6 @@ namespace Foundation.Plugin
 			if (plugin == null) {
 				return;
 			}
-
-			this.RemovePlugin (plugin);
-
-			plugin.Init ();
 
 			_Plugins.Add (plugin);
 		}
@@ -52,38 +48,72 @@ namespace Foundation.Plugin
 		}
 
 		/// <summary>
-		/// 移除所有插件
-		/// </summary>
-		public void RemoveAllPlugins()
-		{
-			_Plugins.Clear ();
-		}
-
-		/// <summary>
 		/// 获取插件
 		/// </summary>
 		/// <returns>The plugin.</returns>
 		/// <typeparam name="T">The 1st type parameter.</typeparam>
 		public T GetPlugin<T>() where T : IPlugin
 		{
-			for (int i = 0; i < _Plugins.Count; i++) {
-				if (_Plugins [i].GetType () == typeof(T)) {
-					return (T)_Plugins [i];
+			foreach (IPlugin plugin in _Plugins) {
+				if (plugin.GetType () == typeof(T)) {
+					return (T)plugin;
 				}
 			}
 
 			return default(T);
 		}
 
+		/// <summary>
+		/// 获取插件
+		/// </summary>
+		/// <returns>The plugin.</returns>
+		/// <param name="pluginID">Plugin I.</param>
+		public IPlugin GetPlugin(int pluginID)
+		{
+			foreach (IPlugin plugin in _Plugins) {
+				if (plugin.ID == pluginID) {
+					return plugin;
+				}
+			}
+
+			return null;
+		}
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public void Init()
+		{
+			foreach (IPlugin plugin in _Plugins) {
+				plugin.Init ();
+			}
+		}
+
 
 		/// <summary>
 		/// 定时更新
 		/// </summary>
-		public void Update()
+		public void Update(float dt)
 		{
-			for (int i = 0; i < _Plugins.Count; i++) {
-				_Plugins [i].Update ();
+			foreach (IPlugin plugin in _Plugins) {
+				plugin.Update (dt);
 			}
+		}
+
+		/// <summary>
+		/// Releases all resource used by the <see cref="Foundation.Plugin.PluginCenter"/> object.
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Foundation.Plugin.PluginCenter"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="Foundation.Plugin.PluginCenter"/> in an unusable state. After
+		/// calling <see cref="Dispose"/>, you must release all references to the <see cref="Foundation.Plugin.PluginCenter"/>
+		/// so the garbage collector can reclaim the memory that the <see cref="Foundation.Plugin.PluginCenter"/> was occupying.</remarks>
+		public void Dispose()
+		{
+			foreach (IPlugin plugin in _Plugins) {
+				plugin.Dispose ();
+			}
+
+			_Plugins.Clear ();
 		}
 	}
 }

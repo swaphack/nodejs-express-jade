@@ -9,16 +9,6 @@ namespace Foundation.DataBase
 	public interface IDataBase
 	{
 		/// <summary>
-		/// 初始化
-		/// </summary>
-		void Init ();
-
-		/// <summary>
-		/// 清空数据
-		/// </summary>
-		void Clear ();
-
-		/// <summary>
 		/// 获取表
 		/// </summary>
 		/// <returns>表</returns>
@@ -39,11 +29,6 @@ namespace Foundation.DataBase
 		void RemoveTable (string name);
 
 		/// <summary>
-		/// 清空表
-		/// </summary>
-		void ClearTables ();
-
-		/// <summary>
 		/// 添加加载步骤
 		/// </summary>
 		/// <param name="step">加载步骤</param>
@@ -56,8 +41,8 @@ namespace Foundation.DataBase
 		void RemoveStep (string name);
 
 		/// <summary>
-		/// 清除所有加载步骤
+		/// 清除
 		/// </summary>
-		void ClearSteps ();
+		void Clear ();
 	}
 }

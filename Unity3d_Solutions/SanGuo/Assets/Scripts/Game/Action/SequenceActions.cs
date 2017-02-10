@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Game
+namespace Game.Action
 {
 	/// <summary>
 	/// 串行动作

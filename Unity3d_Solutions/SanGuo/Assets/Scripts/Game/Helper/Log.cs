@@ -2,7 +2,7 @@
 using System.IO;
 using UnityEngine;
 
-namespace Game
+namespace Game.Helper
 {
 	/// <summary>
 	/// 记录

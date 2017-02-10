@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Game.Helper;
+using UnityEngine.Experimental.Networking;  
 
-namespace Game
+namespace Game.DownLoad
 {
 	/// <summary>
 	/// www下载
@@ -22,10 +24,11 @@ namespace Game
 		/// <param name="task">Task.</param>
 		public static void RunTask(DownloadTask task)
 		{
-			task.IsRunning = true;
-
 			if (File.Exists (task.Item.FilePath)) {
-				task.BytesDownloaded = File.ReadAllBytes (task.Item.FilePath).Length;
+				FileStream fs = File.OpenWrite (task.Item.FilePath);
+				task.BytesDownloaded = (int)fs.Length;
+				fs.Close ();
+				fs.Dispose ();
 			} else {
 				task.BytesDownloaded = 0;
 				FilePathHelp.CreateDirectoryRecursive (task.Item.FilePath);
@@ -36,37 +39,38 @@ namespace Game
 			
 		internal static IEnumerator Downloading(DownloadTask task)
 		{
-			bool existsFile = task.BytesDownloaded > 0;
-			WWWForm from = new WWWForm ();
-			from.AddField (ReadBlockMark, task.BytesDownloaded.ToString () + "-");
-			WWW www = new WWW (task.Item.Url, from);
+			Dictionary<string, string> headers = new Dictionary<string, string> ();
+			headers.Add (ReadBlockMark, task.BytesDownloaded.ToString () + "-");
+			WWW www = new WWW (task.Item.Url, null, headers);
 			yield return www;
 			if (www.isDone) {
 				if (string.IsNullOrEmpty (www.error)) {
+					bool existsFile = File.Exists (task.Item.FilePath);
+					FileStream fs;  
+					if (existsFile) {
+						fs = File.OpenWrite (task.Item.FilePath);
+						fs.Seek (task.BytesDownloaded, SeekOrigin.Begin);
+					} else {
+						fs = File.Create (task.Item.FilePath);
+					}
+
+					if (www.bytes.Length - task.BytesDownloaded > 0) {
+						fs.Write (www.bytes, task.BytesDownloaded, www.bytes.Length - task.BytesDownloaded);
+					}
+
 					task.BytesDownloaded = www.bytesDownloaded;
 					task.Size = www.size;
-					task.IsRunning = false;
 
-					if (existsFile) {
-						using (FileStream fs = File.OpenWrite (task.Item.FilePath)) {
-							fs.Seek (task.BytesDownloaded, SeekOrigin.Begin);
-							fs.Write (www.bytes, 0, www.bytes.Length);
-							fs.Close ();
-						}
-					} else {
-						using (FileStream fs = File.Create (task.Item.FilePath)) {
-							fs.Write (www.bytes, 0, www.bytes.Length);
-							fs.Close ();
-						}
-					}
 					// 是否下载完毕
-					task.IsFinish = task.BytesDownloaded == task.Size;
+					task.IsFinish = task.BytesDownloaded >= task.Size;
+
+					fs.Close ();
+					fs.Dispose ();
 				} else {
+					Log.Warning(www.error);
 					task.IsError = true;
 				}
-			} else {
-				task.BytesDownloaded = www.bytesDownloaded;
-				task.Size = www.size;
+				task.IsRunning = false;
 			}
 		}
 	}

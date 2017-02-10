@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Game
+namespace Game.Platform
 {
 	/// <summary>
 	/// 点击监听
@@ -58,9 +58,9 @@ namespace Game
 				}
 				_TouchEnabled = value;
 				if (_TouchEnabled == true) {
-					GameInstance.GetInstance ().Platform.AddTouchDispatcher (this);
+					GameInstance.GetInstance ().Device.AddTouchDispatcher (this);
 				} else {
-					GameInstance.GetInstance ().Platform.RemoveTouchDispatcher (this);
+					GameInstance.GetInstance ().Device.RemoveTouchDispatcher (this);
 				}
 
 			}

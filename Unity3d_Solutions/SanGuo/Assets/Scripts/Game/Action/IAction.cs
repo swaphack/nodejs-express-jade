@@ -1,6 +1,7 @@
 ﻿using System;
+using UnityEngine;
 
-namespace Game
+namespace Game.Action
 {
 	/// <summary>
 	/// 动作接口
@@ -18,5 +19,11 @@ namespace Game
 		/// <param name="dt">Dt.</param>
 		void Update(float dt);
 	}
+
+
+	/// <summary>
+	/// 动作回调
+	/// </summary>
+	public delegate void OnActionCallback(IAction action);
 }
 

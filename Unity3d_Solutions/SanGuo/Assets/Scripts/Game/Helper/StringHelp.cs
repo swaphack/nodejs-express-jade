@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Game
+namespace Game.Helper
 {
 	/// <summary>
 	/// 字符串工具

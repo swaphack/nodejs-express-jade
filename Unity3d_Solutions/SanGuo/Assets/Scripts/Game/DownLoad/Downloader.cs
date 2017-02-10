@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-namespace Game
+namespace Game.DownLoad
 {
 	/// <summary>
 	/// 下载回调
@@ -26,15 +26,15 @@ namespace Game
 		/// <summary>
 		/// 下载进行中
 		/// </summary>
-		public OnDownloadCallback OnProgress;
+		public OnDownloadCallback OnProgressHandler;
 		/// <summary>
 		/// 下载成功
 		/// </summary>
-		public OnDownloadCallback onSuccess;
+		public OnDownloadCallback OnSuccessHandler;
 		/// <summary>
 		/// 下载失败
 		/// </summary>
-		public OnDownloadCallback onFailure;
+		public OnDownloadCallback OnFailureHandler;
 		/// <summary>
 		/// 执行下载任务
 		/// </summary>
@@ -112,7 +112,7 @@ namespace Game
 
 				// 下载完毕
 				if (task.IsFinish == true) {
-					onSuccess(task);
+					OnSuccess(task);
 					_DownloadSheet.Pop ();
 					return;
 				}
@@ -126,13 +126,54 @@ namespace Game
 
 				// 下载进行中
 				if (task.IsError) {
-					// 下载错误
-					onFailure (task);
+					// 下载出现错误
+					OnFailure (task);
 					_DownloadSheet.Pop ();
 				} else {
 					// 下载中
 					OnProgress (task);
 				}
+			}
+		}
+
+		private void OnDownload(DownloadTask task)
+		{
+			if (task != null && RunTaskHandler != null) {
+				RunTaskHandler (task);
+			}
+		}
+
+		/// <summary>
+		/// 下载成功
+		/// </summary>
+		/// <param name="task">Task.</param>
+		private void OnSuccess(DownloadTask task)
+		{
+			if (task != null && OnSuccessHandler != null) {
+				OnSuccessHandler (task);
+			}
+			
+		}
+
+		/// <summary>
+		/// 下载失败
+		/// </summary>
+		/// <param name="task">Task.</param>
+		private void OnFailure(DownloadTask task)
+		{
+			if (task != null && OnFailureHandler != null) {
+				OnFailureHandler (task);
+			}
+		}
+
+		/// <summary>
+		/// 下载中
+		/// </summary>
+		/// <param name="task">Task.</param>
+		private void OnProgress(DownloadTask task)
+		{
+			if (task != null && OnProgressHandler != null) {
+				OnProgressHandler (task);
 			}
 		}
 	}

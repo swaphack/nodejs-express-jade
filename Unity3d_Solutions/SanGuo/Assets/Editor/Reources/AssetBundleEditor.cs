@@ -3,7 +3,8 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
-using Game;
+using Game.Helper;
+using Game.Constants;
 
 /// <summary>
 /// 资源包编辑
