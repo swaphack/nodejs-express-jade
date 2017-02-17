@@ -3,7 +3,7 @@
     Properties {
         _Color ("Main Color", Color) = (.5,.5,.5,1)
         _OutlineColor ("Rim Color", Color) = (0,0,0,1)
-        _Outline ("Rim width", Range (.002, 0.03)) = .005
+        _Outline ("Rim width", Range (.000, 0.03)) = .005
         _MainTex ("Base (RGB)", 2D) = "white" { }
         _Illum ("Illumin (A)", 2D) = "white" { }
         _EmissionLM ("Emission (Lightmapper)", Float) = 0

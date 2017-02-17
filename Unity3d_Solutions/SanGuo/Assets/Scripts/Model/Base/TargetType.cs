@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Model.Skill
+namespace Model.Base
 {
 	/// <summary>
 	/// 选择目标类型

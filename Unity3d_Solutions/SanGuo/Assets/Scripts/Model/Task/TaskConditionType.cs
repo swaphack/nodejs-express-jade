@@ -12,6 +12,10 @@ namespace Model.Task
 		/// </summary>
 		Item,
 		/// <summary>
+		/// 怪物
+		/// </summary>
+		Monster,
+		/// <summary>
 		/// 等级
 		/// </summary>
 		Level,

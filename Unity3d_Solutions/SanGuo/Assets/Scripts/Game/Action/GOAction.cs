@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Game.Action
 {
@@ -15,11 +16,28 @@ namespace Game.Action
 		/// 动作
 		/// </summary>
 		private SpawnActions _Actions;
+		/// <summary>
+		/// 目标
+		/// </summary>
+		private Transform _Target;
 
 		public GOAction() 
 		{
 			_Actions = new SpawnActions ();
 			_ActionStatus = ActionStatus.Pause;	
+		}
+
+		/// <summary>
+		/// 目标
+		/// </summary>
+		/// <value>The target.</value>
+		public Transform Target {
+			get { 
+				return _Target;
+			}
+			set { 
+				_Target = value;
+			}
 		}
 
 		/// <summary>
@@ -55,6 +73,7 @@ namespace Game.Action
 				return;
 			}
 
+			action.Target = Target;
 			_Actions.AddAction (action);
 		}
 
@@ -67,7 +86,6 @@ namespace Game.Action
 			if (action == null) {
 				return;
 			}
-
 			_Actions.RemoveAction (action);
 		}
 

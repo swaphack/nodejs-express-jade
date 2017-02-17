@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml;
 using Game.Table;
 using Foundation.DataBase;
 
@@ -27,6 +28,38 @@ namespace Game.Helper
 				return null;
 			}
 			return loadStep.TableData;
+		}
+
+		/// <summary>
+		/// 加载xml跟节点
+		/// </summary>
+		/// <returns>The X ml root.</returns>
+		/// <param name="configPath">Config path.</param>
+		public static XmlNode LoadXMlRoot(string configPath)
+		{
+			string xmlData = FileDataHelp.GetXmlFileData (configPath);
+			if (string.IsNullOrEmpty (xmlData)) {
+				return null;
+			}
+
+			XmlDocument document = new XmlDocument ();
+			document.LoadXml (xmlData);
+			XmlNode root = document.FirstChild;
+			if (root == null) {
+				return null;		
+			}
+
+			XmlNode node = root.NextSibling;
+			if (node == null) {
+				return null;		
+			}
+
+			node = node.FirstChild;
+			if (node == null) {
+				return null;		
+			}
+
+			return node;
 		}
 	}
 }

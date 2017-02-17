@@ -27,6 +27,14 @@ namespace Game.Module
 		/// 数据库
 		/// </summary>
 		DataBase,
+		/// <summary>
+		/// 用户界面
+		/// </summary>
+		UI,
+		/// <summary>
+		/// 战斗
+		/// </summary>
+		Battle,
 	}
 }
 

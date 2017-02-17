@@ -103,26 +103,65 @@ namespace Data
 			_ElementItems = new List<ElementItem> ();
 		}
 
+
+		/// <summary>
+		/// 加载原型
+		/// </summary>
+		/// <returns><c>true</c>, if prefab was loaded, <c>false</c> otherwise.</returns>
+		/// <param name="node">Node.</param>
+		private void LoadPrefab(XmlNode node)
+		{
+			if (node == null) {
+				return;
+			}
+
+			XmlElement element = (XmlElement)node;
+			_AssetBundle = element.GetAttribute ("Path");
+			XmlNode itemNode = node.FirstChild;
+			while (itemNode != null) {
+				element = (XmlElement)itemNode;
+
+				PrefabItem item = new PrefabItem();
+				item.ID = Int32.Parse(element.GetAttribute ("ID"));
+				item.Path = element.GetAttribute ("Path");
+				_PrefabItems [item.ID] = item;
+
+				itemNode = itemNode.NextSibling;
+			}
+		}
+
+		/// <summary>
+		/// 加载元素
+		/// </summary>
+		/// <param name="node">Node.</param>
+		private void LoadElement(XmlNode node)
+		{
+			if (node == null) {
+				return;
+			}
+
+			XmlNode itemNode = node.FirstChild;
+			while (itemNode != null) {
+				XmlElement element = (XmlElement)itemNode;
+
+				ElementItem item = new ElementItem();
+				item.Name = element.GetAttribute ("Name");
+				item.PrefabID = Int32.Parse(element.GetAttribute ("PrefabID"));
+				item.Position = StringHelp.ConvertToVector3 (element.GetAttribute ("Position"));
+				_ElementItems.Add(item);
+
+				itemNode = itemNode.NextSibling;
+			}
+		}
+
 		/// <summary>
 		/// 加载
 		/// </summary>
 		public bool Load ()
 		{
-			string xmlData = FileDataHelp.GetXmlFileData (ConfigPath);
-			if (string.IsNullOrEmpty (xmlData)) {
-				return false;
-			}
-
-			XmlDocument document = new XmlDocument ();
-			document.LoadXml (xmlData);
-			XmlNode root = document.FirstChild;
-			if (root == null) {
-				return false;		
-			}
-
-			XmlNode node = root.NextSibling;
+			XmlNode node = XmlHelp.LoadXMlRoot (ConfigPath);
 			if (node == null) {
-				return false;		
+				return false;
 			}
 
 			this.Clear ();
@@ -130,28 +169,9 @@ namespace Data
 			node = node.FirstChild;
 			while (node != null) {
 				if (node.Name == "Prefabs") {
-					XmlElement element = (XmlElement)node;
-					_AssetBundle = element.GetAttribute ("Path");
-					element = (XmlElement)node.FirstChild;
-					while (element != null) {
-						PrefabItem item = new PrefabItem();
-						item.ID = Int32.Parse(element.GetAttribute ("ID"));
-						item.Path = element.GetAttribute ("Path");
-						_PrefabItems [item.ID] = item;
-
-						element = (XmlElement)element.NextSibling;
-					}
+					LoadPrefab (node);
 				} else if (node.Name == "Elements") {
-					XmlElement element = (XmlElement)node.FirstChild;
-					while (element != null) {
-						ElementItem item = new ElementItem();
-						item.Name = element.GetAttribute ("Name");
-						item.PrefabID = Int32.Parse(element.GetAttribute ("PrefabID"));
-						item.Position = StringHelp.ConvertToVector3 (element.GetAttribute ("Position"));
-						_ElementItems.Add(item);
-
-						element = (XmlElement)element.NextSibling;
-					}
+					LoadElement (node);
 				}
 				
 				node = node.NextSibling;

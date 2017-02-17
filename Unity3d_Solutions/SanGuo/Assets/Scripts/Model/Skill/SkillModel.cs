@@ -25,7 +25,7 @@ namespace Model.Skill
 		/// 选择半径
 		/// 在范围内有目标，才能触发
 		/// </summary>
-		public float ChooseRadius;
+		public float Radius;
 		/// <summary>
 		/// 选择目标类型
 		/// 目标满足条件，才能触发

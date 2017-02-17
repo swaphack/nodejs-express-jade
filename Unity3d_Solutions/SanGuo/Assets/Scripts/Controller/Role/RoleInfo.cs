@@ -19,6 +19,10 @@ namespace Controller.Role
 		/// 等级
 		/// </summary>
 		public int Level;
+		/// <summary>
+		/// 经验
+		/// </summary>
+		public int Exp;
 	}
 }
 

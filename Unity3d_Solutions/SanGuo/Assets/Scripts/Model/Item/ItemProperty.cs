@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Model.Base;
 
-namespace Model.Item
+namespace Model.Battle
 {
 	/// <summary>
 	/// 物品属性
@@ -11,7 +12,7 @@ namespace Model.Item
 		/// <summary>
 		/// 属性{属性类型，属性值}
 		/// </summary>
-		public Dictionary<int, float> Attributes;
+		public Property Attributes;
 	}
 }
 

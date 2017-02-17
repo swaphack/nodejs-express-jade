@@ -6,18 +6,12 @@ namespace Game.Action
 	/// <summary>
 	/// 串行动作
 	/// </summary>
-	public class SequenceActions : IAction
+	public class SequenceActions : BaseAction
 	{
 		/// <summary>
 		/// 动作集
 		/// </summary>
 		private List<IAction> _Actions;
-
-		/// <summary>
-		/// 是否完成动作，如果完成移除
-		/// </summary>
-		/// <value><c>true</c> if this instance is finish; otherwise, <c>false</c>.</value>
-		public bool IsFinish { get { return _Actions.Count == 0; } }
 
 		public SequenceActions()
 		{
@@ -28,7 +22,7 @@ namespace Game.Action
 		/// 定时更新
 		/// </summary>
 		/// <param name="dt">Dt.</param>
-		public void Update(float dt)
+		public override void Update(float dt)
 		{
 			int count = _Actions.Count;
 			if (count < 0) {
@@ -45,6 +39,8 @@ namespace Game.Action
 			if (action.IsFinish == true) {
 				_Actions.RemoveAt (0);
 			}
+
+			IsFinish = _Actions.Count == 0;
 		}
 
 		/// <summary>

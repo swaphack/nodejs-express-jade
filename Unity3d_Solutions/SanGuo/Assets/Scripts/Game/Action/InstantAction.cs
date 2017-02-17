@@ -5,7 +5,7 @@ namespace Game.Action
 	/// <summary>
 	/// 瞬间完成
 	/// </summary>
-	public class InstantAction : Action
+	public class InstantAction : BaseAction
 	{
 		public InstantAction ()
 		{
@@ -53,6 +53,7 @@ namespace Game.Action
 		{
 			if (_Handler != null) {
 				_Handler (this);
+				IsFinish = true;
 			}
 		}
 	}

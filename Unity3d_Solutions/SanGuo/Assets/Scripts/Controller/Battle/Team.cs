@@ -3,6 +3,7 @@ using UnityEngine;
 using Model.Battle;
 using Game;
 using Game.Helper;
+using Model.Base;
 
 namespace Controller.Battle
 {
@@ -28,12 +29,25 @@ namespace Controller.Battle
 		/// </summary>
 		private UnitSheet _DeadUnits;
 		/// <summary>
+		/// 队伍被摧毁
+		/// </summary>
+		public event OnTeamBroadCast OnDestory;
+		/// <summary>
+		/// 创建新单位资源
+		/// </summary>
+		public event OnUnitBroadCast OnUnitCreate;
+		/// <summary>
+		/// 销毁单位资源
+		/// </summary>
+		public event OnUnitBroadCast OnUnitDestory;
+		/// <summary>
 		/// 是否被摧毁
 		/// </summary>
 		/// <value><c>true</c> if this instance is destory; otherwise, <c>false</c>.</value>
 		public bool IsDestory {
 			get {
-				return _AliveUnits.Count == 0;
+				// 所有单位被摧毁
+				return _DeadUnits.Count == _Formation.UnitModels.Count;
 			}
 		}
 
@@ -102,13 +116,13 @@ namespace Controller.Battle
 			if (string.IsNullOrEmpty (paper.AssetBundlePath)) {
 				FileDataHelp.CreatePrefabFromAsset (paper.FileName, (GameObject gameObj)=>{
 					if (gameObj != null) {
-						OnCreateGameObject(gameObj, paper);
+						OnCreateUnit(gameObj, paper);
 					}
 				});					
 			} else {
 				FileDataHelp.CreatePrefabFromAssetBundle (paper.AssetBundlePath, paper.FileName, (GameObject gameObj)=>{
 					if (gameObj != null) {
-						OnCreateGameObject(gameObj, paper);
+						OnCreateUnit(gameObj, paper);
 					}
 				});
 			}
@@ -122,6 +136,7 @@ namespace Controller.Battle
 		/// <param name="dt">Dt.</param>
 		protected void UpdateUnits(float dt) {
 			_AliveUnits.Update (dt);
+			_DeadUnits.Update (dt);
 		}
 
 		/// <summary>
@@ -129,13 +144,13 @@ namespace Controller.Battle
 		/// </summary>
 		/// <param name="gameObj">Game object.</param>
 		/// <param name="paper">UnitModel.</param>
-		private void OnCreateGameObject(GameObject gameObj, UnitModel paper)
+		private void OnCreateUnit(GameObject gameObj, UnitModel paper)
 		{
 			if (gameObj == null || paper == null) {
 				return;
 			}
 
-			GameObject newGameObj = GameObject.Instantiate<GameObject> (gameObj);
+			GameObject newGameObj = Utility.Clone (gameObj);
 			if (newGameObj == null) {
 				return;
 			}
@@ -150,19 +165,59 @@ namespace Controller.Battle
 			}
 
 			Unit unit = new Unit ();
+			unit.ID = paper.ID;
 			unit.SetObject (newGameObj);
 			unit.SetModel (paper);
-			unit.SetDeadHandler (OnDisposeGameObject);
+			unit.TeamID = ID;
+			unit.OnDead += OnDisposeUnit;
+			unit.OnUnitActionEnd += OnEndUnitAction;
 			_AliveUnits.AddUnit (unit);
+			OnUnitCreate (unit);
 		}
 
-		private void OnDisposeGameObject(Unit unit)
+		/// <summary>
+		/// 移除单位
+		/// </summary>
+		/// <param name="unit">Unit.</param>
+		private void OnDisposeUnit(Unit unit)
 		{
+			if (unit == null) {
+				return;
+			}
+
+			_AliveUnits.RemoveUnit (unit.ID);
+			_DeadUnits.AddUnit (unit);
+			if (_AliveUnits.Count == 0) {
+				this.Dispose ();
+			}
 		}
 
+		/// <summary>
+		/// 单位动作播放结束
+		/// </summary>
+		/// <param name="unit">Unit.</param>
+		/// <param name="tag">Tag.</param>
+		private void OnEndUnitAction(Unit unit, string tag)
+		{
+			if (unit == null || string.IsNullOrEmpty (tag)) {
+				return;
+			}
+
+			if (tag == UnitAction.AnimationTag.Dead) {
+				OnUnitDestory (unit);
+			}
+		}
+
+		/// <summary>
+		/// 销毁队伍
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Controller.Battle.Team"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="Controller.Battle.Team"/> in an unusable state. After calling
+		/// <see cref="Dispose"/>, you must release all references to the <see cref="Controller.Battle.Team"/> so the garbage
+		/// collector can reclaim the memory that the <see cref="Controller.Battle.Team"/> was occupying.</remarks>
 		public void Dispose()
 		{
-			
+			OnDestory (this);
 		}
 	}
 }

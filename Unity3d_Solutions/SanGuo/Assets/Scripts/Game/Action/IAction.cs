@@ -14,6 +14,11 @@ namespace Game.Action
 		/// <value><c>true</c> if this instance is finish; otherwise, <c>false</c>.</value>
 		bool IsFinish { get; }
 		/// <summary>
+		/// 对象
+		/// </summary>
+		/// <value>The transform.</value>
+		Transform Target { get ; set ;	}
+		/// <summary>
 		/// 定时更新
 		/// </summary>
 		/// <param name="dt">Dt.</param>

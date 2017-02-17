@@ -38,7 +38,7 @@ namespace Model.Battle
 		/// </summary>
 		/// <param name="type">PropertyType.</param>
 		/// <param name="value">Value.</param>
-		public void SetValue(PropertyType type, int value)
+		public void SetValue(PropertyType type, float value)
 		{
 			if (_Properties.ContainsKey (type)) {
 				_Properties [type] = value;
@@ -46,6 +46,14 @@ namespace Model.Battle
 				_Properties.Add (type, value);
 			}
 		}  
+
+		/// <summary>
+		/// 清空数据
+		/// </summary>
+		public void Clear()
+		{
+			_Properties.Clear ();
+		}
 	}
 }
 

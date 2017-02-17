@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Model.Skill
+namespace Model.Base
 {
 	/// <summary>
 	/// 技能效果类型

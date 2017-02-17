@@ -49,8 +49,10 @@
      <Compile Include="Assets\Editor\Reources\AssetBundleEditor.cs" />
      <Compile Include="Assets\Editor\Reources\XmlDataEditor.cs" />
      <Compile Include="Assets\Editor\Resolution.cs" />
+     <None Include="Assets\Resources\Shaders\Simple.shader" />
      <None Include="Assets\Resources\DataBase\Data\ResourceType.xml" />
      <None Include="Assets\Resources\DataBase\Config\Remote.xml" />
+     <None Include="Assets\Resources\Shaders\Sample.shader" />
      <None Include="Assets\Resources\DataBase\Data\BuildProperty.xml" />
      <None Include="Assets\Resources\DataBase\Data\AdminLevel.xml" />
      <None Include="Assets\Resources\DataBase\Data\BuildType.xml" />

@@ -10,7 +10,7 @@ namespace Model.Task
 		/// <summary>
 		/// 条件类型
 		/// </summary>
-		public int Type;
+		public TaskConditionType Type;
 		/// <summary>
 		/// 目标编号（物品id、怪物id等）
 		/// </summary>

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Model.Base;
+using Model.Skill;
 
 namespace Model.Battle
 {
@@ -8,6 +11,7 @@ namespace Model.Battle
 	/// </summary>
 	public class UnitModel
 	{
+		public int ID;
 		/// <summary>
 		/// 资源包路径
 		/// </summary>
@@ -32,6 +36,20 @@ namespace Model.Battle
 		/// 单位体积
 		/// </summary>
 		public Vector3 Volume;
+		/// <summary>
+		/// 属性
+		/// </summary>
+		public Dictionary<PropertyType, float> Attributes;
+		/// <summary>
+		/// 技能
+		/// </summary>
+		public List<SkillModel> Skills;
+
+		public UnitModel()
+		{
+			Attributes = new Dictionary<PropertyType, float> ();
+			Skills = new List<SkillModel> ();
+		}
 	}
 }
 

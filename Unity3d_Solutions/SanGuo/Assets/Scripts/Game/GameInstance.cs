@@ -21,6 +21,10 @@ namespace Game
 		/// 插件管理中心
 		/// </summary>
 		private PluginCenter _PluginCenter;
+		/// <summary>
+		/// 临时插件管理中心
+		/// </summary>
+		private PluginCenter _TempPluginCenter;
 
 		/// <summary>
 		/// 游戏静态实例
@@ -35,6 +39,7 @@ namespace Game
 			s_GameInstance = this;
 
 			_PluginCenter = new PluginCenter ();
+			_TempPluginCenter = new PluginCenter ();
 
 			// 注册模块
 			RegisterModules ();
@@ -53,12 +58,13 @@ namespace Game
 		/// </summary>
 		void Start()
 		{
-			// 玩家信息
-			Player.MainPlayer.Init ();
+			_PluginCenter.Init ();
+
 			// 日志
 			Log.Init();
 
-			_PluginCenter.Init ();
+			// 玩家信息
+			Player.MainPlayer.Init ();
 		}
 
 		/// <summary>
@@ -66,12 +72,15 @@ namespace Game
 		/// </summary>
 		void Update()
 		{
-			_PluginCenter.Update (GetDeltaTime ());
+			float dt = GetDeltaTime ();
+			_PluginCenter.Update (dt);
+			_TempPluginCenter.Update (dt);
 		}
 
 		void OnDestory()
 		{
 			_PluginCenter.Dispose ();
+			_TempPluginCenter.Dispose ();
 		}
 
 		/// <summary>
@@ -101,6 +110,32 @@ namespace Game
 		}
 
 		/// <summary>
+		/// 添加临时插件
+		/// </summary>
+		/// <param name="plugin">Plugin.</param>
+		public void AddTempPlugin(IPlugin plugin)
+		{
+			if (plugin == null) {
+				return;
+			}
+
+			_TempPluginCenter.AddPlugin (plugin);
+		}
+
+		/// <summary>
+		/// 移除临时插件
+		/// </summary>
+		/// <param name="plugin">Plugin.</param>
+		public void RemoveTempPlugin(IPlugin plugin)
+		{
+			if (plugin == null) {
+				return;
+			}
+
+			_TempPluginCenter.RemovePlugin (plugin);
+		}
+
+		/// <summary>
 		/// 注册模块
 		/// </summary>
 		private void RegisterModules()
@@ -110,6 +145,7 @@ namespace Game
 			_PluginCenter.AddPlugin (new ActionPlugin ());
 			_PluginCenter.AddPlugin (new DevicePlugin ());
 			_PluginCenter.AddPlugin (new DataBasePlugin ());
+			_PluginCenter.AddPlugin (new UIPlugin ());
 		}
 
 		/// <summary>

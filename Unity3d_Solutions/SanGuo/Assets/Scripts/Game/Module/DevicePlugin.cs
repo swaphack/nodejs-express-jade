@@ -154,6 +154,7 @@ namespace Game.Module
 		/// </summary>
 		public void Init()
 		{
+			Log.Info ("Screen.Size, width : " + Screen.width + ", height : " + Screen.height);
 			Log.Info ("Application.dataPath : " + Application.dataPath);
 			Log.Info ("Application.persistentDataPath : " + Application.persistentDataPath);
 			Log.Info ("Application.streamingAssetsPath : " + Application.streamingAssetsPath);

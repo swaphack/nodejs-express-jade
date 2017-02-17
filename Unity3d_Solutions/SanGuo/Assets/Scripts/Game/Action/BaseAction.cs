@@ -6,7 +6,7 @@ namespace Game.Action
 	/// <summary>
 	/// 实例单个动作表现
 	/// </summary>
-	public abstract class Action : IAction
+	public abstract class BaseAction : IAction
 	{
 		/// <summary>
 		/// 是否结束
@@ -15,7 +15,7 @@ namespace Game.Action
 		/// <summary>
 		/// 对象
 		/// </summary>
-		private GameObject _GameObject;
+		private Transform _Target;
 
 		/// <summary>
 		/// 是否完成动作，如果完成移除
@@ -34,16 +34,16 @@ namespace Game.Action
 		/// 对象
 		/// </summary>
 		/// <value>The transform.</value>
-		public GameObject GameObject { 
+		public Transform Target { 
 			get { 
-				return _GameObject;
+				return _Target;
 			}
 			set { 
-				_GameObject = value;
+				_Target = value;
 			}
 		}
 
-		public Action ()
+		public BaseAction ()
 		{
 			_IsFinish = false;
 		}

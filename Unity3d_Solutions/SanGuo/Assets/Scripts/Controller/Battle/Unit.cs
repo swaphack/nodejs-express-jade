@@ -1,13 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Model.Battle;
+using Model.Base;
 
 namespace Controller.Battle
 {
-	/// <summary>
-	/// 单位死亡处理
-	/// </summary>
-	public delegate void OnUnitDeadCallback(Unit unit);
 	/// <summary>
 	/// 作战单位
 	/// </summary>
@@ -28,7 +26,19 @@ namespace Controller.Battle
 		/// <summary>
 		/// 单位死亡处理
 		/// </summary>
-		private OnUnitDeadCallback _OnDeadHandler;
+		public event OnUnitBroadCast OnDead;
+		/// <summary>
+		/// 开始播放动作
+		/// </summary>
+		public event OnUnitActionBroadCast OnUnitActionStart;
+		/// <summary>
+		/// 动作播放停止
+		/// </summary>
+		public event OnUnitActionBroadCast OnUnitActionEnd;
+		/// <summary>
+		/// 所属队伍编号
+		/// </summary>
+		public int TeamID;
 		/// <summary>
 		/// 空间变换对象
 		/// </summary>
@@ -53,6 +63,8 @@ namespace Controller.Battle
 		{
 			_TranformObject = new TranformObject ();
 			_UnitProperty = new UnitProperty ();
+
+			_UnitProperty.OnCurrentPropertyChanged += OnPropertyChanged;
 		}
 
 		/// <summary>
@@ -67,6 +79,24 @@ namespace Controller.Battle
 			}
 
 			_TranformObject.SetTranform (gameObj.transform);
+			_TranformObject.OnActionStart += OnStartAction;
+			_TranformObject.OnActionEnd += OnEndAction;
+		}
+
+		/// <summary>
+		///  播放动作
+		/// </summary>
+		/// <param name="tag">Tag.</param>
+		private void OnStartAction(string tag) {
+			OnUnitActionStart (this, tag);	
+		}
+
+		/// <summary>
+		///  停止动作
+		/// </summary>
+		/// <param name="tag">Tag.</param>
+		private void OnEndAction(string tag) {
+			OnUnitActionEnd (this, tag);
 		}
 
 		/// <summary>
@@ -80,15 +110,32 @@ namespace Controller.Battle
 			}
 
 			_UnitModel = paper;
+
+			if (paper.Attributes != null) {
+				foreach(KeyValuePair<PropertyType, float>  item in paper.Attributes){
+					_UnitProperty.BaseProperty.SetValue (item.Key, item.Value);
+				}
+
+				foreach(KeyValuePair<PropertyType, float>  item in paper.Attributes) {
+					float value = _UnitProperty.GetMaxValue (item.Key);
+					_UnitProperty.CurrentProperty.SetValue (item.Key, value);
+				}
+			}
 		}
 
 		/// <summary>
-		/// 设置单位死亡处理
+		/// 属性改变时通知
 		/// </summary>
-		/// <param name="handler">Handler.</param>
-		public void SetDeadHandler(OnUnitDeadCallback handler)
+		/// <param name="type">Type.</param>
+		/// <param name="value">Value.</param>
+		private void OnPropertyChanged(PropertyType type, float value)
 		{
-			_OnDeadHandler = handler;
+			if (type == PropertyType.HitPoints) {
+				if (value <= 0) {
+					OnDead (this);
+					_TranformObject.PlayDead ();
+				}
+			}
 		}
 
 		/// <summary>
@@ -97,7 +144,11 @@ namespace Controller.Battle
 		/// <param name="delta">Delta.</param>
 		public void Update(float dt)
 		{
-			
+			_TranformObject.Update (dt);
+
+			if (_UnitProperty.Dead) {
+				return;
+			}
 		}
 	}
 }

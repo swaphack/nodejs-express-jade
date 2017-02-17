@@ -148,7 +148,7 @@ namespace Game.Local
 				handler (null);
 			}
 
-			Utility.RunCoroutine (CheckWWWExists (url, handler));
+			Utility.RunCoroutine (CheckExistsWWW (url, handler));
 		}
 
 		/// <summary>
@@ -156,7 +156,7 @@ namespace Game.Local
 		/// </summary>
 		/// <param name="url">URL.</param>
 		/// <param name="handler">Handler.</param>
-		private IEnumerator CheckWWWExists(string filepath, OnWWWCallback handler)
+		private IEnumerator CheckExistsWWW(string filepath, OnWWWCallback handler)
 		{
 			WWW www = new WWW (FilePathHelp.WWWMark + filepath);
 			yield return www;

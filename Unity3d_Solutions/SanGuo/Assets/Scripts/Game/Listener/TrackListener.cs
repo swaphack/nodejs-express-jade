@@ -95,7 +95,7 @@ namespace Game.Listener
 					return;
 				}
 
-				GameObject instance = GameObject.Instantiate<GameObject> (gameObj);
+				GameObject instance = Utility.Clone (gameObj);
 				if (instance == null) {
 					return;
 				}
@@ -110,7 +110,7 @@ namespace Game.Listener
 					return;
 				}
 
-				GameObject instance = GameObject.Instantiate<GameObject> (gameObj);
+				GameObject instance = Utility.Clone (gameObj);
 				if (instance == null) {
 					return;
 				}
