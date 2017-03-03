@@ -70,11 +70,15 @@ namespace Game
 		/// <summary>
 		/// 更新
 		/// </summary>
-		void Update()
+		void FixedUpdate()
 		{
-			float dt = GetDeltaTime ();
-			_PluginCenter.Update (dt);
-			_TempPluginCenter.Update (dt);
+			try {
+				float dt = GetDeltaTime ();
+				_PluginCenter.Update (dt);
+				_TempPluginCenter.Update (dt);
+			} catch (Exception ex) {
+				Log.Error (ex.ToString ());
+			}
 		}
 
 		void OnDestory()

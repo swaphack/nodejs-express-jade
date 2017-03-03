@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+	<Points Des="点">
+		<Item ID="1" X="0" Y="0"/>
+		<Item ID="2" X="0" Y="1"/>
+		<Item ID="3" X="0" Y="2"/>
+		<Item ID="4" X="0" Y="3"/>
+		<Item ID="5" X="0" Y="4"/>
+		<Item ID="6" X="0" Y="5"/>
+		<Item ID="7" X="0" Y="6"/>
+		<Item ID="8" X="0" Y="7"/>
+		<Item ID="9" X="0" Y="8"/>
+		<Item ID="10" X="0" Y="9"/>
+		<Item ID="11" X="1" Y="0"/>
+		<Item ID="12" X="1" Y="1"/>
+		<Item ID="13" X="1" Y="2"/>
+		<Item ID="14" X="1" Y="3"/>
+		<Item ID="15" X="1" Y="4"/>
+		<Item ID="16" X="1" Y="5"/>
+		<Item ID="17" X="1" Y="6"/>
+		<Item ID="18" X="1" Y="7"/>
+		<Item ID="19" X="1" Y="8"/>
+		<Item ID="20" X="1" Y="9"/>
+		<Item ID="21" X="2" Y="0"/>
+		<Item ID="22" X="2" Y="1"/>
+		<Item ID="23" X="2" Y="2"/>
+		<Item ID="24" X="2" Y="3"/>
+		<Item ID="25" X="2" Y="4"/>
+		<Item ID="26" X="2" Y="5"/>
+		<Item ID="27" X="2" Y="6"/>
+		<Item ID="28" X="2" Y="7"/>
+		<Item ID="29" X="2" Y="8"/>
+		<Item ID="30" X="2" Y="9"/>
+		<Item ID="31" X="3" Y="0"/>
+		<Item ID="32" X="3" Y="1"/>
+		<Item ID="33" X="3" Y="2"/>
+		<Item ID="34" X="3" Y="3"/>
+		<Item ID="35" X="3" Y="4"/>
+		<Item ID="36" X="3" Y="5"/>
+		<Item ID="37" X="3" Y="6"/>
+		<Item ID="38" X="3" Y="7"/>
+		<Item ID="39" X="3" Y="8"/>
+		<Item ID="40" X="3" Y="9"/>
+	</Points>
+	<Links Des="关联">
+		<Item ID="1" Point1="1" Point2="2" Distance="1"/>
+		<Item ID="2" Point1="2" Point2="3" Distance="1"/>
+		<Item ID="3" Point1="3" Point2="13" Distance="1"/>
+		<Item ID="4" Point1="13" Point2="12" Distance="1"/>
+		<Item ID="5" Point1="12" Point2="22" Distance="1"/>
+		<Item ID="6" Point1="22" Point2="32" Distance="1"/>
+		<Item ID="7" Point1="32" Point2="33" Distance="1"/>
+		<Item ID="8" Point1="33" Point2="34" Distance="1"/>
+		<Item ID="9" Point1="34" Point2="35" Distance="1"/>
+		<Item ID="10" Point1="35" Point2="36" Distance="1"/>
+		<Item ID="11" Point1="36" Point2="37" Distance="1"/>
+		<Item ID="12" Point1="37" Point2="38" Distance="1"/>
+		<Item ID="13" Point1="38" Point2="39" Distance="1"/>
+		<Item ID="14" Point1="39" Point2="40" Distance="1"/>
+	</Links>
+</root>

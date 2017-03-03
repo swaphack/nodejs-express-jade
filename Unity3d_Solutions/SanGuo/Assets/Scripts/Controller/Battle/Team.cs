@@ -31,15 +31,15 @@ namespace Controller.Battle
 		/// <summary>
 		/// 队伍被摧毁
 		/// </summary>
-		public event OnTeamBroadCast OnDestory;
+		public event OnTeamBroadcast OnDestory;
 		/// <summary>
 		/// 创建新单位资源
 		/// </summary>
-		public event OnUnitBroadCast OnUnitCreate;
+		public event OnUnitBroadcast OnUnitCreate;
 		/// <summary>
 		/// 销毁单位资源
 		/// </summary>
-		public event OnUnitBroadCast OnUnitDestory;
+		public event OnUnitBroadcast OnUnitDestory;
 		/// <summary>
 		/// 是否被摧毁
 		/// </summary>
@@ -95,8 +95,6 @@ namespace Controller.Battle
 		/// <param name="delta">Delta.</param>
 		public void Update(float dt)
 		{
-			// 加载单位
-			LoadUnits ();
 			// 更新单位
 			UpdateUnits (dt);
 		}
@@ -104,12 +102,20 @@ namespace Controller.Battle
 		/// <summary>
 		/// 加载单位
 		/// </summary>
-		protected void LoadUnits() {
+		public bool LoadUnits()
+		{
 			if (_Formation == null || _Formation.UnitModels.Count == 0) {
-				return;
+				return false;
 			}
+
+			// 全部加载完毕
+			if (_Formation.UnitModels.Count == _AliveUnits.Count) {
+				return false;
+			}
+
+			// 还在加载
 			if (_ReadUnitCursor >= _Formation.UnitModels.Count) {
-				return;
+				return true;
 			}
 
 			UnitModel paper = _Formation.UnitModels [_ReadUnitCursor];
@@ -127,6 +133,15 @@ namespace Controller.Battle
 				});
 			}
 			_ReadUnitCursor++;
+
+			return true;
+		}
+
+		/// <summary>
+		/// 集结
+		/// </summary>
+		public void BuildUp()
+		{
 		}
 
 		/// <summary>
@@ -134,7 +149,8 @@ namespace Controller.Battle
 		/// </summary>
 		/// <returns><c>true</c>, if units was updated, <c>false</c> otherwise.</returns>
 		/// <param name="dt">Dt.</param>
-		protected void UpdateUnits(float dt) {
+		protected void UpdateUnits(float dt)
+		{
 			_AliveUnits.Update (dt);
 			_DeadUnits.Update (dt);
 		}
@@ -155,7 +171,20 @@ namespace Controller.Battle
 				return;
 			}
 
-			newGameObj.transform.localPosition = paper.Position;
+			Unit unit = new Unit ();
+			unit.ID = paper.ID;
+			unit.Name = paper.Name;
+			unit.TeamID = ID;
+			unit.OnDead += OnDisposeUnit;
+			unit.OnUnitActionEnd += OnEndUnitAction;
+			unit.SetObject (newGameObj);
+			unit.SetModel (paper);
+
+			_AliveUnits.AddUnit (unit);
+
+			// 设置控件属性
+			newGameObj.name = paper.Name;
+			newGameObj.transform.position = paper.Position;
 			newGameObj.transform.localScale = paper.Scale;
 			newGameObj.transform.Rotate (paper.Rotation);
 			Collider collider = newGameObj.GetComponent<Collider> ();
@@ -164,14 +193,6 @@ namespace Controller.Battle
 				bounds.size = paper.Volume;
 			}
 
-			Unit unit = new Unit ();
-			unit.ID = paper.ID;
-			unit.SetObject (newGameObj);
-			unit.SetModel (paper);
-			unit.TeamID = ID;
-			unit.OnDead += OnDisposeUnit;
-			unit.OnUnitActionEnd += OnEndUnitAction;
-			_AliveUnits.AddUnit (unit);
 			OnUnitCreate (unit);
 		}
 

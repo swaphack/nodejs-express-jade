@@ -9,17 +9,30 @@ namespace Model.Buff
 	public class BuffModel : ModelItem
 	{
 		/// <summary>
-		/// 是否减益状态
+		/// 状态类型
 		/// </summary>
-		public bool IsDeBuff;
+		public BuffType BuffType;
 		/// <summary>
 		/// 相同状态是否可叠加
 		/// </summary>
 		public bool CanSuperpose;
 		/// <summary>
+		/// 持续时间
+		/// </summary>
+		public int Duration;
+		/// <summary>
+		/// 间隔
+		/// </summary>
+		public float Interval;
+
+		/// <summary>
+		/// 是否减益状态
+		/// </summary>
+		public bool IsDeBuff;
+		/// <summary>
 		/// 影响的属性类型
 		/// </summary>
-		public PropertyType Type;
+		public PropertyType PropertyType;
 		/// <summary>
 		/// 固定值
 		/// </summary>
@@ -28,10 +41,6 @@ namespace Model.Buff
 		/// 百分比
 		/// </summary>
 		public float PercentValue; 
-		/// <summary>
-		/// 持续时间
-		/// </summary>
-		public int Duration;
 	}
 }
 

@@ -2,30 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Helper;
+using Controller.AI.AStar;
 
 namespace Controller.Battle
-{
+{	
 	/// <summary>
 	/// 地图
 	/// </summary>
 	public class Map
-	{  
+	{
 		/// <summary>
 		/// 根节点
 		/// </summary>
 		private Transform _Root;
 		/// <summary>
-		/// 资源包
+		/// 寻路方式
 		/// </summary>
-		private List<string> _AssetBundles;
+		private ASGridPath _FindWayMethod;
 		/// <summary>
-		/// 已加载资源包数量
+		/// 地图项
 		/// </summary>
-		private int _LoadAssetBundleCount;
+		private List<Transform> _MapItems;
 		/// <summary>
-		/// 加载资源包索引
+		/// 地图大小
 		/// </summary>
-		private int _LoadAssetBundleCursor;
+		private Vector2 _MapSize;
 
 		/// <summary>
 		/// 根节点
@@ -40,47 +41,28 @@ namespace Controller.Battle
 			}
 		}
 
-		public Map ()
+		public Map()
 		{
-			_AssetBundles = new List<string> ();
+			_FindWayMethod = new ASGridPath ();
+			_MapItems = new List<Transform> ();
+			_MapSize = Vector2.zero;
 		}
 
+
 		/// <summary>
-		/// 添加要加载的资源包
+		/// 设置地图大小
 		/// </summary>
-		/// <param name="filepath">Filepath.</param>
-		public void AddAssetBundle(string filepath)
+		/// <param name="width">Width.</param>
+		/// <param name="height">Height.</param>
+		public void SetSize(int width, int height) 
 		{
-			if (string.IsNullOrEmpty (filepath) == true) {
+			if (width <= 0 || height <= 0) {
 				return;
 			}
-
-			_AssetBundles.Add (filepath);
+			_MapSize.x = width;
+			_MapSize.y = height;
 		}
 
-		/// <summary>
-		/// 是否正在加载资源包
-		/// </summary>
-		/// <returns><c>true</c>, if asset bundle was loaded, <c>false</c> otherwise.</returns>
-		public bool LoadAssetBundle()
-		{
-			if (_LoadAssetBundleCount >= _AssetBundles.Count) {
-				return false;
-			}
-
-			if (_LoadAssetBundleCursor >= _AssetBundles.Count) {
-				return true;
-			}
-
-			string filePath = _AssetBundles [_LoadAssetBundleCursor];
-
-			FileDataHelp.LoadAssetBundle(filePath, (bool value)=> {
-				_LoadAssetBundleCount++;
-			});
-			_LoadAssetBundleCursor++;
-
-			return true;
-		}
 
 		/// <summary>
 		/// 添加对象
@@ -93,6 +75,8 @@ namespace Controller.Battle
 			}
 
 			transform.SetParent (_Root);
+
+			_MapItems.Add (transform);
 		}
 
 
@@ -108,7 +92,53 @@ namespace Controller.Battle
 
 			transform.SetParent (null);
 
+			_MapItems.Remove (transform);
+
 			Utility.Destory (transform.gameObject);
+		}
+
+		/// <summary>
+		/// 查找从起始到目标的路径
+		/// </summary>
+		/// <returns>The way.</returns>
+		/// <param name="src">Source.</param>
+		/// <param name="dest">Destination.</param>
+		public List<Vector2> FindWay(Transform src, Transform dest) {
+			if (src == null || dest == null) {
+				return null;
+			}
+
+			_FindWayMethod.SetSize ((int)_MapSize.x, (int)_MapSize.y);
+			if (!_FindWayMethod.Init ()) {
+				return null;
+			}
+
+			foreach (Transform target in _MapItems) {
+				if (target != src && target !=  dest) {
+					Vector2 position = MathHelp.Convert3DTo2D (target.position);
+					ASGridNode item = _FindWayMethod.GetGrid (position);
+					item.CanPass = false;
+				}
+			}
+
+			Vector2 srcPos = MathHelp.Convert3DTo2D(src.position);
+			Vector2 destPos = MathHelp.Convert3DTo2D(dest.position);
+					
+			List<AStarNode> path = _FindWayMethod.FindWay (srcPos, destPos);
+			if (path == null) {
+				return null;
+			}
+
+			List<Vector2> way = new List<Vector2> ();
+			foreach (AStarNode item in path) {
+				ASGridNode node = item as ASGridNode;
+				if (node == null) {
+					return null;
+				}
+				way.Add (node.Position);
+			}
+
+			return way;
 		}
 
 		/// <summary>
@@ -116,7 +146,6 @@ namespace Controller.Battle
 		/// </summary>
 		public void Dispose()
 		{
-			_AssetBundles.Clear ();
 			if (_Root == null) {
 				return;
 			}

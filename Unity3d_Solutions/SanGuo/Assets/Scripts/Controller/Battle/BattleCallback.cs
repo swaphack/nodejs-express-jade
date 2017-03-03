@@ -6,25 +6,25 @@ namespace Controller.Battle
 	/// <summary>
 	/// 战斗广播
 	/// </summary>
-	public delegate void OnBattleBroadCast();
+	public delegate void OnBattleBroadcast();
 
 	/// <summary>
 	/// 队伍广播
 	/// </summary>
-	public delegate void OnTeamBroadCast(Team Team);
+	public delegate void OnTeamBroadcast(Team Team);
 
 	/// <summary>
 	/// 单位广播
 	/// </summary>
-	public delegate void OnUnitBroadCast(Unit unit);
+	public delegate void OnUnitBroadcast(Unit unit);
 
 	/// <summary>
 	/// 动作广播
 	/// </summary>
-	public delegate void OnActionBroadCast(string tag);
+	public delegate void OnActionBroadcast(string tag);
 	/// <summary>
 	/// 单位动作广播
 	/// </summary>
-	public delegate void OnUnitActionBroadCast(Unit unit, string tag);
+	public delegate void OnUnitActionBroadcast(Unit unit, string tag);
 }
 

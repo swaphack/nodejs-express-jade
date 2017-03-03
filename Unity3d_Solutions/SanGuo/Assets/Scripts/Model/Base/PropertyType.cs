@@ -8,6 +8,10 @@ namespace Model.Base
 	public enum PropertyType
 	{
 		/// <summary>
+		/// 非属性类型
+		/// </summary>
+		None,
+		/// <summary>
 		/// 物理伤害
 		/// </summary>
 		AttactDamage,
@@ -16,7 +20,7 @@ namespace Model.Base
 		/// </summary>
 		PhysicalDefense,
 		/// <summary>
-		/// 普工攻击速度
+		/// 攻击速度
 		/// </summary>
 		AttackSpeed,
 		/// <summary>

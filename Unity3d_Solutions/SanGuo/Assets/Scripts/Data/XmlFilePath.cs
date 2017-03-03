@@ -22,6 +22,8 @@ public class XmlFilePath
 	
 	public const string DataBaseLanguageLan_ZH = "DataBase/Language/Lan_ZH";
 	
+	public const string DataBaseMapMap = "DataBase/Map/Map";
+	
 	public const string DataBaseMapTrack = "DataBase/Map/Track";
 	
 }

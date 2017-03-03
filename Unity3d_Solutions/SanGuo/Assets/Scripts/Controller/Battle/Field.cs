@@ -26,6 +26,10 @@ namespace Controller.Battle
 		/// </summary>
 		private bool _Running;
 		/// <summary>
+		/// 地图加载管理
+		/// </summary>
+		private MapLoader _MapLoader;
+		/// <summary>
 		/// 地图
 		/// </summary>
 		private Map _Map;
@@ -49,18 +53,40 @@ namespace Controller.Battle
 		}
 
 		/// <summary>
+		/// 地图加载
+		/// </summary>
+		/// <value>The map.</value>
+		public MapLoader MapLoader {
+			get { 
+				return _MapLoader;
+			}
+		}
+
+		/// <summary>
+		/// 地图
+		/// </summary>
+		/// <value>The map.</value>
+		public Map Map {
+			get { 
+				return _Map;
+			}
+		}
+
+		/// <summary>
 		/// 开始战斗
 		/// </summary>
-		public event OnBattleBroadCast OnBeginBattle;
+		//public event OnBattleBroadcast OnBeginBattle;
 		/// <summary>
 		/// 结束战斗
 		/// </summary>
-		public event OnBattleBroadCast OnEndBattle;
+		//public event OnBattleBroadcast OnEndBattle;
 
 		public Field ()
 		{
 			_AliveTeams = new Dictionary<int, Team> ();
 			_DeadTeams = new Dictionary<int, Team> ();
+			_MapLoader = new MapLoader ();
+			_Map = new Map ();
 		}
 
 		/// <summary>
@@ -78,6 +104,41 @@ namespace Controller.Battle
 			team.OnDestory += OnTeamDestory;
 			team.OnUnitCreate += OnCreateUnit;
 			team.OnUnitDestory += OnDestoryUnit;
+		}
+
+		/// <summary>
+		/// 查找队伍
+		/// </summary>
+		/// <returns>The team.</returns>
+		/// <param name="teamID">Team I.</param>
+		public Team GetTeam(int teamID)
+		{
+			if (_AliveTeams.ContainsKey (teamID)) {
+				return _AliveTeams [teamID];
+			}
+
+			if (_DeadTeams.ContainsKey (teamID)) {
+				return _DeadTeams [teamID];
+			}
+
+			return null;
+		}
+
+		/// <summary>
+		/// 获取其他非存活的队伍
+		/// </summary>
+		/// <returns>The other alive team.</returns>
+		/// <param name="teamID">Team I.</param>
+		public List<Team> GetOtherAliveTeam(int teamID)
+		{
+			List<Team> teams = new List<Team> ();
+			foreach (KeyValuePair<int,Team> item in _AliveTeams) {
+				if (item.Key != teamID) {
+					teams.Add (item.Value);
+				}
+			}
+
+			return teams;
 		}
 
 		/// <summary>
@@ -125,16 +186,6 @@ namespace Controller.Battle
 			unit.TranformObject.SetTranform (null);
 		}
 
-
-		/// <summary>
-		/// 设置场地地图
-		/// </summary>
-		/// <param name="map">Map.</param>
-		public void SetMap(Map map)
-		{
-			_Map = map;
-		}
-
 		/// <summary>
 		/// 开始战斗
 		/// </summary>
@@ -176,7 +227,19 @@ namespace Controller.Battle
 			}
 
 			// 正在加载资源
-			if (_Map.LoadAssetBundle ()) {
+			if (_MapLoader.LoadAssetBundle ()) {
+				return;
+			}
+
+			// 正在加载单位
+			bool isLoading = false;
+			foreach (KeyValuePair<int,Team> item in _AliveTeams) {
+				if (!isLoading) {
+					isLoading = item.Value.LoadUnits ();
+				}
+			}
+
+			if (isLoading) {
 				return;
 			}
 
@@ -187,6 +250,7 @@ namespace Controller.Battle
 			foreach (KeyValuePair<int,Team> item in _AliveTeams) {
 				item.Value.Update (dt);
 			}
+			//*/
 		}
 
 		/// <summary>
@@ -200,6 +264,7 @@ namespace Controller.Battle
 		{
 			_AliveTeams.Clear ();
 			_DeadTeams.Clear ();
+			_MapLoader.Dispose ();
 			_Map.Dispose ();
 		}
 	}

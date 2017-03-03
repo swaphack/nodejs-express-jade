@@ -11,11 +11,18 @@ namespace Game.Helper
 	{
 		/// <summary>
 		/// 文档名称
-		/// 在WindowsPlayer模式下,是保存到本地文档中
+		/// 在保存模式下,是保存到本地文档中
 		/// </summary>
 		public const string FileName = "Logger.txt";
 
+		/// <summary>
+		/// 保存的路径
+		/// </summary>
 		public static string _FilePath = "";
+		/// <summary>
+		/// 是否写入文件
+		/// </summary>
+		private static bool _IsWriteToFile = false;
 		
 		private Log ()
 		{
@@ -26,20 +33,24 @@ namespace Game.Helper
 		/// </summary>
 		public static void Init()
 		{
-			_FilePath = FilePathHelp.GetWritableFilePath(FileName);
+			_FilePath = FilePathHelp.GetWritableFilePath (FileName);
 			if (Application.platform == RuntimePlatform.WindowsPlayer) {
+				_IsWriteToFile = true;
+			}
+			// 删除旧有数据
+			if (_IsWriteToFile) {
 				File.Delete (_FilePath);
 			} 
 		}
 
 		/// <summary>
 		/// 写入消息
-		/// 在WindowsPlayer模式下,是保存到本地文档中
+		/// 在保存模式下,是保存到本地文档中
 		/// </summary>
 		/// <param name="obj">string.</param>
 		public static void Info(string obj)
 		{
-			if (Application.platform == RuntimePlatform.WindowsPlayer) {
+			if (_IsWriteToFile) {
 				File.AppendAllText (_FilePath, "[Info]" + obj + "\r\n");
 			} else {
 				Debug.Log (obj);
@@ -48,12 +59,12 @@ namespace Game.Helper
 
 		/// <summary>
 		/// 写入消息
-		/// 在WindowsPlayer模式下,是保存到本地文档中
+		/// 在保存模式下,是保存到本地文档中
 		/// </summary>
 		/// <param name="obj">string.</param>
 		public static void Warning(string obj)
 		{
-			if (Application.platform == RuntimePlatform.WindowsPlayer) {
+			if (_IsWriteToFile) {
 				File.AppendAllText (_FilePath, "[Warning]" + obj + "\r\n");
 			} else {
 				Debug.LogWarning (obj);
@@ -62,12 +73,12 @@ namespace Game.Helper
 
 		/// <summary>
 		/// 写入消息
-		/// 在WindowsPlayer模式下,是保存到本地文档中
+		/// 在保存模式下,是保存到本地文档中
 		/// </summary>
 		/// <param name="exception">Exception.</param>
 		public static void Exception(Exception exception)
 		{
-			if (Application.platform == RuntimePlatform.WindowsPlayer) {
+			if (_IsWriteToFile) {
 				File.AppendAllText (_FilePath, "[Exception]" + exception.ToString() + "\r\n");
 			} else {
 				Debug.LogException (exception);
@@ -76,29 +87,29 @@ namespace Game.Helper
 
 		/// <summary>
 		/// 写入消息
-		/// 在WindowsPlayer模式下,是保存到本地文档中
+		/// 在保存模式下,是保存到本地文档中
 		/// </summary>
 		/// <param name="condition">boolean.</param>
 		/// <param name="obj">string.</param>
 		public static void Assert(bool condition, string obj)
 		{
-			if (Application.platform == RuntimePlatform.WindowsPlayer) {
+			if (_IsWriteToFile) {
 				if (!condition) {
-					File.AppendAllText (_FilePath, "[Exception]" + obj + "\r\n");
+					File.AppendAllText (_FilePath, "[Assert]" + obj + "\r\n");
 				}
-			} else {
-				Debug.Assert (condition, obj);
-			}
+			} 
+
+			Debug.Assert (condition, obj);
 		}
 
 		/// <summary>
 		/// 写入消息
-		/// 在WindowsPlayer模式下,是保存到本地文档中
+		/// 在保存模式下,是保存到本地文档中
 		/// </summary>
 		/// <param name="obj">string.</param>
 		public static void Error(string obj)
 		{
-			if (Application.platform == RuntimePlatform.WindowsPlayer) {
+			if (_IsWriteToFile) {
 				File.AppendAllText (_FilePath, "[Error]" + obj + "\r\n");
 			} else {
 				Debug.LogError (obj);

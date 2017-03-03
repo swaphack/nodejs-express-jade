@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 53915648
+CRC: 3354024478
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c2d2d0ef8eca4b5ce18101b520087824
+    Hash: 6bff5bfd26916800d231970fb97c16b0
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 5f31f323eaff3b27edbe02b7368e984e
+    Hash: b28875d73e1ed821128139004a2af5a9
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -25,6 +25,10 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 54
   Script: {instanceID: 0}
+- Class: 96
+  Script: {instanceID: 0}
+- Class: 111
+  Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: 11500000, guid: a48c0459bc75b9b4db863ad7d0833f98, type: 3}
 - Class: 114
@@ -37,5 +41,6 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/AssetBundle/Prefabs/Map/Pillar.prefab
+- Assets/AssetBundle/Prefabs/Bullet/Ball.prefab
 - Assets/AssetBundle/Prefabs/Role/Player.prefab
 Dependencies: []

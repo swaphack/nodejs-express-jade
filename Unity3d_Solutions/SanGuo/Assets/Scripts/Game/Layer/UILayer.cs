@@ -123,7 +123,7 @@ namespace Game.Layer
 		{
 			FileDataHelp.CreatePrefabFromAsset (FilePath, (GameObject gameObject) => {
 				if (gameObject == null) {
-					Log.Warning("Not Exist UI File Path " + FilePath);
+					Log.Warning("Not Exist UI File Path : " + FilePath);
 					return;
 				}
 

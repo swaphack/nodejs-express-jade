@@ -11,6 +11,11 @@ namespace Model.Skill
 	public class SkillModel : ModelItem
 	{
 		/// <summary>
+		/// 是否普通攻击
+		/// 否则技能攻击
+		/// </summary>
+		public bool IsNormalAttack;
+		/// <summary>
 		/// 冷却时间
 		/// 冷却完毕才能触发
 		/// </summary>
@@ -42,7 +47,7 @@ namespace Model.Skill
 		public List<float> EffectParams;
 
 		/// <summary>
-		/// 状态
+		/// 触发状态
 		/// </summary>
 		public List<BuffModel> Buffs;
 

@@ -2,6 +2,7 @@
 using Game.Module;
 using Data;
 using Game;
+using Controller.Battle;
 
 namespace Game.Helper
 {
@@ -9,6 +10,19 @@ namespace Game.Helper
 	{
 		private BattleHelp ()
 		{
+		}
+
+		/// <summary>
+		/// 获取当前战场
+		/// </summary>
+		/// <value>The field.</value>
+		public static Field Field {
+			get { 
+				if (_BattlePlugin == null) {
+					return null;
+				}
+				return _BattlePlugin.Field;
+			}
 		}
 
 		/// <summary>

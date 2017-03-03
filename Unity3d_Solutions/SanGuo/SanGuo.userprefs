@@ -1,22 +1,17 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Controller\AI\FindWayTask.cs">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="Assets\Scripts\Model\Skill\SkillModel.cs" Line="33" Column="32" />
-      <File FileName="Assets\Scripts\Controller\AI\FindTargetTask.cs" Line="8" Column="15" />
-      <File FileName="Assets\Scripts\Controller\AI\TaskSheet.cs" Line="9" Column="24" />
-      <File FileName="Assets\Scripts\Controller\AI\Spellcaster.cs" Line="11" Column="26" />
-      <File FileName="Assets\Scripts\Model\Battle\UnitySkill.cs" Line="36" Column="4" NotebookId="1" />
-      <File FileName="Assets\Scripts\Controller\AI\EnableSkillTask.cs" Line="3" Column="11" NotebookId="1" />
-      <File FileName="Assets\Scripts\Controller\AI\FindWayTask.cs" Line="6" Column="8" NotebookId="1" />
+      <File FileName="Assets\Scripts\Game\Shapes\Line.cs" Line="43" Column="16" />
+      <File FileName="Assets\Scripts\Game\Shapes\Rectangle.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Game\Shapes\Polygon.cs" Line="85" Column="38" />
+      <File FileName="Assets\Scripts\Game\Shapes\Triangle.cs" Line="25" Column="35" NotebookId="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Editor\Reources\XmlDataEditor.cs" line="53" column="1" />
-      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Game\Layer\UI.cs" line="95" column="1" />
-      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Resources\Shaders\Sample.shader" line="14" column="1" />
-      <RunToCursorBreakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Controller\AI\FindTargetTask.cs" line="8" column="37" />
+      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Controller\AI\AStar2D.cs" line="246" column="1" />
+      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Game\Helper\MathHelp.cs" line="38" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

@@ -15,6 +15,20 @@ namespace Data
 	public class FieldData
 	{
 		/// <summary>
+		/// 地图信息项
+		/// </summary>
+		public class MapItem
+		{
+			/// <summary>
+			/// 宽度
+			/// </summary>
+			public int Width;
+			/// <summary>
+			/// 高度
+			/// </summary>
+			public int Height;
+		}
+		/// <summary>
 		/// 原型项
 		/// </summary>
 		public class ResourceItem
@@ -94,6 +108,10 @@ namespace Data
 		public class UnitItem
 		{
 			/// <summary>
+			/// 名称
+			/// </summary>
+			public string Name;
+			/// <summary>
 			/// 资源编号
 			/// </summary>
 			public int ResourceID;
@@ -125,6 +143,11 @@ namespace Data
 		}
 
 		/// <summary>
+		/// 地图信息项
+		/// </summary>
+		private MapItem _MapItem;
+
+		/// <summary>
 		/// 资源包路径
 		/// </summary>
 		private Dictionary<int, ResourceItem> _ResourceItems;
@@ -148,6 +171,16 @@ namespace Data
 		/// 队伍
 		/// </summary>
 		private Dictionary<int, TeamItem> _TeamItems;
+
+
+		/// <summary>
+		/// 地图信息项
+		/// </summary>
+		public MapItem MapInfo {
+			get { 
+				return _MapItem;
+			}
+		}
 
 		/// <summary>
 		/// 资源包路径
@@ -200,6 +233,7 @@ namespace Data
 
 		public FieldData ()
 		{
+			_MapItem = new MapItem ();
 			_ResourceItems = new Dictionary<int, ResourceItem> ();
 			_Properties = new Dictionary<int, PropertyItem> ();
 			_TransformItems = new Dictionary<int, TransformItem> ();
@@ -277,6 +311,24 @@ namespace Data
 			}
 
 			return _UnitItems [id];
+		}
+
+		/// <summary>
+		/// 加载地图配置
+		/// </summary>
+		/// <param name="node">Node.</param>
+		private void LoadMap(XmlNode node)
+		{
+			if (node == null) {
+				return;
+			}
+			XmlNode itemNode = node.FirstChild;
+			while (itemNode != null) {
+				XmlElement element = (XmlElement)itemNode;
+				_MapItem.Width = Int32.Parse (element.GetAttribute ("width"));
+				_MapItem.Height = Int32.Parse (element.GetAttribute ("height"));
+				itemNode = itemNode.NextSibling;
+			}
 		}
 
 		/// <summary>
@@ -367,10 +419,10 @@ namespace Data
 				XmlElement element = (XmlElement)itemNode;
 				int id = Int32.Parse (element.GetAttribute ("ID"));
 				SkillItem item = new SkillItem ();
-				item.CoolDown = float.Parse (element.GetAttribute ("Position"));
-				item.CostMana = Int32.Parse (element.GetAttribute ("Rotation"));
-				item.Radius = float.Parse (element.GetAttribute ("Scale"));
-				item.TargetType = (TargetType)Int32.Parse (element.GetAttribute ("Volume"));
+				item.CoolDown = float.Parse (element.GetAttribute ("CoolDown"));
+				item.CostMana = Int32.Parse (element.GetAttribute ("CostMana"));
+				item.Radius = float.Parse (element.GetAttribute ("Radius"));
+				item.TargetType = (TargetType)Int32.Parse (element.GetAttribute ("TargetType"));
 				_SkillItems.Add (id, item);
 				itemNode = itemNode.NextSibling;
 			}
@@ -390,6 +442,7 @@ namespace Data
 				XmlElement element = (XmlElement)itemNode;
 				int id = Int32.Parse (element.GetAttribute ("ID"));
 				UnitItem item = new UnitItem ();
+				item.Name = element.GetAttribute ("Name");
 				item.ResourceID = Int32.Parse (element.GetAttribute ("ResourceID"));
 				item.PropertyID = Int32.Parse (element.GetAttribute ("PropertyID"));
 				item.TransformID = Int32.Parse (element.GetAttribute ("TransformID"));
@@ -437,7 +490,9 @@ namespace Data
 			this.Clear ();
 
 			while (node != null) {
-				if (node.Name == "Resource") {
+				if (node.Name == "Map") {
+					LoadMap (node);
+				} else if (node.Name == "Resource") {
 					LoadResource (node);
 				} else if (node.Name == "Property") {
 					LoadProperty (node);

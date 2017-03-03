@@ -6,30 +6,65 @@ using Model.Buff;
 
 namespace Model.Battle
 {
-	public class BuffValue
-	{
-		/// <summary>
-		/// 固定值
-		/// </summary>
-		public float Fix;
-		/// <summary>
-		/// 百分比
-		/// </summary>
-		public float Percent;
-	}
+	/// <summary>
+	/// buff改变时处理
+	/// </summary>
+	public delegate void OnBuffBroadCast(BuffModel buffModel);
 	/// <summary>
 	/// 单位状态
 	/// </summary>
 	public class UnitBuff
 	{
 		/// <summary>
-		/// 状态集合
+		/// 状态相关值
 		/// </summary>
-		private Dictionary<PropertyType, HashSet<BuffModel>> _BuffModels;
+		public class BuffValue : CoolDown
+		{
+
+		}
+
+		/// <summary>
+		/// 状态类别集合
+		/// {状态类型， 叠加数量}
+		/// </summary>
+		private Dictionary<BuffType, List<BuffModel>> _BuffModels;
+
+		/// <summary>
+		/// 技能值
+		/// </summary>
+		private Dictionary<BuffType, List<BuffValue>> _BuffValues;
+
+		/// <summary>
+		/// 状态类别集合
+		/// </summary>
+		public Dictionary<BuffType, List<BuffModel>> BuffModels	{
+			get { 
+				return _BuffModels;
+			}
+		}
+
+		/// <summary>
+		/// 技能值
+		/// </summary>
+		public Dictionary<BuffType, List<BuffValue>> BuffValues	{
+			get { 
+				return _BuffValues;
+			}
+		}
+
+		/// <summary>
+		/// 新增buff
+		/// </summary>
+		public event OnBuffBroadCast OnBuffAdd;
+		/// <summary>
+		/// 移除buff
+		/// </summary>
+		public event OnBuffBroadCast OnBuffRemove;
 
 		public UnitBuff ()
 		{
-			_BuffModels = new Dictionary<PropertyType, HashSet<BuffModel>> ();
+			_BuffModels = new Dictionary<BuffType, List<BuffModel>> ();
+			_BuffValues = new Dictionary<BuffType, List<BuffValue>> ();
 		}
 
 		/// <summary>
@@ -42,11 +77,13 @@ namespace Model.Battle
 				return;
 			}
 
-			if (!_BuffModels.ContainsKey (buffModel.Type)) {
-				_BuffModels [buffModel.Type] = new HashSet<BuffModel> ();
+			if (!_BuffModels.ContainsKey (buffModel.BuffType)) {
+				_BuffModels [buffModel.BuffType] = new List<BuffModel> ();
 			}
 
-			_BuffModels [buffModel.Type].Add (buffModel);
+			_BuffModels [buffModel.BuffType].Add (buffModel);
+
+			OnBuffAdd (buffModel);
 		}
 
 		/// <summary>
@@ -54,17 +91,48 @@ namespace Model.Battle
 		/// </summary>
 		/// <param name="buffModel">Buff model.</param>
 		public void RemoveBuff(BuffModel buffModel)
-		{
+		{  
 			if (buffModel == null) {
 				return;
 			}
 
-			if (!_BuffModels.ContainsKey (buffModel.Type)) {
-				Log.Warning ("Not Exists Buff Type : " + buffModel.Type.ToString());
+			if (!_BuffModels.ContainsKey (buffModel.BuffType)) {
+				Log.Warning ("Not Exists Buff Type : " + buffModel.BuffType.ToString());
 				return;
 			}
+			  
+			_BuffModels [buffModel.BuffType].Remove (buffModel);
 
-			_BuffModels [buffModel.Type].Remove (buffModel);
+			OnBuffRemove (buffModel);
+		}
+
+		/// <summary>
+		/// 获取状态索引
+		/// </summary>
+		/// <returns>The buff index.</returns>
+		/// <param name="buffModel">Buff model.</param>
+		public int GetBuffIndex(BuffModel buffModel)
+		{
+			if (buffModel == null) {
+				return -1;
+			}
+
+			if (!_BuffModels.ContainsKey (buffModel.BuffType)) {
+				return -1;
+			}
+
+			return _BuffModels [buffModel.BuffType].IndexOf(buffModel);
+		}
+
+
+		/// <summary>
+		/// 是否包含指定类型的状态
+		/// </summary>
+		/// <returns><c>true</c> if this instance has type the specified type; otherwise, <c>false</c>.</returns>
+		/// <param name="type">Type.</param>
+		public bool HasType(BuffType type)
+		{
+			return _BuffModels.ContainsKey (type);
 		}
 
 		/// <summary>
@@ -76,27 +144,30 @@ namespace Model.Battle
 		/// <param name="type">Type.</param>
 		/// <param name="gain">增益{固定值，百分比}.</param>
 		/// <param name="reduction">减益{固定值，百分比}.</param>
-		public void GetBuffMaxPercent(PropertyType type, out BuffValue gain, out BuffValue reduction)
+		public void GetEffectPropertyValue(PropertyType type, out BuffPropertyValue gain, out BuffPropertyValue reduction)
 		{
-			gain = new BuffValue ();
-			reduction = new BuffValue ();
+			gain = new BuffPropertyValue ();
+			reduction = new BuffPropertyValue ();
 
-			if (!_BuffModels.ContainsKey (type)) {
+			if (!_BuffModels.ContainsKey (BuffType.EffectProperty)) {
 				return;
 			}
 
 			// 增益叠加
-			BuffValue gainSuperpose = new BuffValue();
+			BuffPropertyValue gainSuperpose = new BuffPropertyValue();
 			// 增益不叠加
-			BuffValue gainNotSuperpose = new BuffValue();
+			BuffPropertyValue gainNotSuperpose = new BuffPropertyValue();
 			// 减益叠加
-			BuffValue reductionSuperpose = new BuffValue();
+			BuffPropertyValue reductionSuperpose = new BuffPropertyValue();
 			// 减益不叠加
-			BuffValue reductionNotSuperpose = new BuffValue();
+			BuffPropertyValue reductionNotSuperpose = new BuffPropertyValue();
 
-			BuffValue current;
+			BuffPropertyValue current;
 
-			foreach (BuffModel buff in _BuffModels[type]) {
+			foreach (BuffModel buff in _BuffModels[BuffType.EffectProperty]) {
+				if (buff.PropertyType != type) {
+					continue;
+				}
 				if (buff.CanSuperpose) { // 可叠加
 					if (!buff.IsDeBuff) {
 						current = gainSuperpose;
@@ -127,12 +198,64 @@ namespace Model.Battle
 			reduction.Percent = reductionSuperpose.Percent > reductionNotSuperpose.Percent ? reductionSuperpose.Percent : reductionNotSuperpose.Percent;
 		}
 
+
+		/// <summary>
+		/// 添加技能参数
+		/// </summary>
+		/// <param name="type">Type.</param>
+		/// <param name="value">Value.</param>
+		public void AddBuffValue(BuffType type, BuffValue value)
+		{
+			if (value == null) {
+				return;
+			}
+
+			if (!_BuffValues.ContainsKey (type)) {
+				_BuffValues = new Dictionary<BuffType, List<BuffValue>> ();
+			}
+
+			_BuffValues[type].Add(value);
+		}
+
+		/// <summary>
+		/// 移除技能参数
+		/// </summary>
+		/// <param name="type">Type.</param>
+		/// <param name="index">Index.</param>
+		public void RemoveBuffValue(BuffType type, int index)
+		{
+			if (!_BuffValues.ContainsKey (type)) {
+				return;
+			}
+			_BuffValues[type].RemoveAt (index);
+		}
+
+		/// <summary>
+		/// 获取技能值
+		/// </summary>
+		/// <returns>The buff value.</returns>
+		/// <param name="type">Type.</param>
+		/// <param name="index">Index.</param>
+		public BuffValue GetBuffValue(BuffType type, int index)
+		{
+			if (_BuffValues.ContainsKey (type)) {
+				return null;
+			}
+
+			if (index < 0 || index >= _BuffValues [type].Count) {
+				return null;
+			}
+
+			return _BuffValues[type][index];
+		}
+
 		/// <summary>
 		/// 清除所有状态
 		/// </summary>
 		public void Clear()
 		{
 			_BuffModels.Clear ();
+			_BuffValues.Clear ();
 		}
 	}
 }

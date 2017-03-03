@@ -87,6 +87,8 @@ namespace Game.Module
 
 					UnitModel unitModel = new UnitModel ();
 					unitModel.ID = unitID; 
+					unitModel.Name = unitItem.Name;
+
 					if (resItem != null) {
 						unitModel.AssetBundlePath = resItem.AssetBundlePath;
 						unitModel.FileName = resItem.Name;
@@ -113,6 +115,8 @@ namespace Game.Module
 						skillModel.CostMana = skillItem.CostMana;
 						skillModel.Radius = skillItem.Radius;
 						skillModel.TargetType = skillItem.TargetType;
+
+						unitModel.Skills.Add (skillModel);
 					}
 
 					formation.AddUnit (unitModel);
@@ -124,20 +128,19 @@ namespace Game.Module
 			}
 
 			// 设置地图
-			Map map = new Map ();
 			GameObject gameObject = GameObject.Find ("Battle");
 			if (gameObject != null) {
-				map.Root = gameObject.transform;
+				_Field.Map.Root = gameObject.transform;
 			} else {
 				Log.Warning ("Not Exist Battle Node, Name : 'Battle'");
 			}
 
+			_Field.Map.SetSize (_FieldData.MapInfo.Width, _FieldData.MapInfo.Height);
+
 			foreach (string item in assetBundles) {
-				map.AddAssetBundle (item);
+				_Field.MapLoader.AddAssetBundle (item);
 			}
 
-
-			_Field.SetMap (map);
 			// 开始战斗
 			_Field.Start ();
 		}

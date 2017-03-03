@@ -6,7 +6,7 @@ namespace Model.Battle
 	/// <summary>
 	/// 属性广播
 	/// </summary>
-	public delegate void OnPropertyBroadCast(PropertyType type, float value);
+	public delegate void OnPropertyBroadcast(PropertyType type, float value);
 
 	/// <summary>
 	/// 单位属性
@@ -33,7 +33,7 @@ namespace Model.Battle
 		/// <summary>
 		/// 当前属性改变
 		/// </summary>
-		public event OnPropertyBroadCast OnCurrentPropertyChanged;
+		public event OnPropertyBroadcast OnCurrentPropertyChanged;
 
 		/// <summary>
 		/// 基础属性

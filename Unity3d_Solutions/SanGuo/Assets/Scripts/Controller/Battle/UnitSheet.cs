@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Controller.Battle
@@ -12,6 +13,15 @@ namespace Controller.Battle
 		/// 单位
 		/// </summary>
 		private Dictionary<int, Unit> _Units;
+
+		/// <summary>
+		/// 单位
+		/// </summary>
+		public Dictionary<int, Unit> Units {
+			get { 
+				return _Units;
+			}
+		}
 
 		/// <summary>
 		/// 单位个数
@@ -61,6 +71,34 @@ namespace Controller.Battle
 		public void RemoveUnit(int id)
 		{
 			_Units.Remove (id);
+		}
+
+		/// <summary>
+		/// 随机取几个单位
+		/// </summary>
+		/// <returns>The random unit.</returns>
+		/// <param name="count">Count.</param>
+		public List<Unit> GetRandomUnits(int count)
+		{
+			if (count < Count / 2) {
+				List<Unit> targets = _Units.Values.ToList ();
+				List<Unit> units = new List<Unit> ();
+				for (int i = 0; i < count; i++) {
+					int rand = UnityEngine.Random.Range (0, targets.Count);
+					units.Add (targets [rand]);
+					targets.RemoveAt (rand);
+				}
+
+				return units;
+			} else {
+				List<Unit> targets = _Units.Values.ToList ();
+				int time = targets.Count - count;
+				for (int i = 0; i < time; i++) {
+					int rand = UnityEngine.Random.Range (0, targets.Count);
+					targets.RemoveAt (rand);
+				}
+				return targets;
+			}
 		}
 
 		/// <summary>

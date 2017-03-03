@@ -79,7 +79,7 @@ namespace Game.Action
 
 		protected override void UpdateAction(float dt)
 		{
-			Target.transform.localPosition += _Destination * dt / _TotalTime;
+			Target.transform.Translate(_Destination * dt / _TotalTime);
 		}
 	}
 }

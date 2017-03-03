@@ -11,7 +11,14 @@ namespace Model.Battle
 	/// </summary>
 	public class UnitModel
 	{
+		/// <summary>
+		/// 编号
+		/// </summary>
 		public int ID;
+		/// <summary>
+		/// 名称
+		/// </summary>
+		public string Name;
 		/// <summary>
 		/// 资源包路径
 		/// </summary>

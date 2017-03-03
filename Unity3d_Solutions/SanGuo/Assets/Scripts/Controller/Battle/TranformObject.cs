@@ -18,15 +18,19 @@ namespace Controller.Battle
 		/// The action.
 		/// </summary>
 		private GOAction _Action;
+		/// <summary>
+		/// 最后一次播放动作的名称
+		/// </summary>
+		private string _LastActionName;
 
 		/// <summary>
 		/// 开始播放动作
 		/// </summary>
-		public event OnActionBroadCast OnActionStart;
+		public event OnActionBroadcast OnActionStart;
 		/// <summary>
 		/// 动作播放停止
 		/// </summary>
-		public event OnActionBroadCast OnActionEnd;
+		public event OnActionBroadcast OnActionEnd;
 
 		public Transform Transform {
 			get { 
@@ -42,7 +46,7 @@ namespace Controller.Battle
 				if (_Transform == null) {
 					return Vector3.zero;
 				} else {
-					return _Transform.localPosition;
+					return _Transform.position;
 				}
 			}
 		}
@@ -100,7 +104,6 @@ namespace Controller.Battle
 			if (Transform == null) {
 				return;
 			}
-			//_Transform.localPosition = position;
 
 			Vector3 vector = position - Position;
 			Transform.Translate (vector);
