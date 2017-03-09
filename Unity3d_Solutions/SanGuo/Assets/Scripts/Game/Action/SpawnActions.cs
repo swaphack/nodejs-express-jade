@@ -31,15 +31,16 @@ namespace Game.Action
 
 			List<IAction> removeActions = new List<IAction> ();
 
-			foreach (IAction action in _Actions) {
-				action.Update (dt);
-				if (action.IsFinish == true) {
-					removeActions.Add (action);
+			for (int i = 0; i < count; i ++) {
+				_Actions[i].Update (dt);
+				if (_Actions[i].IsFinish == true) {
+					removeActions.Add (_Actions[i]);
 				}
 			}
 
-			foreach (IAction action in removeActions) {
-				this.RemoveAction (action);
+			count = removeActions.Count;
+			for (int i = 0; i < count; i ++) {
+				this.RemoveAction (removeActions[i]);
 			}
 
 			IsFinish = _Actions.Count == 0;

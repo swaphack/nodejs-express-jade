@@ -80,6 +80,9 @@ namespace Controller.Battle
 		/// <param name="count">Count.</param>
 		public List<Unit> GetRandomUnits(int count)
 		{
+			if (count <= 0) {
+				return null;
+			}
 			if (count < Count / 2) {
 				List<Unit> targets = _Units.Values.ToList ();
 				List<Unit> units = new List<Unit> ();

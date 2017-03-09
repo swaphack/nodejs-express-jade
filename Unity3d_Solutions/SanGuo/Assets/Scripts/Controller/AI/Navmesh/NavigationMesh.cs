@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Controller.AI.AStar;
-using Game.Shapes.D2;
+using Game.Shapes;
 using UnityEngine;
 using Game.Helper;
 
@@ -13,37 +13,52 @@ namespace Controller.AI.Navmesh
 	public class NavigationMesh : ASPointPath
 	{
 		/// <summary>
+		/// 关联点
+		/// </summary>
+		private Dictionary<int, Dictionary<int, float>> _NeighborNodes;
+		/// <summary>
 		/// 多边形
 		/// </summary>
 		private Dictionary<int, NavigationNode> _NavNodes;
 
 		public NavigationMesh ()
 		{
+			_NeighborNodes = new Dictionary<int, Dictionary<int, float>> ();
 			_NavNodes = new Dictionary<int, NavigationNode> ();
 		}
 
 		/// <summary>
-		/// 添加形状
+		/// 添加节点
 		/// </summary>
 		/// <param name="id">Identifier.</param>
 		/// <param name="center">Center.</param>
-		/// <param name="vertexes">Vertexes.</param>
-		public void AddPolygon(int id, Vector3 center, Vector3[] vertexes)
+		/// <param name="shape">Shape.</param>
+		public void AddNode(int id, Vector2 center, IShape shape)
 		{
-			if (vertexes == null || vertexes.Length < 3) {
-				return;
-			}
-
-			if (_NavNodes.ContainsKey (id)) {
-				Log.Warning ("Exists ID in Navigation Mesh, id : " + id);
-				return;
-			}
-
 			NavigationNode item = new NavigationNode ();
 			item.Position = center;
-			Array.Copy (vertexes, item.Polygon.Points, vertexes.Length);
+			item.Shape = shape;
 
 			_NavNodes.Add (id, item);
+		}
+
+		/// <summary>
+		/// 添加关联
+		/// </summary>
+		/// <param name="first">First.</param>
+		/// <param name="second">Second.</param>
+		/// <param name="distance">Distance.</param>
+		public void AddLink(int first, int second, float distance)
+		{
+			if (!_NeighborNodes.ContainsKey (first)) {
+				_NeighborNodes.Add (first, new Dictionary<int, float> ());
+			}
+
+			if (!_NeighborNodes [first].ContainsKey (second)) {
+				_NeighborNodes[first].Add (second, distance);
+			} else {
+				_NeighborNodes [first][second] = distance;
+			}
 		}
 
 		/// <summary>
@@ -65,12 +80,11 @@ namespace Controller.AI.Navmesh
 		/// </summary>
 		/// <returns>The polygon.</returns>
 		/// <param name="point">Point.</param>
-		public NavigationNode GetPolygon(Vector2 point)
+		public NavigationNode GetContainPointShape(Vector2 point)
 		{
 			foreach (KeyValuePair<int, NavigationNode> item in _NavNodes) {
 				if (item.Value != null
-					&& item.Value.Polygon != null
-					&& item.Value.Polygon.Contains (point)) {
+					&& item.Value.Shape.Contains (point)) {
 					return item.Value;
 				}
 			}
@@ -90,14 +104,43 @@ namespace Controller.AI.Navmesh
 				return null;
 			}
 
-			// 查找初始网格，并设置开始位置
-			NavigationNode startNode = GetPolygon (src);
+			// 查找初始网格
+			NavigationNode startNode = GetContainPointShape (src);
 
-			// 查找结束网格，并设置结束位置
-			NavigationNode endNode = GetPolygon (dest);
+			// 查找结束网格
+			NavigationNode endNode = GetContainPointShape (dest);
 
 			return FindWay (startNode, endNode);
 		}
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public override bool Init()
+		{
+			foreach (KeyValuePair<int, NavigationNode> item in _NavNodes) {
+				item.Value.Reset ();
+			}
+
+			float distance;
+			foreach (KeyValuePair<int, Dictionary<int, float>> item in _NeighborNodes) {
+				foreach (KeyValuePair<int, float> item2 in item.Value) {
+					NavigationNode startNode = GetNode (item.Key);
+					NavigationNode endNode = GetNode (item2.Key);
+					if (startNode != null && endNode != null) {
+						if (item2.Value == 0) {
+							distance = Vector3.Distance (startNode.Position, endNode.Position);
+						} else {
+							distance = item2.Value;
+						}
+						this.AddNeighborNode (startNode, endNode, distance);
+					}
+				}
+			}
+
+			return true;
+		}
+
 
 		/// <summary>
 		/// Releases all resource used by the <see cref="Controller.AI.Navmesh.NavigationMesh"/> object.
@@ -111,6 +154,7 @@ namespace Controller.AI.Navmesh
 		{
 			base.Dispose ();
 			_NavNodes.Clear ();
+			_NeighborNodes.Clear ();
 		}
 	}
 }

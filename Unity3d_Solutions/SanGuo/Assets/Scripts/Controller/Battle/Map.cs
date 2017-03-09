@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Helper;
+using Game.Controller;
 using Controller.AI.AStar;
 
 namespace Controller.Battle
@@ -77,6 +78,12 @@ namespace Controller.Battle
 			transform.SetParent (_Root);
 
 			_MapItems.Add (transform);
+
+			ThirdPersonController controller = _Root.gameObject.GetComponent<ThirdPersonController> ();
+			if (controller == null) {
+				controller = _Root.gameObject.AddComponent<ThirdPersonController> ();
+			}
+			controller.CameraPosition = new Vector3 (-5, 3, -6);
 		}
 
 
@@ -98,6 +105,22 @@ namespace Controller.Battle
 		}
 
 		/// <summary>
+		/// 初始化
+		/// </summary>
+		public bool Init()
+		{
+			if (_FindWayMethod.Loaded) {
+				return true;
+			}
+			_FindWayMethod.SetSize ((int)_MapSize.x, (int)_MapSize.y);
+			if (!_FindWayMethod.Init ()) {
+				return false;
+			}
+
+			return true;
+		}
+
+		/// <summary>
 		/// 查找从起始到目标的路径
 		/// </summary>
 		/// <returns>The way.</returns>
@@ -108,30 +131,41 @@ namespace Controller.Battle
 				return null;
 			}
 
-			_FindWayMethod.SetSize ((int)_MapSize.x, (int)_MapSize.y);
-			if (!_FindWayMethod.Init ()) {
-				return null;
-			}
 
-			foreach (Transform target in _MapItems) {
-				if (target != src && target !=  dest) {
-					Vector2 position = MathHelp.Convert3DTo2D (target.position);
+			_FindWayMethod.Reset ();
+
+			/*
+			int count = _MapItems.Count;
+			for (int i = 0; i < count; i++) {
+				if (_MapItems[i] != src && _MapItems[i] !=  dest) {
+					Vector2 position = MathHelp.Convert3DTo2D (_MapItems[i].position);
 					ASGridNode item = _FindWayMethod.GetGrid (position);
-					item.CanPass = false;
+					if (item != null) {
+						item.CanPass = false;
+					}
 				}
 			}
+			*/
 
 			Vector2 srcPos = MathHelp.Convert3DTo2D(src.position);
 			Vector2 destPos = MathHelp.Convert3DTo2D(dest.position);
 					
 			List<AStarNode> path = _FindWayMethod.FindWay (srcPos, destPos);
-			if (path == null) {
+			if (path == null || path.Count == 0) {
 				return null;
 			}
 
 			List<Vector2> way = new List<Vector2> ();
-			foreach (AStarNode item in path) {
-				ASGridNode node = item as ASGridNode;
+			ASGridNode firstNode = path[0] as ASGridNode;
+			if (firstNode != null) {
+				if (srcPos != firstNode.Position) {
+					way.Add (srcPos);
+				}
+			}
+
+			int count = path.Count;
+			for (int i = 0; i < count; i++) {
+				ASGridNode node = path[i] as ASGridNode;
 				if (node == null) {
 					return null;
 				}

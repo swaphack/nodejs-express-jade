@@ -3,6 +3,7 @@ using Game.Module;
 using Data;
 using Game;
 using Controller.Battle;
+using Data.Battle;
 
 namespace Game.Helper
 {

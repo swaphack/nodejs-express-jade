@@ -32,11 +32,11 @@ namespace Model.Base
 		}
 
 		/// <summary>
-		/// 重置当前值
+		/// 重置当前值,设置成最大值
 		/// </summary>
 		public void Reset()
 		{
-			CurrentValue = 0;
+			CurrentValue = MaxValue;
 		}
 	}
 }

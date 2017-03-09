@@ -219,12 +219,16 @@ namespace Controller.AI.AStar
 			AStarNode currentNode;
 			openList.Add (startNode);
 
+			int count = 0;
+			int i = 0;
+			AStarNode item = null;
 			//Log.Warning ("Begin Find Way From :(" + src.x + "," + src.y + "),To :(" +dest.x + "," + dest.y + ")");
 			while (openList.Count > 0) {
 				currentNode = openList[0];
 
 				// 查找最小权值
-				for (int i = 0, max = openList.Count; i < max; i++) {
+				count = openList.Count;
+				for (i = 0; i < count; i++) {
 					if (openList [i].TotalDistance <= currentNode.TotalDistance
 						&& openList [i].DestDistance < currentNode.DestDistance) {
 						currentNode = openList [i];
@@ -244,7 +248,9 @@ namespace Controller.AI.AStar
 				if (neighborItems == null) {
 					return null;
 				}
-				foreach (AStarNode item in neighborItems) {
+				count = neighborItems.Count;
+				for (i = 0; i< count; i++) {
+					item = neighborItems [i];
 					// 不可通过、已查找过
 					if (item == null || !item.CanPass || closedList.Contains (item)) {
 						continue;

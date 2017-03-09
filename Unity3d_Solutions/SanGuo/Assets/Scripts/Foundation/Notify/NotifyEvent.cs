@@ -51,8 +51,9 @@ namespace Foundation.Notify
 		/// </summary>
 		public void Dispatch()
 		{
-			foreach (NotifyHandler t in _NotifyEvent) {
-				t ();
+			int count = _NotifyEvent.Count;
+			for (int i = 0; i < count; i++) {
+				_NotifyEvent [i] ();
 			}
 		}
 
@@ -84,8 +85,9 @@ namespace Foundation.Notify
 		/// <param name="parameter">Parameter.</param>
 		public void Dispatch(object parameter)
 		{
-			foreach (NotifyHandlerWithParameter t in _NotifyEventWithParameter) {
-				t (parameter);
+			int count = _NotifyEventWithParameter.Count;
+			for (int i = 0; i < count; i++) {
+				_NotifyEventWithParameter[i] (parameter);
 			}
 		}
 	}

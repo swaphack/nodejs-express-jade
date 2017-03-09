@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Model.Battle;
 using Game;
@@ -28,6 +29,10 @@ namespace Controller.Battle
 		/// 死亡的单位
 		/// </summary>
 		private UnitSheet _DeadUnits;
+		/// <summary>
+		/// 待移除的单位
+		/// </summary>
+		private List<Unit> _WaitForRemoveUnits;
 		/// <summary>
 		/// 队伍被摧毁
 		/// </summary>
@@ -73,6 +78,8 @@ namespace Controller.Battle
 		{
 			_AliveUnits = new UnitSheet ();
 			_DeadUnits = new UnitSheet ();
+
+			_WaitForRemoveUnits = new List<Unit> ();
 		}
 
 		/// <summary>
@@ -109,7 +116,7 @@ namespace Controller.Battle
 			}
 
 			// 全部加载完毕
-			if (_Formation.UnitModels.Count == _AliveUnits.Count) {
+			if (_Formation.UnitModels.Count == _AliveUnits.Count + _DeadUnits.Count) {
 				return false;
 			}
 
@@ -156,6 +163,26 @@ namespace Controller.Battle
 		}
 
 		/// <summary>
+		/// 更新活着的单位
+		/// </summary>
+		/// <param name="dt">Dt.</param>
+		public void UpdateAliveUnits(float dt)
+		{
+			HandWaitForRemoveUnits ();
+
+			_AliveUnits.Update (dt);
+		}
+
+		/// <summary>
+		/// 更新死亡单位
+		/// </summary>
+		/// <param name="dt">Dt.</param>
+		public void UpdateDeadUnits(float dt)
+		{
+			_DeadUnits.Update (dt);
+		}
+
+		/// <summary>
 		/// 创建单位回调
 		/// </summary>
 		/// <param name="gameObj">Game object.</param>
@@ -187,11 +214,12 @@ namespace Controller.Battle
 			newGameObj.transform.position = paper.Position;
 			newGameObj.transform.localScale = paper.Scale;
 			newGameObj.transform.Rotate (paper.Rotation);
-			Collider collider = newGameObj.GetComponent<Collider> ();
-			if (collider) {
-				Bounds bounds = collider.bounds;
-				bounds.size = paper.Volume;
-			}
+			Collider collider = newGameObj.GetComponent<BoxCollider> ();
+			if (collider == null) {
+				newGameObj.AddComponent<BoxCollider> ();
+			} 
+			newGameObj.GetComponent<BoxCollider> ().size = paper.Volume;
+			newGameObj.GetComponent<BoxCollider> ().center = paper.Center;
 
 			OnUnitCreate (unit);
 		}
@@ -206,8 +234,24 @@ namespace Controller.Battle
 				return;
 			}
 
-			_AliveUnits.RemoveUnit (unit.ID);
-			_DeadUnits.AddUnit (unit);
+			_WaitForRemoveUnits.Add (unit);
+		}
+
+		/// <summary>
+		/// 处理待移除单位事件
+		/// </summary>
+		private void HandWaitForRemoveUnits()
+		{
+			if (_WaitForRemoveUnits.Count == 0) {
+				return;
+			}
+			int count = _WaitForRemoveUnits.Count;
+			for (int i = 0; i < count; i++) {
+				_AliveUnits.RemoveUnit (_WaitForRemoveUnits [i].ID);
+				_DeadUnits.AddUnit (_WaitForRemoveUnits [i]);
+			}
+
+			_WaitForRemoveUnits.Clear ();
 			if (_AliveUnits.Count == 0) {
 				this.Dispose ();
 			}
@@ -218,14 +262,16 @@ namespace Controller.Battle
 		/// </summary>
 		/// <param name="unit">Unit.</param>
 		/// <param name="tag">Tag.</param>
-		private void OnEndUnitAction(Unit unit, string tag)
+		private void OnEndUnitAction(Unit unit, int tag)
 		{
-			if (unit == null || string.IsNullOrEmpty (tag)) {
+			if (unit == null) {
 				return;
 			}
 
-			if (tag == UnitAction.AnimationTag.Dead) {
-				OnUnitDestory (unit);
+			if (tag == UnitAction.t_die) {
+				if (OnUnitDestory != null) {
+					OnUnitDestory (unit);
+				}
 			}
 		}
 

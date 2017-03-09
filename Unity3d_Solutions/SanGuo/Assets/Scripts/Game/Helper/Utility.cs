@@ -6,6 +6,7 @@ namespace Game.Helper
 {
 	/// <summary>
 	/// 一些常用方法
+	/// 
 	/// </summary>
 	public class Utility
 	{
@@ -69,7 +70,23 @@ namespace Game.Helper
 		public static Vector2 GetScreenSize()
 		{
 			return new Vector2 (Screen.width, Screen.height);
-			
+		}
+
+
+		/// <summary>
+		/// 释放无用资源
+		/// </summary>
+		public static void UnloadUnusedResources()
+		{
+			Resources.UnloadUnusedAssets ();
+		}
+
+		/// <summary>
+		/// 释放无用对象
+		/// </summary>
+		public static void UnloadUnusedObject()
+		{
+			GC.Collect ();
 		}
 	}
 }

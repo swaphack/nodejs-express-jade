@@ -73,6 +73,7 @@ namespace Game.Platform
 		{
 			KeyPress keyPress;
 			bool bTrigger = false;
+
 			foreach (KeyValuePair<KeyPress, NotifyEvent> item in _NotifyListeners) {
 				
 				keyPress = item.Key;

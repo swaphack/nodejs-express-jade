@@ -10,6 +10,16 @@ namespace Game.Controller
 	/// </summary>
 	public class UnitActionController : MonoBehaviour
 	{
+		internal class TriggerName
+		{
+			public const string Stand = "Stand";
+			public const string Walk = "Walk";
+			public const string Run = "Run";
+			public const string Attack = "Attack";
+			public const string Dead = "Dead";
+			public const string Hurt = "Hurt";
+
+		}
 		// Use this for initialization
 		void Start ()
 		{
@@ -40,7 +50,7 @@ namespace Game.Controller
 		{
 			Animator animation = this.GetComponent<Animator> ();
 			AnimatorStateInfo stateInfo = animation.GetCurrentAnimatorStateInfo (0);
-			if (stateInfo.IsTag(UnitAction.AnimationTag.Dead)) {
+			if (stateInfo.tagHash == UnitAction.t_die) {
 				Log.Info ("normalizedTime : " + stateInfo.normalizedTime);
 			}
 		}
@@ -66,7 +76,7 @@ namespace Game.Controller
 		private void PlayStand()
 		{
 			Animator animator = this.GetComponent<Animator> ();
-			animator.SetTrigger (UnitAction.TriggerName.Stand);
+			animator.SetTrigger (TriggerName.Stand);
 		}
 
 		/// <summary>
@@ -75,7 +85,7 @@ namespace Game.Controller
 		private void PlayWalk()
 		{
 			Animator animator = this.GetComponent<Animator> ();
-			animator.SetTrigger (UnitAction.TriggerName.Walk);
+			animator.SetTrigger (TriggerName.Walk);
 		}
 
 		/// <summary>
@@ -84,7 +94,7 @@ namespace Game.Controller
 		private void PlayRun()
 		{
 			Animator animator = this.GetComponent<Animator> ();
-			animator.SetTrigger (UnitAction.TriggerName.Run);
+			animator.SetTrigger (TriggerName.Run);
 		}
 
 		/// <summary>
@@ -93,7 +103,7 @@ namespace Game.Controller
 		private void PlayAttack()
 		{
 			Animator animator = this.GetComponent<Animator> ();
-			animator.SetTrigger (UnitAction.TriggerName.Attack);
+			animator.SetTrigger (TriggerName.Attack);
 		}
 
 		/// <summary>
@@ -102,7 +112,7 @@ namespace Game.Controller
 		private void PlayDead()
 		{
 			Animator animator = this.GetComponent<Animator> ();
-			animator.SetTrigger (UnitAction.TriggerName.Dead);
+			animator.SetTrigger (TriggerName.Dead);
 		}
 
 		/// <summary>
@@ -111,7 +121,7 @@ namespace Game.Controller
 		private void PlayHurt()
 		{
 			Animator animator = this.GetComponent<Animator> ();
-			animator.SetTrigger (UnitAction.TriggerName.Hurt);
+			animator.SetTrigger (TriggerName.Hurt);
 		}
 	}
 }

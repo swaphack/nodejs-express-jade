@@ -4,7 +4,10 @@
 		<Size width="100" height="100"/>
 	</Map>
 	<Resource Des="资源">
-		<Item ID="1" AssetBundlePath="assets.ab" Name="Prefabs/Map/Pillar.prefab"/>
+		<Item ID="1" AssetBundlePath="assets.ab" Name="Prefabs/Role/Footman_Unlit_Blue.prefab"/>
+		<Item ID="2" AssetBundlePath="assets.ab" Name="Prefabs/Role/Footman_Unlit_Green.prefab"/>
+		<Item ID="3" AssetBundlePath="assets.ab" Name="Prefabs/Role/Footman_Unlit_Red.prefab"/>
+		<Item ID="4" AssetBundlePath="assets.ab" Name="Prefabs/Role/Footman_Unlit_Yellow.prefab"/>
 	</Resource>
 	<Property Des="属性">
 		<Item ID="1" HP="200" Attack="2" />
@@ -15,25 +18,31 @@
 		<Item ID="6" HP="200" Attack="20" />
 	</Property>
 	<Transform Des="空间属性">
-		<Item ID="1" Position="1,1,10" Rotation="0,0,0" Scale="1,1,1" Volume="1,1,1"/>
-		<Item ID="2" Position="2,1,10" Rotation="0,0,0" Scale="1,1,1" Volume="1,1,1"/>
-		<Item ID="3" Position="3,1,10" Rotation="0,0,0" Scale="1,1,1" Volume="1,1,1"/>
-		<Item ID="4" Position="19,1,20" Rotation="0,0,0" Scale="1,1,1" Volume="1,1,1"/>
-		<Item ID="5" Position="20,1,20" Rotation="0,0,0" Scale="1,1,1" Volume="1,1,1"/>
-		<Item ID="6" Position="21,1,20" Rotation="0,0,0" Scale="1,1,1" Volume="1,1,1"/>
+		<Item ID="1" Position="0,1,0" Rotation="0,0,0" Scale="1,1,1" Center="0,1,0" Volume="1,2,1"/>
+		<Item ID="2" Position="0,1,2" Rotation="0,0,0" Scale="1,1,1" Center="0,1,0" Volume="1,2,1"/>
+		<Item ID="3" Position="0,1,4" Rotation="0,0,0" Scale="1,1,1" Center="0,1,0" Volume="1,2,1"/>
+		<Item ID="4" Position="9,1,10" Rotation="0,0,0" Scale="1,1,1" Center="0,1,0" Volume="1,2,1"/>
+		<Item ID="5" Position="9,1,12" Rotation="0,0,0" Scale="1,1,1" Center="0,1,0" Volume="1,2,1"/>
+		<Item ID="6" Position="9,1,14" Rotation="0,0,0" Scale="1,1,1" Center="0,1,0" Volume="1,2,1"/>
+		<Item ID="7" Position="13,1,10" Rotation="0,0,0" Scale="1,1,1" Center="0,1,0" Volume="1,2,1"/>
+		<Item ID="8" Position="13,1,12" Rotation="0,0,0" Scale="1,1,1" Center="0,1,0" Volume="1,2,1"/>
+		<Item ID="9" Position="13,1,14" Rotation="0,0,0" Scale="1,1,1" Center="0,1,0" Volume="1,2,1"/>
 	</Transform>
 	<Skill Des="技能">
-		<Item ID="1" CoolDown="2" CostMana="0" Radius="5" TargetType="3"/>
-		<Item ID="2" CoolDown="2" CostMana="0" Radius="6" TargetType="3"/>
-		<Item ID="3" CoolDown="2" CostMana="0" Radius="7" TargetType="3"/>
+		<Item ID="1" CoolDown="2" CostMana="0" Radius="2" TargetType="3"/>
+		<Item ID="2" CoolDown="2" CostMana="0" Radius="3" TargetType="3"/>
+		<Item ID="3" CoolDown="2" CostMana="0" Radius="4" TargetType="3"/>
 	</Skill>
 	<Unit Des="单位配置">
 		<Item ID="1" Name="Unit1" ResourceID="1" PropertyID="1" TransformID="1" SkillID="1"/>
-		<Item ID="2" Name="Unit2" ResourceID="1" PropertyID="2" TransformID="2" SkillID="2"/>
-		<Item ID="3" Name="Unit3" ResourceID="1" PropertyID="3" TransformID="3" SkillID="3"/>
-		<Item ID="4" Name="Unit4" ResourceID="1" PropertyID="4" TransformID="4" SkillID="1"/>
-		<Item ID="5" Name="Unit5" ResourceID="1" PropertyID="5" TransformID="5" SkillID="2"/>
-		<Item ID="6" Name="Unit6" ResourceID="1" PropertyID="6" TransformID="6" SkillID="3"/>
+		<Item ID="2" Name="Unit2" ResourceID="1" PropertyID="2" TransformID="2" SkillID="1"/>
+		<Item ID="3" Name="Unit3" ResourceID="1" PropertyID="3" TransformID="3" SkillID="1"/>
+		<Item ID="4" Name="Unit4" ResourceID="2" PropertyID="4" TransformID="4" SkillID="2"/>
+		<Item ID="5" Name="Unit5" ResourceID="2" PropertyID="5" TransformID="5" SkillID="2"/>
+		<Item ID="6" Name="Unit6" ResourceID="2" PropertyID="6" TransformID="6" SkillID="2"/>
+		<Item ID="7" Name="Unit7" ResourceID="3" PropertyID="4" TransformID="7" SkillID="2"/>
+		<Item ID="8" Name="Unit8" ResourceID="3" PropertyID="5" TransformID="8" SkillID="3"/>
+		<Item ID="9" Name="Unit9" ResourceID="3" PropertyID="6" TransformID="9" SkillID="3"/>
 	</Unit>
 	<Team ID="1" Des="队伍">
 		<Item ID="1"/>
@@ -44,6 +53,11 @@
 		<Item ID="4"/>
 		<Item ID="5"/>
 		<Item ID="6"/>
+	</Team>
+	<Team ID="3" Des="队伍">
+		<Item ID="7"/>
+		<Item ID="8"/>
+		<Item ID="9"/>
 	</Team>
 	<Record>
 		<Round ID="1" Src="1,1,1" SpellID="1">

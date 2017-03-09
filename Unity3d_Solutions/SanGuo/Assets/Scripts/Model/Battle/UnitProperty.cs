@@ -114,12 +114,12 @@ namespace Model.Battle
 		/// <param name="value">Value.</param>
 		public void AddHP(float value)
 		{
-			if (value <= 0) {
+			if (value == 0) {
 				return;
 			}
 			PropertyType type = PropertyType.HitPoints;
 			float curVal = GetValue (type);
-			if (curVal < 0) {
+			if (curVal <= 0) {
 				return;
 			}
 

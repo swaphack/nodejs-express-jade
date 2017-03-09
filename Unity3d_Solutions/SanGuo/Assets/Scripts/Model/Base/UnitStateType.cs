@@ -12,10 +12,6 @@ namespace Model.Base
 		/// </summary>
 		None,
 		/// <summary>
-		/// 自动寻路
-		/// </summary>
-		AutoWalk,
-		/// <summary>
 		/// 播放技能
 		/// </summary>
 		PlaySpell,

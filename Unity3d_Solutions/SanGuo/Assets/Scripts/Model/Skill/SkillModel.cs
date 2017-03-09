@@ -36,6 +36,10 @@ namespace Model.Skill
 		/// 目标满足条件，才能触发
 		/// </summary>
 		public TargetType TargetType;
+		/// <summary>
+		/// 数量
+		/// </summary>
+		public int Count;
 
 		/// <summary>
 		/// 技能效果类型
@@ -47,14 +51,14 @@ namespace Model.Skill
 		public List<float> EffectParams;
 
 		/// <summary>
-		/// 触发状态
+		/// 触发状态 {状态编号， 概率}
 		/// </summary>
-		public List<BuffModel> Buffs;
+		public Dictionary<int, float> Buffs;
 
 		public SkillModel()
 		{
 			EffectParams = new List<float> ();
-			Buffs = new List<BuffModel> ();
+			Buffs = new Dictionary<int, float> ();
 		}
 	}
 }

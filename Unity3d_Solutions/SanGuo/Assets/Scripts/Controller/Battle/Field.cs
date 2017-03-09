@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Model.Battle;
+using Game.Helper;
 
 namespace Controller.Battle
 {
@@ -17,6 +18,10 @@ namespace Controller.Battle
 		/// 死亡的队伍
 		/// </summary>
 		private Dictionary<int, Team> _DeadTeams;
+		/// <summary>
+		/// 待移除队伍
+		/// </summary>
+		private List<Team> _WaitForRemoveTeams;
 		/// <summary>
 		/// 进行时间
 		/// </summary>
@@ -86,7 +91,10 @@ namespace Controller.Battle
 			_AliveTeams = new Dictionary<int, Team> ();
 			_DeadTeams = new Dictionary<int, Team> ();
 			_MapLoader = new MapLoader ();
+
 			_Map = new Map ();
+
+			_WaitForRemoveTeams = new List<Team> ();
 		}
 
 		/// <summary>
@@ -151,12 +159,11 @@ namespace Controller.Battle
 				return;
 			}
 
-			_AliveTeams.Remove (team.ID);
-			_DeadTeams.Add (team.ID, team);
-
-			if (_AliveTeams.Count == 1) {
-				//OnEndBattle ();
+			if (_WaitForRemoveTeams.Contains (team)) {
+				return;
 			}
+
+			_WaitForRemoveTeams.Add (team);
 		}
 
 		/// <summary>
@@ -169,7 +176,7 @@ namespace Controller.Battle
 				return;
 			}
 
-			_Map.AddTransform (unit.TranformObject.Transform);
+			_Map.AddTransform (unit.MemberTransform.Transform);
 		}
 
 		/// <summary>
@@ -182,8 +189,8 @@ namespace Controller.Battle
 				return;
 			}
 
-			_Map.RemoveTransform (unit.TranformObject.Transform);
-			unit.TranformObject.SetTranform (null);
+			_Map.RemoveTransform (unit.MemberTransform.Transform);
+			unit.RestObject();
 		}
 
 		/// <summary>
@@ -227,8 +234,78 @@ namespace Controller.Battle
 			}
 
 			// 正在加载资源
-			if (_MapLoader.LoadAssetBundle ()) {
+			if (!IsFinishedLoadResource ()) {
 				return;
+			}
+
+			// 初始化地图
+			if (!_Map.Init ()) {
+				return;
+			}
+
+			CheckWaitForRemoveTeams ();
+
+			// 死亡单位
+			foreach (KeyValuePair<int,Team> item in _DeadTeams) {
+				item.Value.UpdateDeadUnits (dt);
+			}
+
+			foreach (KeyValuePair<int,Team> item in _AliveTeams) {
+				item.Value.UpdateDeadUnits (dt);
+			}
+
+			// 战斗结束
+			if (IsEndBattle ()) {
+				return;
+			}
+
+			// 活着单位
+			foreach (KeyValuePair<int,Team> item in _AliveTeams) {
+				item.Value.UpdateAliveUnits (dt);
+			}
+		}
+
+		/// <summary>
+		/// 检查待移除队伍列表
+		/// </summary>
+		private void CheckWaitForRemoveTeams()
+		{
+			if (_WaitForRemoveTeams.Count == 0) {
+				return;
+			}
+			int count = _WaitForRemoveTeams.Count;
+			for (int i =0; i< count; i++) {
+				if (_AliveTeams.ContainsKey (_WaitForRemoveTeams[i].ID)) {
+					_AliveTeams.Remove (_WaitForRemoveTeams[i].ID);
+				}
+
+				if (!_DeadTeams.ContainsKey (_WaitForRemoveTeams[i].ID)) {
+					_DeadTeams.Add (_WaitForRemoveTeams[i].ID, _WaitForRemoveTeams[i]);
+				}
+			}
+
+			_WaitForRemoveTeams.Clear ();
+
+			if (_AliveTeams.Count == 1) {
+				foreach (KeyValuePair<int,Team> item in _AliveTeams) {
+					foreach (KeyValuePair<int, Unit> item2 in item.Value.AliveUnits.Units) {
+						item2.Value.UnitBehaviour.PlayWin ();
+					}
+				}
+
+				Utility.UnloadUnusedObject ();
+			}
+		}
+
+		/// <summary>
+		/// 是否资源加载结束
+		/// </summary>
+		/// <returns><c>true</c> if this instance is finished load resource; otherwise, <c>false</c>.</returns>
+		private bool IsFinishedLoadResource()
+		{
+			// 正在加载资源
+			if (_MapLoader.LoadAssetBundle ()) {
+				return false;
 			}
 
 			// 正在加载单位
@@ -239,18 +316,20 @@ namespace Controller.Battle
 				}
 			}
 
-			if (isLoading) {
-				return;
+			return !isLoading;
+		}
+
+		/// <summary>
+		/// 战斗是否结束
+		/// </summary>
+		/// <returns><c>true</c> if this instance is end battle; otherwise, <c>false</c>.</returns>
+		private bool IsEndBattle()
+		{
+			if (_AliveTeams.Count > 1) {
+				return false;
 			}
 
-			foreach (KeyValuePair<int,Team> item in _DeadTeams) {
-				item.Value.Update (dt);
-			}
-
-			foreach (KeyValuePair<int,Team> item in _AliveTeams) {
-				item.Value.Update (dt);
-			}
-			//*/
+			return true;
 		}
 
 		/// <summary>

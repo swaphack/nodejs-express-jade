@@ -2,7 +2,7 @@
 <root Des="赛道配置数据">
 	<Prefabs Path="assets.ab" Des="原型，Path是资源包名称">
 		<Item ID="1" Path="Prefabs/Map/Pillar.prefab" Des="柱子"/>
-		<Item ID="2" Path="Prefabs/Role/Player.prefab" Des="角色"/>
+		<Item ID="2" Path="Prefabs/Role/Role1.prefab" Des="角色"/>
 	</Prefabs>
 	<Elements Des="元素">
 		<Item Name="Element1" PrefabID="1" Position="1,1,1"/>

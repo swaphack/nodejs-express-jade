@@ -2,7 +2,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
-using Data;
+using Data.Map;
 using Game.Helper;
 
 namespace Game.Controller
@@ -15,11 +15,11 @@ namespace Game.Controller
 		/// <summary>
 		/// 原型
 		/// </summary>
-		private Dictionary<int, TrackConfig.PrefabItem> _PrefabItems;
+		private Dictionary<int, TrackMap.PrefabItem> _PrefabItems;
 		/// <summary>
 		/// 赛道元素
 		/// </summary>
-		private List<TrackConfig.ElementItem> _ElementItems;
+		private List<TrackMap.ElementItem> _ElementItems;
 		/// <summary>
 		/// 资源包名称
 		/// </summary>
@@ -40,7 +40,7 @@ namespace Game.Controller
 		// Use this for initialization
 		void Start ()
 		{
-			TrackConfig data = new TrackConfig (TrackConfigPath);
+			TrackMap data = new TrackMap (TrackConfigPath);
 			if (!data.Load ()) {
 				return;
 			}
@@ -83,12 +83,12 @@ namespace Game.Controller
 				return;
 			}
 
-			TrackConfig.ElementItem elementItem = _ElementItems [_LoadedCount];
+			TrackMap.ElementItem elementItem = _ElementItems [_LoadedCount];
 			if (!_PrefabItems.ContainsKey (elementItem.PrefabID)) {
 				_LoadedCount++;
 				return;
 			}
-			TrackConfig.PrefabItem prefabItem = _PrefabItems [elementItem.PrefabID];
+			TrackMap.PrefabItem prefabItem = _PrefabItems [elementItem.PrefabID];
 #if USE_ASSET_BUNDLE
 			FileDataHelp.CreatePrefabFromAssetBundle (_AssetBundle, prefabItem.Path, (GameObject gameObj)=>{
 				if (gameObj == null) {

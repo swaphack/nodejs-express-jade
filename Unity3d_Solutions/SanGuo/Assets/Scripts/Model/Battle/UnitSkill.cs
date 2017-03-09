@@ -124,6 +124,19 @@ namespace Model.Battle
 		}
 
 		/// <summary>
+		/// 重置技能时间
+		/// </summary>
+		/// <param name="index">Index.</param>
+		public void ResetSkillValue(SkillIndex index)
+		{
+			if (!_SkillValues.ContainsKey (index)) {
+				return;
+			}
+
+			_SkillValues [index].Reset ();
+		}
+
+		/// <summary>
 		/// 清空数据
 		/// </summary>
 		public void Clear()

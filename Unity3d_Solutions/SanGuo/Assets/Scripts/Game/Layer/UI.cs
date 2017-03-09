@@ -158,8 +158,9 @@ namespace Game.Layer
 		/// <param name="dt">Dt.</param>
 		public void Update(float dt)
 		{
-			foreach (UILayer layer in _UILayers) {
-				layer.Update (dt);
+			int count = _UILayers.Count;
+			for (int i = 0; i < count; i++) {
+				_UILayers[i].Update (dt);
 			}
 		}
 
@@ -168,8 +169,9 @@ namespace Game.Layer
 		/// </summary>
 		public void Clear()
 		{
-			foreach (UILayer layer in _UILayers) {
-				layer.Dispose ();
+			int count = _UILayers.Count;
+			for (int i = 0; i < count; i++) {
+				_UILayers [i].Dispose ();
 			}
 
 			_UILayers.Clear ();
@@ -182,9 +184,10 @@ namespace Game.Layer
 		/// <typeparam name="T">The 1st type parameter.</typeparam>
 		public void Show<T>() where T : ILayer, new() 
 		{
-			foreach (UILayer layer in _UILayers) {
-				if (typeof(T) == layer.GetType ()) {
-					layer.Show ();
+			int count = _UILayers.Count;
+			for (int i = 0; i < count; i++) {
+				if (typeof(T) == _UILayers[i].GetType ()) {
+					_UILayers[i].Show ();
 					return;
 				}
 			}

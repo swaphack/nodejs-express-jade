@@ -67,9 +67,10 @@ namespace Game.Platform
 				return;
 			}
 
-			foreach (ITouchDispatcher dispather in _TouchDispatchers) {
-				if (dispather.Target.enabled == true && hitInfo.collider == dispather.Target) {
-					dispather.OnDispatchTouch (phase, position);
+			int count = _TouchDispatchers.Count;
+			for (int i = 0; i < count; i++) {
+				if (_TouchDispatchers[i].Target.enabled == true && hitInfo.collider == _TouchDispatchers[i].Target) {
+					_TouchDispatchers[i].OnDispatchTouch (phase, position);
 				}
 			}
 		}
@@ -84,7 +85,7 @@ namespace Game.Platform
 			phase = TouchPhase.Began;
 			position = new Vector2 ();
 
-			if (Input.touchSupported == true && Input.touchSupported == true) {
+			if (Input.touchSupported == true && Input.touchSupported == true) { // 触摸
 				if (Input.touchCount == 0) {
 					return false;
 				}
@@ -97,7 +98,7 @@ namespace Game.Platform
 
 				return true;
 
-			} else if (Input.mousePresent) {
+			} else if (Input.mousePresent) { // 鼠标
 				if (Input.GetMouseButtonDown (0)) {
 					phase = TouchPhase.Began;
 				} else if (Input.GetMouseButtonUp (0)) {

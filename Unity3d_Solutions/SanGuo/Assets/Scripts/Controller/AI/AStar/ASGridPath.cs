@@ -94,7 +94,22 @@ namespace Controller.AI.AStar
 			ASGridNode startNode = GetGrid (src);
 			ASGridNode endNode = GetGrid (dest);
 
+			if (startNode == null || dest == null) {
+				return null;
+			}
+
 			return FindWay (startNode, endNode);
+		}
+
+
+		/// <summary>
+		/// 是否已加载
+		/// </summary>
+		/// <value><c>true</c> if loaded; otherwise, <c>false</c>.</value>
+		public bool Loaded {
+			get { 
+				return _Grids != null;
+			}
 		}
 
 		/// <summary>
@@ -106,9 +121,11 @@ namespace Controller.AI.AStar
 				return false;
 			}
 
-			if (_Grids == null) {
-				_Grids = new ASGridNode[_Width, _Height];
+			if (_Grids != null) {
+				return true;
 			}
+
+			_Grids = new ASGridNode[_Width, _Height];
 
 			int i, j, m, n, x, y;
 			float distance;
@@ -145,6 +162,26 @@ namespace Controller.AI.AStar
 			}
 
 			return true;
+		}
+
+		/// <summary>
+		/// 重置
+		/// </summary>
+		public void Reset()
+		{
+			int i, j;
+			float distance;
+			for (i = 0; i < _Height; i++) {
+				for (j = 0; j < _Width; j++) {
+					if (_Grids [i, j] == null) {
+						_Grids [i, j] = new ASGridNode ();
+						_Grids [i, j].Position.x = i;
+						_Grids [i, j].Position.y = j;
+					} else {
+						_Grids [i, j].Reset ();
+					}
+				}
+			}
 		}
 
 		/// <summary>

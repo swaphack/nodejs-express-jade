@@ -53,7 +53,18 @@ namespace Controller.Role
 				return;
 			}
 
-			//------------------------- 资源 -------------------------
+			InitResource ();
+
+			InitTask ();
+				
+			_bInit = true;
+		}
+
+		/// <summary>
+		/// 初始化资源
+		/// </summary>
+		private void InitResource()
+		{
 			Resource.Food = UserDefault.GetInstance ().GetInteger ("Food");
 			Resource.Wood = UserDefault.GetInstance ().GetInteger ("Wood");
 			Resource.Iron = UserDefault.GetInstance ().GetInteger ("Iron");
@@ -69,17 +80,22 @@ namespace Controller.Role
 			Resource.AddChangedNotify (ResType.Iron, () => {
 				UserDefault.GetInstance ().Set ("Food", Resource.Iron.ToString());
 			});
+		}
 
-			//------------------------- 任务 -------------------------
+		/// <summary>
+		/// 初始化任务
+		/// </summary>
+		private void InitTask()
+		{
+			// 判断物品数量是否满足
 			Task.AddCheckFinishTaskHandler(TaskConditionType.Item, (TaskCondition condition) => {
 				return Bag.GetItemCount(condition.TargetID) >= condition.Number;
 			});
 
+			// 判断角色等级是否满足
 			Task.AddCheckFinishTaskHandler(TaskConditionType.Level, (TaskCondition condition) => {
 				return Role.Level >= condition.Number;
 			});
-
-			_bInit = true;
 		}
 	}
 }

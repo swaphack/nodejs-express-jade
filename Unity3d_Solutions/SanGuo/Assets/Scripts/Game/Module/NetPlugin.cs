@@ -1,7 +1,7 @@
 ﻿using System;
 using Foundation.Net;
 using Foundation.Plugin;
-using Data;
+using Data.Config;
 
 namespace Game.Module
 {

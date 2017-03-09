@@ -19,7 +19,7 @@ namespace Model.Buff
 		/// <summary>
 		/// 持续时间
 		/// </summary>
-		public int Duration;
+		public float Duration;
 		/// <summary>
 		/// 间隔
 		/// </summary>

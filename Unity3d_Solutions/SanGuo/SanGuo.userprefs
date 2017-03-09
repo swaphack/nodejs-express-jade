@@ -1,17 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Controller\Battle\Map.cs">
     <Files>
-      <File FileName="Assets\Scripts\Game\Shapes\Line.cs" Line="43" Column="16" />
-      <File FileName="Assets\Scripts\Game\Shapes\Rectangle.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Game\Shapes\Polygon.cs" Line="85" Column="38" />
-      <File FileName="Assets\Scripts\Game\Shapes\Triangle.cs" Line="25" Column="35" NotebookId="1" />
+      <File FileName="Assets\Scripts\Controller\AI\AStar\ASGridPath.cs" Line="109" Column="3" />
+      <File FileName="Assets\Scripts\Controller\Battle\Map.cs" Line="144" Column="28" />
+      <File FileName="Assets\Scripts\Controller\Battle\Field.cs" Line="242" Column="18" NotebookId="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Controller\AI\AStar2D.cs" line="246" column="1" />
-      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Game\Helper\MathHelp.cs" line="38" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

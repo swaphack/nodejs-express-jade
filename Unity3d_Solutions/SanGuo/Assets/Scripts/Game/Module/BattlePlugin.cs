@@ -8,6 +8,7 @@ using Model.Base;
 using UnityEngine;
 using Game.Helper;
 using Model.Skill;
+using Data.Battle;
 
 namespace Game.Module
 {
@@ -68,6 +69,15 @@ namespace Game.Module
 				return;
 			}
 
+			// 设置地图
+			GameObject gameObject = GameObject.Find ("Battle");
+			if (gameObject != null) {
+				_Field.Map.Root = gameObject.transform;
+			} else {
+				Log.Warning ("Not Exist Battle Node, Name : 'Battle'");
+				return;
+			}
+
 			HashSet<String> assetBundles = new HashSet<string> ();
 
 			// 设置队伍
@@ -100,6 +110,7 @@ namespace Game.Module
 						unitModel.Rotation = tranItem.Rotation;
 						unitModel.Scale = tranItem.Scale;
 						unitModel.Volume = tranItem.Volume;
+						unitModel.Center = tranItem.Center;
 					}
 
 					if (propItem != null) {
@@ -125,14 +136,6 @@ namespace Game.Module
 				team.ID = item.Key;
 				team.SetFormation (formation);
 				_Field.AddTeam (team);
-			}
-
-			// 设置地图
-			GameObject gameObject = GameObject.Find ("Battle");
-			if (gameObject != null) {
-				_Field.Map.Root = gameObject.transform;
-			} else {
-				Log.Warning ("Not Exist Battle Node, Name : 'Battle'");
 			}
 
 			_Field.Map.SetSize (_FieldData.MapInfo.Width, _FieldData.MapInfo.Height);

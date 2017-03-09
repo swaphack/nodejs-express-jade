@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Controller.AI.AStar;
-using Game.Shapes.D2;
+using Game.Shapes;
 
 namespace Controller.AI.Navmesh
 {
@@ -10,28 +10,23 @@ namespace Controller.AI.Navmesh
 	/// 导航节点
 	/// Position 为多边形的中心点
 	/// </summary>
-	public class NavigationNode : ASPointNode
+	public class NavigationNode : AStarNode
 	{
 		/// <summary>
 		/// 编号
 		/// </summary>
 		public int ID;
 		/// <summary>
-		/// 多边形
+		/// 位置
 		/// </summary>
-		private Polygon _Polygon;
+		public Vector3 Position;
 		/// <summary>
-		/// 多边形
+		/// 形状
 		/// </summary>
-		public Polygon Polygon {
-			get { 
-				return _Polygon;
-			}
-		}
+		public IShape Shape;
 		
 		public NavigationNode ()
 		{
-			_Polygon = new Polygon ();
 		}
 	}
 }

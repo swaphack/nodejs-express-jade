@@ -141,8 +141,10 @@ namespace Foundation.Notify
 		/// 主键
 		/// </summary>
 		/// <value>The keys.</value>
-		public Dictionary<T, NotifyEvent>.KeyCollection GetKeys() {
-			return _NotifyListeners.Keys;
+		public Dictionary<T, NotifyEvent> NotifyEvents {
+			get { 
+				return _NotifyListeners;
+			}
 		}
 
 		/// <summary>

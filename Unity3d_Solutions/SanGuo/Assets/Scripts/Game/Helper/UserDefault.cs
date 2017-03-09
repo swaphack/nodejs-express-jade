@@ -164,6 +164,9 @@ namespace Game.Helper
 			return 0;
 		}
 
+		/// <summary>
+		/// 保存到本地
+		/// </summary>
 		public void Flush()
 		{
 			this.Save ();

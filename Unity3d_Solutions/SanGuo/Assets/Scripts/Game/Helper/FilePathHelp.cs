@@ -149,15 +149,17 @@ namespace Game.Helper
 			string[] filePaths = Directory.GetFiles (dir);	
 			string[] dirPaths = Directory.GetDirectories (dir);
 
-			foreach (string filename in filePaths) {
-				if (!filename.EndsWith (withoutformat)) {
-					string realdir = filename.Substring (withoutBaseDir.Length);
+			int length = filePaths.Length;
+			for (int i = 0; i < length; i++) {
+				if (!filePaths[i].EndsWith (withoutformat)) {
+					string realdir = filePaths[i].Substring (withoutBaseDir.Length);
 					realdir = realdir.Replace (@"\", "/");
 					filePathList.Add (realdir);
 				}
 			}
-			foreach (string dirpath in dirPaths) {
-				getFilePaths (dirpath, filePathList, withoutBaseDir, withoutformat);
+			length = dirPaths.Length;
+			for (int i = 0; i < length; i++) {
+				getFilePaths (dirPaths[i], filePathList, withoutBaseDir, withoutformat);
 			}
 		}
 	}

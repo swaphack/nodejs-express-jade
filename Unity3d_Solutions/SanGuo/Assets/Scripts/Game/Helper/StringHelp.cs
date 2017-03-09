@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Game.Helper
 {
@@ -47,6 +48,38 @@ namespace Game.Helper
 			}
 
 			return new Vector3 (x, y, z);
+		}
+
+		/// <summary>
+		/// 将字符串转成整形数组
+		/// 格式1,1,1
+		/// </summary>
+		/// <returns>The to array.</returns>
+		/// <param name="value">Value.</param>
+		/// <typeparam name="">The 1st type parameter.</typeparam>
+		public static List<int> ConvertToIntArray(string value)
+		{
+			if (string.IsNullOrEmpty (value)) {
+				return null;
+			}
+
+			string[] parameters = value.Split (',');
+			if (parameters == null || parameters.Length == 0) {
+				return null;
+			}
+
+			List<int> result = new List<int> ();
+			int x = 0;
+			int length = parameters.Length;
+			for (int i = 0; i < length; i++) {
+				if (int.TryParse (parameters[i], out x)) {
+					result.Add (x);
+				} else {
+					Log.Warning ("Convert string to array Error, Not ValueType!");
+				}
+			}
+
+			return result;
 		}
 	}
 }

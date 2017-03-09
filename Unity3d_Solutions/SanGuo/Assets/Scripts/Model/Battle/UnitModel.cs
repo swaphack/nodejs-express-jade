@@ -44,6 +44,10 @@ namespace Model.Battle
 		/// </summary>
 		public Vector3 Volume;
 		/// <summary>
+		/// 中心点
+		/// </summary>
+		public Vector3 Center;
+		/// <summary>
 		/// 属性
 		/// </summary>
 		public Dictionary<PropertyType, float> Attributes;

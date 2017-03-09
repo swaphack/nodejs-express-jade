@@ -27,16 +27,15 @@ namespace Game.Controller
 
 		public ThirdPersonController ()
 		{
+			CameraPosition.x = 0;
+			CameraPosition.y = 1;
+			CameraPosition.z = -5;
 		}
 
 		void Start()
 		{
 			Camera mainCamera = Camera.main;
 			_CameraParent = mainCamera.transform.parent;
-
-			CameraPosition.x = 0;
-			CameraPosition.y = 1;
-			CameraPosition.z = -5;
 		}
 
 		void Update()

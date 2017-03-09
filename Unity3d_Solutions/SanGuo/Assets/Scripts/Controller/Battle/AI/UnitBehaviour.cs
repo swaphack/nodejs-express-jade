@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Controller.AI.Task;
 using Model.Base;
+using UnityEngine;
+using Controller.Battle.Task;
 
 namespace Controller.Battle.AI
 {
@@ -72,6 +73,77 @@ namespace Controller.Battle.AI
 		public void Init()
 		{
 			AddUnitTask (UnitStateType.PlaySpell, new SpellCaster ());
+		}
+
+		/// <summary>
+		/// 是否在行走中
+		/// </summary>
+		/// <value><c>true</c> if this instance is walk; otherwise, <c>false</c>.</value>
+		public bool IsWalk {
+			get { 
+				return !Target.Walker.Empty;
+			}
+		}
+
+		/// <summary>
+		/// 攻击
+		/// </summary>
+		public void PlayAttack()
+		{
+			Target.StopWalk ();
+			int i = (int)Random.Range (0, 3);
+			if (i == 0) {
+				Target.MemberModel.PlayAttack01 ();
+			} else if (i == 1) {
+				Target.MemberModel.PlayAttack02 ();
+			} else {
+				Target.MemberModel.PlayAttack03 ();
+			}
+		}
+
+		/// <summary>
+		/// 受击
+		/// </summary>
+		public void PlayGetHit()
+		{
+			Target.StopWalk ();
+			Target.MemberModel.PlayGetHit ();
+		}
+
+		/// <summary>
+		/// 模拟死亡
+		/// </summary>
+		public void PlaySimDead()
+		{
+			if (Target.Property.Dead) {
+				return;
+			}
+			Target.Property.AddHP(-Target.Property.GetValue(PropertyType.CurrentHitPoints));
+		}
+
+		/// <summary>
+		/// 死亡
+		/// </summary>
+		public void PlayDie()
+		{
+			CurrentTask = null;
+			Target.StopWalk ();
+			Target.RunDeadEvent ();
+			Target.MemberModel.PlayDie ();
+		}
+
+		/// <summary>
+		/// 胜利
+		/// </summary>
+		public void PlayWin()
+		{
+			Target.StopWalk ();
+			int i = (int)Random.Range (0, 2);
+			if (i == 0) {
+				Target.MemberModel.PlayJump ();
+			} else {
+				Target.MemberModel.PlayTaunt ();
+			}
 		}
 	}
 }

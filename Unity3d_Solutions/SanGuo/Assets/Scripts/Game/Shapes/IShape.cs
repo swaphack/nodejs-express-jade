@@ -1,24 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
-using Game.Helper;
 
 namespace Game.Shapes
 {
 	/// <summary>
-	/// 形状
+	/// 形状接口
 	/// </summary>
 	public interface IShape
 	{
 		/// <summary>
 		/// 顶点
 		/// </summary>
-		Vector3[] Points { get; }
+		/// <value>The points.</value>
+		Vector2[] Vertices { get; }
 		/// <summary>
-		/// 判断是否包含点
+		/// 是否包含点
 		/// </summary>
 		/// <param name="point">Point.</param>
-		bool Contains (Vector3 point);
+		bool Contains(Vector2 point);
+		/// <summary>
+		/// 设置点
+		/// </summary>
+		/// <param name="points">Points.</param>
+		void SetVertices (Vector2[] vertices);
 	}
 }
 

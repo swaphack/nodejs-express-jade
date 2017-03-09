@@ -43,6 +43,19 @@ namespace Controller.AI.Task
 		}
 
 		/// <summary>
+		/// 当前任务
+		/// </summary>
+		/// <value>The current task.</value>
+		protected ITask CurrentTask {
+			get { 
+				return _CurrentTask;
+			} 
+			set { 
+				_CurrentTask = value;
+			}
+		}
+
+		/// <summary>
 		/// 添加状态
 		/// </summary>
 		/// <param name="state">State.</param>
@@ -75,6 +88,7 @@ namespace Controller.AI.Task
 		public void Clear()
 		{
 			_Tasks.Clear ();
+			_CurrentTask = null;
 		}
 
 		/// <summary>

@@ -25,12 +25,23 @@ namespace Controller.AI.AStar
 		}
 
 		/// <summary>
-		/// 添加关联点
+		/// 添加点
+		/// </summary>
+		/// <param name="position">Position.</param>
+		public void AddPoint(Vector3 position)
+		{
+			if (!_Points.ContainsKey (position)) {
+				_Points.Add (position, new ASPointNode ());
+			}
+		}
+
+		/// <summary>
+		/// 添加关联
 		/// </summary>
 		/// <param name="first">First.</param>
 		/// <param name="second">Second.</param>
 		/// <param name="distance">Distance.</param>
-		public void AddPoint(Vector3 first, Vector3 second, float distance)
+		public void AddLink(Vector3 first, Vector3 second, float distance)
 		{
 			if (!_NeighborPoints.ContainsKey (first)) {
 				_NeighborPoints.Add (first, new Dictionary<Vector3, float> ());
@@ -40,14 +51,6 @@ namespace Controller.AI.AStar
 				_NeighborPoints[first].Add (second, distance);
 			} else {
 				_NeighborPoints [first][second] = distance;
-			}
-
-			if (!_Points.ContainsKey (first)) {
-				_Points.Add (first, new ASPointNode ());
-			}
-
-			if (!_Points.ContainsKey (second)) {
-				_Points.Add (second, new ASPointNode ());
 			}
 		}
 

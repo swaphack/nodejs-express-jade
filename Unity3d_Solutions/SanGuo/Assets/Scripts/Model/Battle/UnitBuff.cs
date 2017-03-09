@@ -71,7 +71,7 @@ namespace Model.Battle
 		/// 添加状态
 		/// </summary>
 		/// <param name="buffModel">BuffModel.</param>
-		public void AddBuff(BuffModel buffModel)
+		private void AddBuffModel(BuffModel buffModel)
 		{
 			if (buffModel == null) {
 				return;
@@ -82,15 +82,13 @@ namespace Model.Battle
 			}
 
 			_BuffModels [buffModel.BuffType].Add (buffModel);
-
-			OnBuffAdd (buffModel);
 		}
 
 		/// <summary>
 		/// 移除状态
 		/// </summary>
 		/// <param name="buffModel">Buff model.</param>
-		public void RemoveBuff(BuffModel buffModel)
+		private void RemoveBuffModel(BuffModel buffModel)
 		{  
 			if (buffModel == null) {
 				return;
@@ -103,7 +101,9 @@ namespace Model.Battle
 			  
 			_BuffModels [buffModel.BuffType].Remove (buffModel);
 
-			OnBuffRemove (buffModel);
+			if (_BuffModels [buffModel.BuffType].Count == 0) {
+				_BuffModels.Remove (buffModel.BuffType);
+			}
 		}
 
 		/// <summary>
@@ -124,6 +124,25 @@ namespace Model.Battle
 			return _BuffModels [buffModel.BuffType].IndexOf(buffModel);
 		}
 
+		/// <summary>
+		/// 获取状态
+		/// </summary>
+		/// <returns>The buff model.</returns>
+		/// <param name="type">Type.</param>
+		/// <param name="index">Index.</param>
+		public BuffModel GetBuffModel(BuffType type, int index)
+		{
+			if (!_BuffModels.ContainsKey (type)) {
+				return null;
+			}
+
+			if (index < 0 || index > _BuffModels.Count) {
+				return null;
+			}
+
+			return _BuffModels[type][index];
+		}
+
 
 		/// <summary>
 		/// 是否包含指定类型的状态
@@ -132,7 +151,10 @@ namespace Model.Battle
 		/// <param name="type">Type.</param>
 		public bool HasType(BuffType type)
 		{
-			return _BuffModels.ContainsKey (type);
+			bool bModelOk = _BuffModels.ContainsKey (type);
+			bool bValueOk = _BuffValues.ContainsKey (type);
+
+			return bModelOk && bValueOk;
 		}
 
 		/// <summary>
@@ -164,7 +186,10 @@ namespace Model.Battle
 
 			BuffPropertyValue current;
 
-			foreach (BuffModel buff in _BuffModels[BuffType.EffectProperty]) {
+			int count = _BuffModels [BuffType.EffectProperty].Count;
+			BuffModel buff = null;
+			for (int i = 0; i < count; i ++) {
+				buff = _BuffModels [BuffType.EffectProperty] [i];
 				if (buff.PropertyType != type) {
 					continue;
 				}
@@ -204,16 +229,17 @@ namespace Model.Battle
 		/// </summary>
 		/// <param name="type">Type.</param>
 		/// <param name="value">Value.</param>
-		public void AddBuffValue(BuffType type, BuffValue value)
+		private void AddBuffValue(BuffType type, BuffValue value)
 		{
 			if (value == null) {
 				return;
 			}
 
 			if (!_BuffValues.ContainsKey (type)) {
-				_BuffValues = new Dictionary<BuffType, List<BuffValue>> ();
+				_BuffValues[type] = new List<BuffValue> ();
 			}
 
+			value.Reset ();
 			_BuffValues[type].Add(value);
 		}
 
@@ -222,12 +248,15 @@ namespace Model.Battle
 		/// </summary>
 		/// <param name="type">Type.</param>
 		/// <param name="index">Index.</param>
-		public void RemoveBuffValue(BuffType type, int index)
+		private void RemoveBuffValue(BuffType type, int index)
 		{
 			if (!_BuffValues.ContainsKey (type)) {
 				return;
 			}
 			_BuffValues[type].RemoveAt (index);
+			if (_BuffValues [type].Count == 0) {
+				_BuffValues.Remove (type);
+			}
 		}
 
 		/// <summary>
@@ -256,6 +285,47 @@ namespace Model.Battle
 		{
 			_BuffModels.Clear ();
 			_BuffValues.Clear ();
+		}
+
+
+		/// <summary>
+		/// 添加状态
+		/// </summary>
+		/// <param name="buffModel">Buff model.</param>
+		public void AddBuff(BuffModel buffModel)
+		{
+			if (buffModel == null) {
+				return;
+			}
+
+			this.AddBuffModel (buffModel);
+			this.AddBuffValue (buffModel.BuffType, new BuffValue () {
+				MaxValue = buffModel.Duration,
+			});
+
+			if (OnBuffAdd != null) {
+				OnBuffAdd (buffModel);
+			}
+		}
+
+		/// <summary>
+		/// 移除状态
+		/// </summary>
+		/// <param name="buffModel">Buff model.</param>
+		public void RemoveBuff(BuffModel buffModel)
+		{
+			if (buffModel == null) {
+				return;
+			}
+
+			int index = this.GetBuffIndex (buffModel);
+
+			this.RemoveBuffValue (buffModel.BuffType, index);
+			this.RemoveBuffModel (buffModel);
+
+			if (OnBuffRemove != null) {
+				OnBuffRemove (buffModel);
+			}
 		}
 	}
 }

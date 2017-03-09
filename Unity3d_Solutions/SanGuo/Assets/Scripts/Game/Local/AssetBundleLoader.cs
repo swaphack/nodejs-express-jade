@@ -73,9 +73,10 @@ namespace Game.Local
 					return;	
 				}
 
-				foreach (string assetName in www.assetBundle.GetAllAssetNames())
-				{
-					Log.Info ("AssetName : " + assetName);
+				string[] allAssetNames = www.assetBundle.GetAllAssetNames();
+				int count = allAssetNames.Length;
+				for (int i = 0; i < count; i++) {
+					Log.Info ("AssetName : " + allAssetNames[i]);
 				}
 
 				ABItem item = new ABItem ();
@@ -85,6 +86,27 @@ namespace Game.Local
 
 				handler(true);
 			});
+		}
+
+		/// <summary>
+		/// 卸载资源
+		/// </summary>
+		/// <param name="filepath">Filepath.</param>
+		public void UnloadAssetBundle(string filepath)
+		{
+			if (string.IsNullOrEmpty(filepath)) {
+				Log.Warning ("null file path in UnloadAssetBundle");
+				return;
+			}
+
+			if (!_LoadItems.ContainsKey (filepath)) {
+				return;
+			}
+
+			if (_LoadItems [filepath].AssetBundle) {
+				_LoadItems [filepath].AssetBundle.Unload (false);
+				_LoadItems.Remove (filepath);
+			}
 		}
 
 

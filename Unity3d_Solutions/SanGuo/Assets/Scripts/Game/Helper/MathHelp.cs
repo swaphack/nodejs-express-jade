@@ -74,6 +74,16 @@ namespace Game.Helper
 		{
 			return GetVector3DArea (point1 - point0, point2 - point0);
 		}
+
+		/// <summary>
+		///  获取从开始位置到目标位置的朝向旋转角度
+		/// </summary>
+		/// <returns>方向向量</returns>
+		/// <param name="direction">Direction.</param>
+		public static double GetRotation(Vector3 direction)
+		{
+			return Math.Atan2 (direction.z, direction.x) * 180 / Math.PI;
+		}
 	}
 }
 

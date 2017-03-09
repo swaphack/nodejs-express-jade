@@ -88,17 +88,17 @@ namespace Game.Module
 			}
 
 			List<IAction> removeActions = new List<IAction> ();
+			for (int i = 0; i < count; i++) {
+				_Actions[i].Update (dt);
 
-			foreach (IAction action in _Actions) {
-				action.Update (dt);
-
-				if (action.IsFinish == true) {
-					removeActions.Add (action);
+				if (_Actions[i].IsFinish == true) {
+					removeActions.Add (_Actions[i]);
 				}
 			}
 
-			foreach (IAction action in removeActions) {
-				this.RemoveAction (action);
+			count = removeActions.Count;
+			for (int i = 0; i < count; i++) {
+				this.RemoveAction (removeActions[i]);
 			}
 		}
 
