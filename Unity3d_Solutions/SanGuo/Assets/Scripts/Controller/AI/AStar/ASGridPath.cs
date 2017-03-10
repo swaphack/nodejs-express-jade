@@ -76,7 +76,18 @@ namespace Controller.AI.AStar
 				return null;
 			}
 
-			return _Grids [(int)position.x, (int)position.y];
+			int i = Mathf.RoundToInt (position.y);
+			int j = Mathf.RoundToInt (position.x);
+
+			if (i >= _Height) {
+				i = _Height - 1;
+			}
+
+			if (j >= _Width) {
+				j = _Width - 1;
+			}
+
+			return _Grids [i, j];
 		}
 
 		/// <summary>
@@ -94,7 +105,7 @@ namespace Controller.AI.AStar
 			ASGridNode startNode = GetGrid (src);
 			ASGridNode endNode = GetGrid (dest);
 
-			if (startNode == null || dest == null) {
+			if (startNode == null || endNode == null) {
 				return null;
 			}
 
@@ -110,6 +121,11 @@ namespace Controller.AI.AStar
 			get { 
 				return _Grids != null;
 			}
+		}
+
+		private float GetDistance(Vector2 startNode, Vector2 endNode, float straightCost, float diagCost)
+		{
+			return GetDiagonalDistance (startNode, endNode, straightCost, diagCost);
 		}
 
 		/// <summary>
@@ -153,7 +169,7 @@ namespace Controller.AI.AStar
 							y = (int)position.y + n;
 							// 判断是否越界，如果没有，加到列表中
 							if (x < _Width && x >= 0 && y < _Height && y >= 0) {
-								distance = GetDiagonalDistance (_Grids [i, j].Position, _Grids [x, y].Position, StraightCost, DiagCost);
+								distance = GetDistance (_Grids [i, j].Position, _Grids [x, y].Position, StraightCost, DiagCost);
 								this.AddNeighborNode (_Grids [i, j], _Grids [x, y], distance);
 							}
 						}
@@ -167,19 +183,12 @@ namespace Controller.AI.AStar
 		/// <summary>
 		/// 重置
 		/// </summary>
-		public void Reset()
+		public override void Reset()
 		{
 			int i, j;
-			float distance;
 			for (i = 0; i < _Height; i++) {
 				for (j = 0; j < _Width; j++) {
-					if (_Grids [i, j] == null) {
-						_Grids [i, j] = new ASGridNode ();
-						_Grids [i, j].Position.x = i;
-						_Grids [i, j].Position.y = j;
-					} else {
-						_Grids [i, j].Reset ();
-					}
+					_Grids [i, j].Reset ();
 				}
 			}
 		}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Model.Battle;
 using Game.Helper;
+using UnityEngine;
 
 namespace Controller.Battle
 {
@@ -38,6 +39,10 @@ namespace Controller.Battle
 		/// 地图
 		/// </summary>
 		private Map _Map;
+		/// <summary>
+		/// 交通管理
+		/// </summary>
+		private Traffic _Traffic;
 
 		/// <summary>
 		/// 存活的队伍
@@ -93,6 +98,8 @@ namespace Controller.Battle
 			_MapLoader = new MapLoader ();
 
 			_Map = new Map ();
+
+			_Traffic = new Traffic ();
 
 			_WaitForRemoveTeams = new List<Team> ();
 		}
@@ -258,6 +265,8 @@ namespace Controller.Battle
 			if (IsEndBattle ()) {
 				return;
 			}
+
+			_Traffic.Update (dt);
 
 			// 活着单位
 			foreach (KeyValuePair<int,Team> item in _AliveTeams) {

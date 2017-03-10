@@ -28,6 +28,11 @@ namespace Controller.Battle
 		/// 地图大小
 		/// </summary>
 		private Vector2 _MapSize;
+		/// <summary>
+		/// 方位偏移
+		/// </summary>
+		/// <value>The root.</value>
+		private Vector2[] _DirectionOffsets;
 
 		/// <summary>
 		/// 根节点
@@ -47,6 +52,12 @@ namespace Controller.Battle
 			_FindWayMethod = new ASGridPath ();
 			_MapItems = new List<Transform> ();
 			_MapSize = Vector2.zero;
+
+			_DirectionOffsets = new Vector2[4];
+			_DirectionOffsets [0] = new Vector2 (-0.5f, -0.5f);
+			_DirectionOffsets [1] = new Vector2 (-0.5f, 0.5f);
+			_DirectionOffsets [2] = new Vector2 (0.5f, -0.5f);
+			_DirectionOffsets [3] = new Vector2 (0.5f, 0.5f);
 		}
 
 
@@ -131,13 +142,12 @@ namespace Controller.Battle
 				return null;
 			}
 
-
 			_FindWayMethod.Reset ();
+			int count = 0;
 
-			/*
-			int count = _MapItems.Count;
+			count = _MapItems.Count;
 			for (int i = 0; i < count; i++) {
-				if (_MapItems[i] != src && _MapItems[i] !=  dest) {
+				if (_MapItems[i] != src) {
 					Vector2 position = MathHelp.Convert3DTo2D (_MapItems[i].position);
 					ASGridNode item = _FindWayMethod.GetGrid (position);
 					if (item != null) {
@@ -145,7 +155,6 @@ namespace Controller.Battle
 					}
 				}
 			}
-			*/
 
 			Vector2 srcPos = MathHelp.Convert3DTo2D(src.position);
 			Vector2 destPos = MathHelp.Convert3DTo2D(dest.position);
@@ -156,14 +165,15 @@ namespace Controller.Battle
 			}
 
 			List<Vector2> way = new List<Vector2> ();
+			/*
 			ASGridNode firstNode = path[0] as ASGridNode;
 			if (firstNode != null) {
 				if (srcPos != firstNode.Position) {
 					way.Add (srcPos);
 				}
 			}
-
-			int count = path.Count;
+			*/
+			count = path.Count;
 			for (int i = 0; i < count; i++) {
 				ASGridNode node = path[i] as ASGridNode;
 				if (node == null) {

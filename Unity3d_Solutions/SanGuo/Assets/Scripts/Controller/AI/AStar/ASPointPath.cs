@@ -90,10 +90,6 @@ namespace Controller.AI.AStar
 		/// </summary>
 		public override bool Init()
 		{
-			foreach (KeyValuePair<Vector3, ASPointNode> item in _Points) {
-				item.Value.Reset ();
-			}
-
 			float distance;
 			foreach (KeyValuePair<Vector3, Dictionary<Vector3, float>> item in _NeighborPoints) {
 				foreach (KeyValuePair<Vector3, float> item2 in item.Value) {
@@ -111,6 +107,16 @@ namespace Controller.AI.AStar
 			}
 
 			return true;
+		}
+
+		/// <summary>
+		/// 重置
+		/// </summary>
+		public override void Reset()
+		{
+			foreach (KeyValuePair<Vector3, ASPointNode> item in _Points) {
+				item.Value.Reset ();
+			}
 		}
 
 		/// <summary>

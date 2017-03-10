@@ -74,12 +74,15 @@
      <Compile Include="Assets\Scripts\Controller\Battle\Member\MemberAction.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Member\MemberModel.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Member\MemberTransform.cs" />
+     <Compile Include="Assets\Scripts\Controller\Battle\Spell\FindTargetMethod.cs" />
+     <Compile Include="Assets\Scripts\Controller\Battle\Spell\ISelectedTargetParameters.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Spell\ITargetSelect.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Spell\SelectedTarget.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Spell\TargetSelectMechanism.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Spell\TargetSelectType.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Task\UnitTask.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Team.cs" />
+     <Compile Include="Assets\Scripts\Controller\Battle\Traffic.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Unit.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\UnitSheet.cs" />
      <Compile Include="Assets\Scripts\Controller\Container\UserBag.cs" />

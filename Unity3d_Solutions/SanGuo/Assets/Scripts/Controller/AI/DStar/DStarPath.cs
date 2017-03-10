@@ -3,7 +3,7 @@
 namespace Controller.AI.DStar
 {
 	/// <summary>
-	/// 动态寻路算法
+	/// D*动态寻路
 	/// </summary>
 	public class DStarPath
 	{

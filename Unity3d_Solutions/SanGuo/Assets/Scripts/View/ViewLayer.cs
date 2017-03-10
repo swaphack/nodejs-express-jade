@@ -2,6 +2,9 @@
 using Game.Layer;
 using View.Layer;
 using Game.Helper;
+using Game;
+using UnityEngine;
+
 namespace View
 {
 	/// <summary>
@@ -13,6 +16,11 @@ namespace View
 		{
 			//UI.GetInstance().Show<UIHomeLayer>();
 			BattleHelp.StartSimulatorBattle();
+
+			GameInstance.GetInstance ().Device.AddEscKeyHandler (() => {
+				Application.Quit();
+			});
+
 		}
 	}
 }

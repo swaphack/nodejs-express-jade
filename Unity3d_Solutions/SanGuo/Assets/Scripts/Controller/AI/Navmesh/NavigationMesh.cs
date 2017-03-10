@@ -10,7 +10,7 @@ namespace Controller.AI.Navmesh
 	/// <summary>
 	/// 导航网格
 	/// </summary>
-	public class NavigationMesh : ASPointPath
+	public class NavigationMesh : AStarPath
 	{
 		/// <summary>
 		/// 关联点
@@ -118,10 +118,6 @@ namespace Controller.AI.Navmesh
 		/// </summary>
 		public override bool Init()
 		{
-			foreach (KeyValuePair<int, NavigationNode> item in _NavNodes) {
-				item.Value.Reset ();
-			}
-
 			float distance;
 			foreach (KeyValuePair<int, Dictionary<int, float>> item in _NeighborNodes) {
 				foreach (KeyValuePair<int, float> item2 in item.Value) {
@@ -139,6 +135,13 @@ namespace Controller.AI.Navmesh
 			}
 
 			return true;
+		}
+
+		public override void Reset()
+		{
+			foreach (KeyValuePair<int, NavigationNode> item in _NavNodes) {
+				item.Value.Reset ();
+			}
 		}
 
 

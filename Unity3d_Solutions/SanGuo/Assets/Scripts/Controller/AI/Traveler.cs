@@ -128,13 +128,16 @@ namespace Controller.AI
 		/// <summary>
 		/// 初始化站点
 		/// </summary>
-		public void InitStation()
+		/// <param name="position">Position.</param>
+		private void InitStation(out Vector3 position)
 		{
+			position = _CurrentPosition;
+
 			if (_WalkPoints.Count == 0) {
 				return;
 			}
 
-			_CurrentPosition = _WalkPoints [0];
+			position = _WalkPoints [0];
 			if (_WalkPoints.Count >= 2) {
 				float distance = Vector3.Distance (_WalkPoints [1], _WalkPoints [0]);
 				if (distance > 0) {
@@ -164,7 +167,24 @@ namespace Controller.AI
 		/// <param name="nextPosition">Next position.</param>
 		public bool GetNextStation(float dt, out Vector3 nextPosition)
 		{
-			nextPosition = Vector3.zero;
+			if (!TryGetNextStation (dt, out nextPosition)) {
+				return false;
+			}
+
+			_CurrentPosition = nextPosition;
+
+			return true;
+		}
+
+		/// <summary>
+		/// 尝试获取下次抵达的坐标，不改变内部数据
+		/// </summary>
+		/// <returns><c>true</c>, if get next station was tryed, <c>false</c> otherwise.</returns>
+		/// <param name="dt">Dt.</param>
+		/// <param name="nextPosition">Next position.</param>
+		public bool TryGetNextStation(float dt, out Vector3 nextPosition)
+		{
+			nextPosition = _CurrentPosition;
 
 			// 抵达目标
 			if (_WalkPoints.Count == 0) {
@@ -172,8 +192,8 @@ namespace Controller.AI
 			}
 
 			// 抵达当前站点目标
-			if (_CurrentPosition == _WalkPoints [0]) {
-				InitStation ();
+			if (nextPosition == _WalkPoints [0]) {
+				InitStation (out nextPosition);
 				_WalkPoints.RemoveAt (0);
 			}
 
@@ -181,15 +201,13 @@ namespace Controller.AI
 				return false;
 			}
 
-			Vector3 lastPosition = _CurrentPosition;
+			Vector3 lastPosition = nextPosition;
 			nextPosition = lastPosition + dt * _CurrentDisplacement;
 
 			// 修正
 			if (Vector3.Distance(lastPosition, _WalkPoints[0]) < Vector3.Distance(lastPosition, nextPosition)) {
 				nextPosition = _WalkPoints [0];
 			}
-
-			_CurrentPosition = nextPosition;
 
 			return true;
 		}

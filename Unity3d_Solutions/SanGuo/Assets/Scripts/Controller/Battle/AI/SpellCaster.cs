@@ -78,25 +78,28 @@ namespace Controller.Battle.AI
 
 			// 查找技能施法目标
 			if (_SelectedTarget == null) {
-				_SelectedTarget = TargetSelectMechanism.Instance.FindTargets (TargetSelectType.Nearest, Src, Field);
+				_SelectedTarget = TargetSelectMechanism.Instance.FindTargets (TargetSelectType.Nearest, Src, Field, null);
 				if (_SelectedTarget == null) {
 					return;
 				}
 			}
 
-			// 离自己最近的目标
-			/*
+			// 离自己最近的目标不可用
 			if (!_SelectedTarget.IsFirstTargetEnabled) {
 				_SelectedTarget = null;
 				return;
 			}
-			*/
 
 			// 是否到达目标
 			if (!CheckInSkillRadius ()) {
 				if (Src.Walker.Empty){
 					ResetMoveToTarget();
 				}
+				return;
+			}
+
+			if (Src.MemberTransform.Position.x != Mathf.Round (Src.MemberTransform.Position.x) 
+				|| Src.MemberTransform.Position.y != Mathf.Round (Src.MemberTransform.Position.y)) {
 				return;
 			}
 
@@ -111,7 +114,7 @@ namespace Controller.Battle.AI
 				Src.MemberModel.OnActionEnd += OnEndAction;
 				Src.UnitBehaviour.PlayAttack ();
 
-				Log.Warning ("Src : " + Src.ID + " Start Attack");
+				//Log.Warning ("Src : " + Src.ID + " Start Attack");
 			}
 		}
 
@@ -226,7 +229,7 @@ namespace Controller.Battle.AI
 				return;
 			}
 
-			Log.Warning ("Src : " + Src.ID + " End Attack");
+			//Log.Warning ("Src : " + Src.ID + " End Attack");
 			Src.Skill.ResetSkillValue (_CurrentSkillIndex);
 			IsFinish = true;
 

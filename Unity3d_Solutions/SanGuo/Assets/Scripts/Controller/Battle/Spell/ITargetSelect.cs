@@ -18,7 +18,8 @@ namespace Controller.Battle.Spell
 		/// <returns><c>true</c>, if targets was found, <c>false</c> otherwise.</returns>
 		/// <param name="src">Source.</param>
 		/// <param name="field">Field.</param>
-		bool FindTargets(Unit src, Field field);
+		/// <param name="parameters">Parameters.</param>
+		bool FindTargets(Unit src, Field field, ISelectedTargetParameters parameters);
 	}
 }
 

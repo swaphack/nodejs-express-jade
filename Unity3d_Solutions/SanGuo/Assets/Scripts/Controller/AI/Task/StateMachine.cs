@@ -131,6 +131,17 @@ namespace Controller.AI.Task
 
 			_CurrentTask.Update (dt);
 		}
+
+		/// <summary>
+		/// 重置
+		/// </summary>
+		public void Reset()
+		{
+			if (_CurrentTask != null) {
+				_CurrentTask.Dispose ();
+			}
+			_CurrentTask = null;
+		}
 	}
 }
 

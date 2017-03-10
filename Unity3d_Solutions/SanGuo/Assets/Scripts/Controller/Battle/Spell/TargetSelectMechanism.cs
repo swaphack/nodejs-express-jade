@@ -39,13 +39,13 @@ namespace Controller.Battle.Spell
 		}
 
 		/// <summary>
-		/// 超找目标
+		/// 查找目标
 		/// </summary>
-		/// <returns>The targets.</returns>
-		/// <param name="type">Type.</param>
+		/// <returns><c>true</c>, if targets was found, <c>false</c> otherwise.</returns>
 		/// <param name="src">Source.</param>
 		/// <param name="field">Field.</param>
-		public SelectedTarget FindTargets(TargetSelectType type, Unit src, Field field)
+		/// <param name="parameters">Parameters.</param>
+		public SelectedTarget FindTargets(TargetSelectType type, Unit src, Field field, ISelectedTargetParameters parameters)
 		{
 			if (src == null || field == null) {
 				return null;
@@ -56,7 +56,7 @@ namespace Controller.Battle.Spell
 			}
 
 			ITargetSelect handler = _TSRule [type];
-			if (!handler.FindTargets (src, field)) {
+			if (!handler.FindTargets (src, field, parameters)) {
 				return null;
 			}
 

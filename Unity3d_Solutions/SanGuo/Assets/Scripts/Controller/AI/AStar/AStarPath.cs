@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Controller.AI.AStar
 {
 	/// <summary>
-	/// A*寻路
+	/// A*静态寻路
 	/// </summary>
 	public class AStarPath
 	{
@@ -282,6 +282,13 @@ namespace Controller.AI.AStar
 		public virtual bool Init()
 		{
 			return true;
+		}
+
+		/// <summary>
+		/// 重置
+		/// </summary>
+		public virtual void Reset()
+		{
 		}
 
 		public virtual void Dispose()

@@ -48,7 +48,7 @@ namespace Controller.Battle.Member
 				_Animator = null;
 				return;
 			}
-			_Transform = target.GetChild (1);
+			_Transform = target;
 			_Animator = _Transform.GetComponent<Animator> ();
 		}
 

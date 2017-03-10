@@ -84,6 +84,51 @@ namespace Game.Helper
 		{
 			return Math.Atan2 (direction.z, direction.x) * 180 / Math.PI;
 		}
+
+		/// <summary>
+		/// 判断是否会相交
+		/// </summary>
+		/// <returns><c>true</c> if is intersect the specified srcPos srcRadius destPos destRadius; otherwise, <c>false</c>.</returns>
+		/// <param name="srcPos">Source position.</param>
+		/// <param name="srcRadius">Source radius.</param>
+		/// <param name="destPos">Destination position.</param>
+		/// <param name="destRadius">Destination radius.</param>
+		public static bool IsIntersect(Vector3 srcPos,float srcRadius, Vector3 destPos, float destRadius)
+		{
+			float distance = Vector3.Distance (srcPos, destPos);
+
+			return distance <= srcRadius + destRadius;
+		}
+
+		/// <summary>
+		/// 求两点围成长方体的面积
+		/// </summary>
+		/// <param name="srcPos">Source position.</param>
+		/// <param name="destPos">Destination position.</param>
+		public static float Area(Vector3 srcPos, Vector3 destPos)
+		{
+			return Mathf.Abs ((srcPos.x - destPos.x) * (srcPos.y - destPos.y) * (srcPos.z - destPos.z));
+		}
+
+		/// <summary>
+		/// 求两点围成长方体的面积
+		/// </summary>
+		/// <param name="srcPos">Source position.</param>
+		/// <param name="destPos">Destination position.</param>
+		public static float Area2D(Vector3 srcPos, Vector3 destPos)
+		{
+			return Mathf.Abs ((srcPos.x - destPos.x) * (srcPos.z - destPos.z));
+		}
+
+		/// <summary>
+		/// 求两点围成长方型的面积
+		/// </summary>
+		/// <param name="srcPos">Source position.</param>
+		/// <param name="destPos">Destination position.</param>
+		public static float Area(Vector2 srcPos, Vector2 destPos)
+		{
+			return Mathf.Abs ((srcPos.x - destPos.x) * (srcPos.y - destPos.y));
+		}
 	}
 }
 

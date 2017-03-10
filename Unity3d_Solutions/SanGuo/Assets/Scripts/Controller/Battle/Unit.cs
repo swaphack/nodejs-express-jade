@@ -23,7 +23,7 @@ namespace Controller.Battle
 		/// <summary>
 		/// 单位信息
 		/// </summary>
-		private UnitModel _UnitModel;
+		//private UnitModel _UnitModel;
 		/// <summary>
 		/// 单位属性
 		/// </summary>
@@ -72,10 +72,6 @@ namespace Controller.Battle
 		/// 动作播放停止
 		/// </summary>
 		public event OnUnitActionBroadcast OnUnitActionEnd;
-		/// <summary>
-		/// 单位碰撞处理
-		/// </summary>
-		public event OnUnitCollisonBroadcast OnUnitCollision;
 		/// <summary>
 		/// 所属队伍编号
 		/// </summary>
@@ -168,6 +164,9 @@ namespace Controller.Battle
 			}
 			set { 
 				_IsCollider = value;
+				if (MemberTransform.Collider != null) {
+					MemberTransform.Collider.enabled = value;
+				}
 			}
 		}
 
@@ -187,7 +186,7 @@ namespace Controller.Battle
 			_UnitBehaviour.Target = this;
 			_UnitBehaviour.Init ();
 
-			//IsCollider = true;
+			IsCollider = true;
 
 			_UnitProperty.OnCurrentPropertyChanged += OnPropertyChanged;
 		}
@@ -206,7 +205,7 @@ namespace Controller.Battle
 			_GameObject = gameObj;
 
 			_MemberTranform.SetTranform (gameObj.transform);
-			_MemberModel.SetTranform (gameObj.transform);
+			_MemberModel.SetTranform (gameObj.transform.GetChild(1));
 
 			_MemberModel.OnActionStart += OnStartAction;
 			_MemberModel.OnActionEnd += OnEndAction;
@@ -255,7 +254,7 @@ namespace Controller.Battle
 				return;
 			}
 
-			_UnitModel = paper;
+			//_UnitModel = paper;
 
 			// 初始化属性
 			if (paper.Attributes != null) {
@@ -421,92 +420,42 @@ namespace Controller.Battle
 				return;
 			}
 
-			// 禁止行走
-			if (CheckNeedStopWalk ()) {
-				StopWalk ();
-				return;
-			}
-
-			// 碰撞检查
-			if (IsCollider && IsCollison()) {
-				StopWalk ();
-				return;
-			}
-
 			// 抵达目标
 			if (!RunningMove (dt)) { 
-				StopWalk ();
 				return;
 			}
-		}
-
-		/// <summary>
-		/// 检查是否需停止行走
-		/// </summary>
-		/// <returns><c>true</c>, if need stop walk was checked, <c>false</c> otherwise.</returns>
-		private bool CheckNeedStopWalk() {
-			// 播放动作
-			if (MemberModel.IsPlay (UnitAction.t_attack_01)
-			    || MemberModel.IsPlay (UnitAction.t_attack_02)
-			    || MemberModel.IsPlay (UnitAction.t_attack_03)
-			    || MemberModel.IsPlay (UnitAction.t_getHit)
-				|| MemberModel.IsPlay (UnitAction.t_defend)
-				|| MemberModel.IsPlay (UnitAction.t_die)
-				|| MemberModel.IsPlay (UnitAction.t_jump)
-				|| MemberModel.IsPlay (UnitAction.t_taunt)) {
-				return true;
-			}
-
-			return false;
 		}
 
 		/// <summary>
 		/// 碰撞检测
 		/// </summary>
-		/// <returns><c>true</c> if this instance is collison; otherwise, <c>false</c>.</returns>
-		private bool IsCollison()
+		/// <returns><c>true</c> if this instance is collision with others; otherwise, <c>false</c>.</returns>
+		public bool IsCollisionWithOthers()
 		{
 			if (GameObject == null) {
 				return false;
 			}
-			Field field = BattleHelp.Field;
-			Collider collider0 = GameObject.GetComponent<Collider> ();
-			if (collider0 == null) {
+			if (MemberTransform.Collider == null) {
 				return false;
 			}
-				
-			// 先搜索范围内的敌人，再判断碰撞
-			float distance = 0;
-			float boxRadius = 0;
-			Bounds bounds0 = collider0.bounds;
-			float maxRadius0 = Mathf.Max (bounds0.extents.x, bounds0.extents.y, bounds0.extents.z);
-			Collider collider1 = null;
-			Bounds bounds1;
 
-			List<Unit> nearUnits = new List<Unit>();
+			Field field = BattleHelp.Field;
 			foreach (KeyValuePair<int, Team> item in field.AliveTeams) {
 				UnitSheet aliveUnits = item.Value.AliveUnits;
 				foreach (KeyValuePair<int, Unit> item2 in aliveUnits.Units) {
-					if (ID != item2.Key && item2.Value.IsCollider && !item2.Value.UnitBehaviour.IsWalk) {
-						collider1 = item2.Value.GameObject.GetComponent<Collider> ();
-						if (collider1 != null) {
-							bounds1 = collider1.bounds;
-							distance = Vector3.Distance (MemberTransform.Position, item2.Value.MemberTransform.Position);
-							boxRadius = Mathf.Max (bounds1.extents.x, bounds1.extents.y, bounds1.extents.z) + maxRadius0;
-							if (distance <= boxRadius) {
-								if (bounds0.Intersects (bounds1)) {
-									return true;
-								}
-							}
+					if (ID != item2.Key 
+						&& item2.Value.IsCollider 
+						&& !item2.Value.Property.Dead
+						&& item2.Value.MemberTransform.Collider != null) {
+						if (MemberTransform.IsCollision (item2.Value.MemberTransform)) {
+							return true;
 						}
-
 					}
 				}
 			}
 
 			return false;
 		}
-
 		/// <summary>
 		/// 行走
 		/// </summary>
@@ -545,9 +494,12 @@ namespace Controller.Battle
 		/// <summary>
 		/// 停止行走
 		/// </summary>
-		public void StopWalk()
+		/// <param name="cleanPath">If set to <c>true</c> clean path.</param>
+		public void StopWalk(bool cleanPath = false)
 		{
-			_Walker.Clear ();
+			if (cleanPath) {
+				_Walker.Clear ();
+			}
 			if (MemberModel.IsPlay (UnitAction.t_walk)) {
 				MemberModel.PlayIdle ();
 			}

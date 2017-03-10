@@ -90,7 +90,7 @@ namespace Controller.Battle.AI
 		/// </summary>
 		public void PlayAttack()
 		{
-			Target.StopWalk ();
+			Target.StopWalk (true);
 			int i = (int)Random.Range (0, 3);
 			if (i == 0) {
 				Target.MemberModel.PlayAttack01 ();
@@ -127,7 +127,7 @@ namespace Controller.Battle.AI
 		public void PlayDie()
 		{
 			CurrentTask = null;
-			Target.StopWalk ();
+			Target.StopWalk (true);
 			Target.RunDeadEvent ();
 			Target.MemberModel.PlayDie ();
 		}
@@ -137,7 +137,7 @@ namespace Controller.Battle.AI
 		/// </summary>
 		public void PlayWin()
 		{
-			Target.StopWalk ();
+			Target.StopWalk (true);
 			int i = (int)Random.Range (0, 2);
 			if (i == 0) {
 				Target.MemberModel.PlayJump ();

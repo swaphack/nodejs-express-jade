@@ -2,6 +2,7 @@
 using UnityEngine;
 using Game.Action;
 using Model.Base;
+using Game.Helper;
 
 namespace Controller.Battle.Member
 {
@@ -14,11 +15,14 @@ namespace Controller.Battle.Member
 		/// The transform.
 		/// </summary>
 		private Transform _Transform;
-
 		/// <summary>
-		/// 最后一次播放动作的名称
+		/// 碰撞体
 		/// </summary>
-		private string _LastActionName;
+		private Collider _Collider;
+		/// <summary>
+		/// 碰撞检测半径
+		/// </summary>
+		private float _CollisionRadius;
 
 		/// <summary>
 		/// Gets the transform.
@@ -29,6 +33,26 @@ namespace Controller.Battle.Member
 				return _Transform;
 			}
 		}
+
+		/// <summary>
+		/// 碰撞体
+		/// </summary>
+		/// <value>The collider.</value>
+		public Collider Collider {
+			get { 
+				return _Collider;
+			}
+		}
+
+		/// <summary>
+		/// 碰撞检测半径
+		/// </summary>
+		public float CollisionRadius {
+			get { 
+				return _CollisionRadius;
+			}
+		}
+
 
 		/// <summary>
 		/// 位置
@@ -69,7 +93,17 @@ namespace Controller.Battle.Member
 		/// <param name="target">Transform.</param>
 		public void SetTranform(Transform target)
 		{
+			if (target == null) {
+				return;
+			}
 			_Transform = target;
+			_Collider = target.GetComponent<Collider> ();
+			if (_Collider == null) {
+				return;
+			}
+
+			Bounds bounds = _Collider.bounds;
+			_CollisionRadius = Mathf.Sqrt (Mathf.Pow (bounds.extents.x, 2) + Mathf.Pow (bounds.extents.z, 2));
 		}
 		/// <summary>
 		/// 移动向量值
@@ -118,6 +152,28 @@ namespace Controller.Battle.Member
 			}
 
 			_Transform.eulerAngles = rotation;
+		}
+
+		/// <summary>
+		/// 碰撞检测
+		/// </summary>
+		/// <returns><c>true</c> if this instance is collision the specified target; otherwise, <c>false</c>.</returns>
+		/// <param name="target">Target.</param>
+		public bool IsCollision(MemberTransform target)
+		{
+			if (target == null) {
+				return false;
+			}
+
+			if (Collider == null || target.Collider == null) {
+				return false;
+			}
+
+			if (!Collider.enabled || !target.Collider.enabled) {
+				return false;
+			}
+
+			return MathHelp.IsIntersect (Position, CollisionRadius, target.Position, target.CollisionRadius);
 		}
 	}
 }

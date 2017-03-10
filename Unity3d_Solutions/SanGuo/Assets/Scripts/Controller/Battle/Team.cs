@@ -198,17 +198,6 @@ namespace Controller.Battle
 				return;
 			}
 
-			Unit unit = new Unit ();
-			unit.ID = paper.ID;
-			unit.Name = paper.Name;
-			unit.TeamID = ID;
-			unit.OnDead += OnDisposeUnit;
-			unit.OnUnitActionEnd += OnEndUnitAction;
-			unit.SetObject (newGameObj);
-			unit.SetModel (paper);
-
-			_AliveUnits.AddUnit (unit);
-
 			// 设置控件属性
 			newGameObj.name = paper.Name;
 			newGameObj.transform.position = paper.Position;
@@ -221,7 +210,21 @@ namespace Controller.Battle
 			newGameObj.GetComponent<BoxCollider> ().size = paper.Volume;
 			newGameObj.GetComponent<BoxCollider> ().center = paper.Center;
 
-			OnUnitCreate (unit);
+			// 创建单位
+			Unit unit = new Unit ();
+			unit.ID = paper.ID;
+			unit.Name = paper.Name;
+			unit.TeamID = ID;
+			unit.OnDead += OnDisposeUnit;
+			unit.OnUnitActionEnd += OnEndUnitAction;
+			unit.SetObject (newGameObj);
+			unit.SetModel (paper);
+
+			_AliveUnits.AddUnit (unit);
+
+			if (OnUnitCreate != null) {
+				OnUnitCreate (unit);
+			}
 		}
 
 		/// <summary>
