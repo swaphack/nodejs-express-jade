@@ -10,8 +10,14 @@ namespace Game.Helper
 	/// </summary>
 	public class Utility
 	{
-		private Utility ()
+		/// <summary>
+		/// 屏幕大小
+		/// </summary>
+		private static Vector2 _ScreenSize;
+
+		static Utility ()
 		{
+			_ScreenSize = new Vector2 (Screen.width, Screen.height);
 		}
 
 		/// <summary>
@@ -69,7 +75,7 @@ namespace Game.Helper
 		/// <returns>The screen size.</returns>
 		public static Vector2 GetScreenSize()
 		{
-			return new Vector2 (Screen.width, Screen.height);
+			return _ScreenSize;
 		}
 
 

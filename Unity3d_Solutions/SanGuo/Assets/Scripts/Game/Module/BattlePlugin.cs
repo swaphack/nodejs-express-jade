@@ -83,21 +83,23 @@ namespace Game.Module
 			// 设置队伍
 			foreach (KeyValuePair<int, FieldData.TeamItem> item in _FieldData.TeamItems) {
 				Formation formation = new Formation ();
-				int unitCount = item.Value.UnitIDs.Count;
-				for (int i = 0; i < unitCount; i++) {
-					int unitID = item.Value.UnitIDs [i];
+				foreach(KeyValuePair<int, Vector3> item2 in item.Value.Units){
+					int unitID = item2.Key;
 					FieldData.UnitItem unitItem = _FieldData.GetUnitItem (unitID);
 					if (unitItem == null) {
 						continue;
 					}
 					FieldData.ResourceItem resItem = _FieldData.GetResourceItem (unitItem.ResourceID);
 					FieldData.PropertyItem propItem = _FieldData.GetPropertyItem (unitItem.PropertyID);
-					FieldData.TransformItem tranItem = _FieldData.GetTransformItem (unitItem.TransformID);
+					FieldData.BoxItem boxItem = _FieldData.GetBoxItem (unitItem.BoxID);
 					FieldData.SkillItem skillItem = _FieldData.GetSkillItem (unitItem.SkillID);
 
 					UnitModel unitModel = new UnitModel ();
 					unitModel.ID = unitID; 
 					unitModel.Name = unitItem.Name;
+					unitModel.Position = item2.Value;
+					unitModel.Rotation = Vector3.zero;
+					unitModel.Scale = Vector3.one;
 
 					if (resItem != null) {
 						unitModel.AssetBundlePath = resItem.AssetBundlePath;
@@ -105,12 +107,9 @@ namespace Game.Module
 
 						assetBundles.Add (resItem.AssetBundlePath);
 					}
-					if (tranItem != null) {
-						unitModel.Position = tranItem.Position;
-						unitModel.Rotation = tranItem.Rotation;
-						unitModel.Scale = tranItem.Scale;
-						unitModel.Volume = tranItem.Volume;
-						unitModel.Center = tranItem.Center;
+					if (boxItem != null) {
+						unitModel.Volume = boxItem.Volume;
+						unitModel.Center = boxItem.Center;
 					}
 
 					if (propItem != null) {
@@ -132,9 +131,14 @@ namespace Game.Module
 
 					formation.AddUnit (unitModel);
 				}
+
 				Team team = new Team ();
 				team.ID = item.Key;
 				team.SetFormation (formation);
+				FieldData.FormationItem formationItem = _FieldData.GetFormationItem (item.Value.FormationID);
+				if (formationItem != null) {
+					team.MoveGroup.SetPlace(formationItem.Grids);
+				}
 				_Field.AddTeam (team);
 			}
 

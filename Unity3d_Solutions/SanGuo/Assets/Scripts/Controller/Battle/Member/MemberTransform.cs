@@ -23,6 +23,10 @@ namespace Controller.Battle.Member
 		/// 碰撞检测半径
 		/// </summary>
 		private float _CollisionRadius;
+		/// <summary>
+		/// 外围
+		/// </summary>
+		private Vector2[] _ExtentsAry;
 
 		/// <summary>
 		/// Gets the transform.
@@ -82,9 +86,29 @@ namespace Controller.Battle.Member
 			}
 		}
 
+		/// <summary>
+		/// 方向
+		/// </summary>
+		/// <value>The orientation.</value>
+		public Vector3 Orientation {
+			get { 
+				if (_Transform == null) {
+					return Vector3.zero;
+				} else {
+					return _Transform.forward;
+				}
+			}
+		}
+
+		public Vector2[] ExtentsAry {
+			get { 
+				return _ExtentsAry;
+			}
+		}
+
 		public MemberTransform()
 		{
-			
+			_ExtentsAry = new Vector2[4];
 		}
 
 		/// <summary>
@@ -104,6 +128,11 @@ namespace Controller.Battle.Member
 
 			Bounds bounds = _Collider.bounds;
 			_CollisionRadius = Mathf.Sqrt (Mathf.Pow (bounds.extents.x, 2) + Mathf.Pow (bounds.extents.z, 2));
+
+			_ExtentsAry [0] = new Vector2 (-bounds.extents.x, 0);
+			_ExtentsAry [1] = new Vector2 (bounds.extents.x, 0);
+			_ExtentsAry [2] = new Vector2 (0, -bounds.extents.z);
+			_ExtentsAry [3] = new Vector2 (0, bounds.extents.z);
 		}
 		/// <summary>
 		/// 移动向量值
@@ -157,9 +186,9 @@ namespace Controller.Battle.Member
 		/// <summary>
 		/// 碰撞检测
 		/// </summary>
-		/// <returns><c>true</c> if this instance is collision the specified target; otherwise, <c>false</c>.</returns>
+		/// <returns><c>true</c> if this instance is collide with the specified target; otherwise, <c>false</c>.</returns>
 		/// <param name="target">Target.</param>
-		public bool IsCollision(MemberTransform target)
+		public bool IsCollideWith(MemberTransform target)
 		{
 			if (target == null) {
 				return false;

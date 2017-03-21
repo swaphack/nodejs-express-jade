@@ -29,6 +29,17 @@ namespace Data.Battle
 			public int Height;
 		}
 		/// <summary>
+		/// 阵型项
+		/// </summary>
+		public class FormationItem
+		{
+			public Vector3 Center;
+			/// <summary>
+			/// 所在格子位置
+			/// </summary>
+			public Vector3[] Grids;
+		}
+		/// <summary>
 		/// 原型项
 		/// </summary>
 		public class ResourceItem
@@ -59,20 +70,8 @@ namespace Data.Battle
 		/// <summary>
 		/// 空间项
 		/// </summary>
-		public class TransformItem
+		public class BoxItem
 		{
-			/// <summary>
-			/// 位置
-			/// </summary>
-			public Vector3 Position;
-			/// <summary>
-			/// 旋转
-			/// </summary>
-			public Vector3 Rotation;
-			/// <summary>
-			/// 缩放
-			/// </summary>
-			public Vector3 Scale;
 			/// <summary>
 			/// 体积
 			/// </summary>
@@ -124,9 +123,9 @@ namespace Data.Battle
 			/// </summary>
 			public int PropertyID;
 			/// <summary>
-			/// 空间编号
+			/// 盒子编号
 			/// </summary>
-			public int TransformID;
+			public int BoxID;
 			/// <summary>
 			/// 技能配置
 			/// </summary>
@@ -138,11 +137,18 @@ namespace Data.Battle
 		/// </summary>
 		public class TeamItem
 		{
-			public List<int> UnitIDs;
+			/// <summary>
+			/// 布阵编号
+			/// </summary>
+			public int FormationID;
+			/// <summary>
+			/// 单位编号
+			/// </summary>
+			public Dictionary<int, Vector3> Units;
 
 			public TeamItem()
 			{
-				UnitIDs = new List<int>();
+				Units = new Dictionary<int, Vector3>();
 			}
 		}
 
@@ -152,6 +158,10 @@ namespace Data.Battle
 		private MapItem _MapItem;
 
 		/// <summary>
+		/// 阵型项
+		/// </summary>
+		private Dictionary<int, FormationItem> _FormationItems;
+		/// <summary>
 		/// 资源包路径
 		/// </summary>
 		private Dictionary<int, ResourceItem> _ResourceItems;
@@ -160,9 +170,9 @@ namespace Data.Battle
 		/// </summary>
 		private Dictionary<int, PropertyItem> _Properties;
 		/// <summary>
-		/// 空间
+		/// 包围盒
 		/// </summary>
-		private Dictionary<int, TransformItem> _TransformItems;
+		private Dictionary<int, BoxItem> _BoxItem;
 		/// <summary>
 		/// 技能
 		/// </summary>
@@ -189,6 +199,15 @@ namespace Data.Battle
 		/// <summary>
 		/// 资源包路径
 		/// </summary>
+		public Dictionary<int, FormationItem> FormationItems { 
+			get { 
+				return _FormationItems; 
+			}
+		}
+
+		/// <summary>
+		/// 资源包路径
+		/// </summary>
 		public Dictionary<int, ResourceItem> ResourceItems { 
 			get { 
 				return _ResourceItems; 
@@ -205,9 +224,9 @@ namespace Data.Battle
 		/// <summary>
 		/// 空间
 		/// </summary>
-		public Dictionary<int, TransformItem> TransformItems { 
+		public Dictionary<int, BoxItem> TransformItems { 
 			get { 
-				return _TransformItems; 
+				return _BoxItem; 
 			}
 		}
 		/// <summary>
@@ -238,12 +257,27 @@ namespace Data.Battle
 		public FieldData ()
 		{
 			_MapItem = new MapItem ();
+			_FormationItems = new Dictionary<int, FormationItem> ();
 			_ResourceItems = new Dictionary<int, ResourceItem> ();
 			_Properties = new Dictionary<int, PropertyItem> ();
-			_TransformItems = new Dictionary<int, TransformItem> ();
+			_BoxItem = new Dictionary<int, BoxItem> ();
 			_SkillItems = new Dictionary<int, SkillItem> ();
 			_UnitItems = new Dictionary<int, UnitItem> ();
 			_TeamItems = new Dictionary<int, TeamItem> ();
+		}
+
+		/// <summary>
+		/// 获取阵型项
+		/// </summary>
+		/// <returns>The formation item.</returns>
+		/// <param name="id">Identifier.</param>
+		public FormationItem GetFormationItem(int id)
+		{
+			if (!_FormationItems.ContainsKey (id)) {
+				return null;
+			}
+
+			return _FormationItems [id];
 		}
 
 
@@ -276,17 +310,17 @@ namespace Data.Battle
 		}
 
 		/// <summary>
-		/// 获取控件配置
+		/// 获取包围盒配置
 		/// </summary>
-		/// <returns>The transform item.</returns>
+		/// <returns>The box item.</returns>
 		/// <param name="id">Identifier.</param>
-		public TransformItem GetTransformItem(int id)
+		public BoxItem GetBoxItem(int id)
 		{
-			if (!_TransformItems.ContainsKey (id)) {
+			if (!_BoxItem.ContainsKey (id)) {
 				return null;
 			}
 
-			return _TransformItems [id];
+			return _BoxItem [id];
 		}
 
 		/// <summary>
@@ -336,6 +370,32 @@ namespace Data.Battle
 		}
 
 		/// <summary>
+		/// 加载阵型配置
+		/// </summary>
+		/// <param name="node">Node.</param>
+		private void LoadFormation(XmlNode node)
+		{
+			if (node == null) {
+				return;
+			}
+			XmlNode itemNode = node.FirstChild;
+			while (itemNode != null) {
+				XmlElement element = (XmlElement)itemNode;
+				FormationItem item = new FormationItem ();
+				int id = Int32.Parse (element.GetAttribute ("ID"));
+				item.Center = StringHelp.ConvertToVector3 (element.GetAttribute("Center"));
+				string value = element.GetAttribute ("Grids");
+				string[] ary = value.Split (';');
+				item.Grids = new Vector3[ary.Length];
+				for (int i = 0; i < ary.Length; i++) {
+					item.Grids [i] = StringHelp.ConvertToVector3 (ary [i]);
+				}
+				_FormationItems [id] = item;
+				itemNode = itemNode.NextSibling;
+			}
+		}
+
+		/// <summary>
 		/// 加载模型数据
 		/// </summary>
 		/// <param name="node">Node.</param>
@@ -379,16 +439,19 @@ namespace Data.Battle
 				if (Int32.TryParse (element.GetAttribute ("Attack"), out value)) {
 					item.Values.Add (PropertyType.AttactDamage, value);
 				}
+				if (Int32.TryParse (element.GetAttribute ("MoveSpeed"), out value)) {
+					item.Values.Add (PropertyType.MoveSpeed, value);
+				}
 				_Properties.Add (id, item);
 				itemNode = itemNode.NextSibling;
 			}
 		}
 
 		/// <summary>
-		/// 加载空间数据
+		/// 加载包围盒数据
 		/// </summary>
 		/// <param name="node">Node.</param>
-		private void LoadTransform(XmlNode node)
+		private void LoadBox(XmlNode node)
 		{
 			if (node == null) {
 				return;
@@ -398,13 +461,10 @@ namespace Data.Battle
 			while (itemNode != null) {
 				XmlElement element = (XmlElement)itemNode;
 				int id = Int32.Parse (element.GetAttribute ("ID"));
-				TransformItem item = new TransformItem ();
-				item.Position = StringHelp.ConvertToVector3 (element.GetAttribute ("Position"));
-				item.Rotation = StringHelp.ConvertToVector3 (element.GetAttribute ("Rotation"));
-				item.Scale = StringHelp.ConvertToVector3 (element.GetAttribute ("Scale"));
+				BoxItem item = new BoxItem ();
 				item.Center = StringHelp.ConvertToVector3 (element.GetAttribute ("Center"));
 				item.Volume = StringHelp.ConvertToVector3 (element.GetAttribute ("Volume"));
-				_TransformItems.Add (id, item);
+				_BoxItem.Add (id, item);
 				itemNode = itemNode.NextSibling;
 			}
 		}
@@ -450,7 +510,7 @@ namespace Data.Battle
 				item.Name = element.GetAttribute ("Name");
 				item.ResourceID = Int32.Parse (element.GetAttribute ("ResourceID"));
 				item.PropertyID = Int32.Parse (element.GetAttribute ("PropertyID"));
-				item.TransformID = Int32.Parse (element.GetAttribute ("TransformID"));
+				item.BoxID = Int32.Parse (element.GetAttribute ("BoxID"));
 				item.SkillID = Int32.Parse (element.GetAttribute ("SkillID"));
 				_UnitItems.Add (id, item);
 				itemNode = itemNode.NextSibling;
@@ -470,11 +530,13 @@ namespace Data.Battle
 			TeamItem item = new TeamItem ();
 			XmlElement element = (XmlElement)node;
 			int id = Int32.Parse (element.GetAttribute ("ID"));
+			item.FormationID = Int32.Parse (element.GetAttribute ("Formation"));
 			XmlNode itemNode = node.FirstChild;
 			while (itemNode != null) {
 				element = (XmlElement)itemNode;
 				int unitID = Int32.Parse (element.GetAttribute ("ID"));
-				item.UnitIDs.Add (unitID);
+				Vector3 position = StringHelp.ConvertToVector3 (element.GetAttribute ("Position"));
+				item.Units [unitID] = position;
 				itemNode = itemNode.NextSibling;
 			}
 			_TeamItems.Add (id, item);
@@ -497,12 +559,14 @@ namespace Data.Battle
 			while (node != null) {
 				if (node.Name == "Map") {
 					LoadMap (node);
+				} else if (node.Name == "Formation") {
+					LoadFormation (node);
 				} else if (node.Name == "Resource") {
 					LoadResource (node);
 				} else if (node.Name == "Property") {
 					LoadProperty (node);
-				} else if (node.Name == "Transform") {
-					LoadTransform (node);
+				} else if (node.Name == "Box") {
+					LoadBox (node);
 				} else if (node.Name == "Skill") {
 					LoadSkill (node);
 				} else if (node.Name == "Unit") {
@@ -522,9 +586,10 @@ namespace Data.Battle
 		/// </summary>
 		public void Clear ()
 		{
+			_FormationItems.Clear ();
 			_ResourceItems.Clear ();
 			_Properties.Clear ();
-			_TransformItems.Clear ();
+			_BoxItem.Clear ();
 			_SkillItems.Clear ();
 			_UnitItems.Clear ();
 			_TeamItems.Clear ();

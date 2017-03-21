@@ -18,6 +18,11 @@ namespace View.Layer
 		/// </summary>
 		private InputField _InputUserName = null;
 
+		public UILoginLayer ()
+		{
+			FileName = "LoginLayer";
+		}
+
 		/// <summary>
 		/// 初始化UI
 		/// </summary>

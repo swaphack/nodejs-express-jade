@@ -32,6 +32,15 @@ namespace Controller.Battle.Member
 		/// 最近一次播放动作的名称
 		/// </summary>
 		private int _lastActionName = 0;
+		/// <summary>
+		/// 模型对象
+		/// </summary>
+		/// <value>The trans form.</value>
+		public Transform Transform {
+			get { 
+				return _Transform;
+			}
+		}
 
 		public MemberModel ()
 		{
@@ -50,32 +59,6 @@ namespace Controller.Battle.Member
 			}
 			_Transform = target;
 			_Animator = _Transform.GetComponent<Animator> ();
-		}
-
-		/// <summary>
-		/// 旋转到指定方向
-		/// </summary>
-		/// <param name="rotation">Vector3.</param>
-		public void RotateTo (Vector3 rotation)
-		{
-			if (_Transform == null) {
-				return;
-			}
-
-			_Transform.eulerAngles = rotation;
-		}
-
-		/// <summary>
-		/// 旋转到指定方向
-		/// </summary>
-		/// <param name="rotation">Vector3.</param>
-		public void LookAt (Vector3 worldPosition)
-		{
-			if (_Transform == null) {
-				return;
-			}
-
-			_Transform.LookAt(worldPosition);
 		}
 
 		/// <summary>

@@ -7,6 +7,28 @@ using Game.Helper;
 namespace Game.Layer
 {
 	/// <summary>
+	/// 界面缩放类型
+	/// </summary>
+	public enum UIScale
+	{
+		/// <summary>
+		/// 固定
+		/// </summary>
+		Fixed = 0,
+		/// <summary>
+		/// 固定宽缩放
+		/// </summary>
+		FixedWidth = 1,
+		/// <summary>
+		/// 固定高缩放
+		/// </summary>
+		FixedHeight = 2,
+		/// <summary>
+		/// 宽高皆按屏幕缩放
+		/// </summary>
+		Expend = 3,
+	}
+	/// <summary>
 	/// 用户接口
 	/// </summary>
 	public class UI
@@ -23,7 +45,11 @@ namespace Game.Layer
 		/// <summary>
 		/// 设计大小
 		/// </summary>
-		private Vector2 _DesignSize = new Vector2(1280, 720);
+		private Vector2 _DesignSize = new Vector2(1024, 768);
+		/// <summary>
+		/// 缩放类型
+		/// </summary>
+		private UIScale _ScaleType;
 
 		/// <summary>
 		/// 静态实例
@@ -63,11 +89,25 @@ namespace Game.Layer
 			}
 		}
 
+		/// <summary>
+		/// 缩放类型
+		/// </summary>
+		/// <value>The type of the scale.</value>
+		public UIScale ScaleType {
+			get { 
+				return _ScaleType;
+			}
+			set { 
+				_ScaleType = value;
+			}
+		}
+
 		public UI ()
 		{
 			_UILayers = new List<UILayer> ();
 
 			s_UserInterface = this;
+			_ScaleType = UIScale.FixedHeight;
 		}
 
 		/// <summary>
@@ -93,21 +133,70 @@ namespace Game.Layer
 			}
 
 			if (_UIRoot == null) {
-				Log.Warning ("UI Root is Not Find");
+				Log.Warning ("UI Root is Not Found");
 				return;
 			}
 
-			layer.Root.transform.SetParent (_UIRoot.transform);
-			layer.Visible = true;
+			if (layer.Root == null) {
+				Log.Warning ("UI Layer is Not Find");
+				return;
+			}
 
-			Vector2 screenSize = Utility.GetScreenSize ();
-			Vector2 designSize = DesignSize;
+			Transform transform = layer.Root.transform;
+			if (transform == null) {
+				Log.Warning ("UI Transform is Not Find");
+				return;
+			}
 
 			RectTransform rect = layer.Root.GetComponent<RectTransform> ();
-			rect.localScale = new Vector3 (screenSize.x / designSize.x, screenSize.y / designSize.y);
-			rect.localPosition = new Vector3 (0,0,0);
+			if (rect == null) {
+				Log.Warning ("UI RectTransform is Not Find");
+				return;
+			}
 
+			transform.SetParent (_UIRoot.transform);
+			rect.localPosition = Vector3.zero;
+			rect.localScale = Vector3.one;
+			AutoScale (rect);
+			layer.Visible = true;
 			_UILayers.Add (layer);
+		}
+
+		/// <summary>
+		/// 设置缩放比
+		/// </summary>
+		/// <param name="rect">Rect.</param>
+		protected void AutoScale(RectTransform rect)
+		{
+			if (rect == null) {
+				return;
+			}
+
+			Vector2 screenSize = Utility.GetScreenSize ();
+			Vector2 designSize = _DesignSize;
+
+			Vector3 scale = Vector3.one;
+
+			switch (_ScaleType) {
+			case UIScale.Fixed:
+				break;
+			case UIScale.FixedWidth:
+				scale.y = scale.x = screenSize.x / designSize.x;
+				break;
+			case UIScale.FixedHeight:
+				scale.x = scale.y = screenSize.y / designSize.y;
+				break;
+			case UIScale.Expend:
+				scale.x = screenSize.x / designSize.x;
+				scale.y = screenSize.y / designSize.y;
+				break;
+			default:
+				break;
+			}
+
+			rect.localPosition = Vector3.zero;
+			//rect.localScale = scale;
+			//rect.sizeDelta = designSize;
 		}
 
 		/// <summary>

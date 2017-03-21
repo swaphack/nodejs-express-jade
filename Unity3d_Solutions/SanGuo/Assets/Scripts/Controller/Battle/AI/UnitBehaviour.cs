@@ -76,12 +76,38 @@ namespace Controller.Battle.AI
 		}
 
 		/// <summary>
-		/// 是否在行走中
+		/// 是否能行走
 		/// </summary>
-		/// <value><c>true</c> if this instance is walk; otherwise, <c>false</c>.</value>
-		public bool IsWalk {
+		/// <value><c>true</c> if this instance is can walk; otherwise, <c>false</c>.</value>
+		public bool IsCanWalk {
 			get { 
-				return !Target.Walker.Empty;
+				if (Target.MemberModel.IsPlay (UnitAction.t_attack_01)
+					|| Target.MemberModel.IsPlay (UnitAction.t_attack_02)
+					|| Target.MemberModel.IsPlay (UnitAction.t_attack_03)
+					|| Target.MemberModel.IsPlay (UnitAction.t_getHit)) {
+					return false;
+				}
+				return !Target.MemeberMovement.Empty;
+			}
+		}
+
+		/// <summary>
+		/// 是否正在攻击
+		/// </summary>
+		/// <value><c>true</c> if this instance is play attack; otherwise, <c>false</c>.</value>
+		public bool IsPlayAttack {
+			get { 
+				if (Target.MemberModel.IsPlay (UnitAction.t_attack_01)
+				    || Target.MemberModel.IsPlay (UnitAction.t_attack_02)
+				    || Target.MemberModel.IsPlay (UnitAction.t_attack_03)) {
+					return true;
+				}
+
+				SpellCaster task = CurrentTask as SpellCaster;
+				if (task == null) {
+					return false;
+				}
+				return task.IsRunningSKill;
 			}
 		}
 
@@ -106,6 +132,7 @@ namespace Controller.Battle.AI
 		/// </summary>
 		public void PlayGetHit()
 		{
+			CurrentTask = null;
 			Target.StopWalk ();
 			Target.MemberModel.PlayGetHit ();
 		}

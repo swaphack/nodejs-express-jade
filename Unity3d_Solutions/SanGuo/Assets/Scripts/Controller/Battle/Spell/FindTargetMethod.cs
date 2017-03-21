@@ -55,7 +55,7 @@ namespace Controller.Battle.Spell
 				// 查找距离最近的单位
 				foreach (Team team in teams) {
 					foreach (KeyValuePair<int, Unit> item in team.AliveUnits.Units) {
-						area = MathHelp.Area2D (src.MemberTransform.Position, item.Value.MemberTransform.Position);
+						area = Vector3.Distance (src.MemberTransform.Position, item.Value.MemberTransform.Position);
 						if (firstTarget == null) {
 							firstTarget = item.Value;
 							minDistance = area;
@@ -191,7 +191,7 @@ namespace Controller.Battle.Spell
 				// 查找距离最近的单位
 				foreach (Team team in teams) {
 					foreach (KeyValuePair<int, Unit> item in team.AliveUnits.Units) {
-						curArea = MathHelp.Area2D (src.MemberTransform.Position, item.Value.MemberTransform.Position);
+						curArea = Vector3.Distance (src.MemberTransform.Position, item.Value.MemberTransform.Position);
 						if (curArea <= area) {
 							if (firstTarget == null) {
 								firstTarget = item.Value;

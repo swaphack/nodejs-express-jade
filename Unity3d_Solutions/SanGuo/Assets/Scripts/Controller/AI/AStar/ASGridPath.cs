@@ -76,16 +76,21 @@ namespace Controller.AI.AStar
 				return null;
 			}
 
-			int i = Mathf.RoundToInt (position.y);
-			int j = Mathf.RoundToInt (position.x);
+			/*
+			int i = Mathf.RoundToInt (position.x);
+			int j = Mathf.RoundToInt (position.y);
 
-			if (i >= _Height) {
-				i = _Height - 1;
+			if (i >= _Width) {
+				i = _Width - 1;
 			}
 
-			if (j >= _Width) {
-				j = _Width - 1;
+			if (j >= _Height) {
+				j = _Height - 1;
 			}
+			*/
+
+			int i = (int)position.x;
+			int j = (int)position.y;
 
 			return _Grids [i, j];
 		}
@@ -123,9 +128,39 @@ namespace Controller.AI.AStar
 			}
 		}
 
-		private float GetDistance(Vector2 startNode, Vector2 endNode, float straightCost, float diagCost)
+		/// <summary>
+		/// 计算距离
+		/// </summary>
+		/// <returns>The distance.</returns>
+		/// <param name="startNode">Start node.</param>
+		/// <param name="endNode">End node.</param>
+		protected override float CalDistance(AStarNode startNode, AStarNode endNode)
 		{
-			return GetDiagonalDistance (startNode, endNode, straightCost, diagCost);
+			if (startNode == null || endNode == null) {
+				return float.MaxValue;
+			}
+
+			ASGridNode node0 = startNode as ASGridNode;
+			ASGridNode node1 = endNode as ASGridNode;
+
+			if (node0 == null || node1 == null) {
+				return float.MaxValue;
+			}
+
+			return CalDistance (node0.Position, node1.Position);
+		}
+
+		/// <summary>
+		/// 获取距离
+		/// </summary>
+		/// <returns>The distance.</returns>
+		/// <param name="startNode">Start node.</param>
+		/// <param name="endNode">End node.</param>
+		private float CalDistance(Vector2 startNode, Vector2 endNode)
+		{
+			// StraightCost DiagCost
+			return Vector2.Distance(startNode, endNode);
+			//return GetDiagonalDistance (startNode, endNode, straightCost, diagCost);
 		}
 
 		/// <summary>
@@ -169,7 +204,7 @@ namespace Controller.AI.AStar
 							y = (int)position.y + n;
 							// 判断是否越界，如果没有，加到列表中
 							if (x < _Width && x >= 0 && y < _Height && y >= 0) {
-								distance = GetDistance (_Grids [i, j].Position, _Grids [x, y].Position, StraightCost, DiagCost);
+								distance = CalDistance (_Grids [i, j].Position, _Grids [x, y].Position);
 								this.AddNeighborNode (_Grids [i, j], _Grids [x, y], distance);
 							}
 						}

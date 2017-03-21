@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Model.Battle;
 using Game.Helper;
 using UnityEngine;
+using Controller.Battle.Terrain;
 
 namespace Controller.Battle
 {
@@ -140,6 +141,34 @@ namespace Controller.Battle
 		}
 
 		/// <summary>
+		/// 获取活着的队伍
+		/// </summary>
+		/// <returns>The alive team.</returns>
+		/// <param name="teamID">Team I.</param>
+		public Team GetAliveTeam(int teamID)
+		{
+			if (_AliveTeams.ContainsKey (teamID)) {
+				return _AliveTeams [teamID];
+			}
+
+			return null;
+		}
+
+		/// <summary>
+		///  获取死亡的队伍
+		/// </summary>
+		/// <returns>The dead team.</returns>
+		/// <param name="teamID">Team I.</param>
+		public Team GetDeadTeam(int teamID)
+		{
+			if (_DeadTeams.ContainsKey (teamID)) {
+				return _DeadTeams [teamID];
+			}
+
+			return null;
+		}
+
+		/// <summary>
 		/// 获取其他非存活的队伍
 		/// </summary>
 		/// <returns>The other alive team.</returns>
@@ -183,7 +212,7 @@ namespace Controller.Battle
 				return;
 			}
 
-			_Map.AddTransform (unit.MemberTransform.Transform);
+			_Map.AddMemberTransform (unit.MemberTransform);
 		}
 
 		/// <summary>
@@ -196,7 +225,7 @@ namespace Controller.Battle
 				return;
 			}
 
-			_Map.RemoveTransform (unit.MemberTransform.Transform);
+			_Map.RemoveMemberTransform (unit.MemberTransform);
 			unit.RestObject();
 		}
 
@@ -250,7 +279,12 @@ namespace Controller.Battle
 				return;
 			}
 
-			CheckWaitForRemoveTeams ();
+			HandWaitForRemoveTeams ();
+
+			// 将要移除的单位
+			foreach (KeyValuePair<int,Team> item in _AliveTeams) {
+				item.Value.HandWaitForRemoveUnits ();
+			}
 
 			// 死亡单位
 			foreach (KeyValuePair<int,Team> item in _DeadTeams) {
@@ -259,11 +293,6 @@ namespace Controller.Battle
 
 			foreach (KeyValuePair<int,Team> item in _AliveTeams) {
 				item.Value.UpdateDeadUnits (dt);
-			}
-
-			// 战斗结束
-			if (IsEndBattle ()) {
-				return;
 			}
 
 			_Traffic.Update (dt);
@@ -275,9 +304,9 @@ namespace Controller.Battle
 		}
 
 		/// <summary>
-		/// 检查待移除队伍列表
+		/// 处理待移除队伍列表
 		/// </summary>
-		private void CheckWaitForRemoveTeams()
+		private void HandWaitForRemoveTeams()
 		{
 			if (_WaitForRemoveTeams.Count == 0) {
 				return;
@@ -318,14 +347,17 @@ namespace Controller.Battle
 			}
 
 			// 正在加载单位
-			bool isLoading = false;
+			bool isLoaded = true;
 			foreach (KeyValuePair<int,Team> item in _AliveTeams) {
-				if (!isLoading) {
-					isLoading = item.Value.LoadUnits ();
-				}
+				if (!item.Value.IsLoaded) {
+					isLoaded = !item.Value.LoadUnits ();
+				}/* else if (!item.Value.IsBuildUp) {
+					item.Value.IsBuildUp = true;
+					item.Value.MoveGroup.Concentrate (new Vector3 (10, 1, 10));
+				}*/
 			}
 
-			return !isLoading;
+			return isLoaded;
 		}
 
 		/// <summary>

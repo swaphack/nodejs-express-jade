@@ -101,7 +101,7 @@ namespace Game.Helper
 		}
 
 		/// <summary>
-		/// 求两点围成长方体的面积
+		/// 求两点围成长方体的体积
 		/// </summary>
 		/// <param name="srcPos">Source position.</param>
 		/// <param name="destPos">Destination position.</param>

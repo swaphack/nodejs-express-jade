@@ -51,11 +51,6 @@ namespace Game.Action
 		/// </summary>
 		private Vector3 _Destination;
 
-		public MoveTo()
-		{
-			_Destination = new Vector3 ();
-		}
-
 		/// <summary>
 		/// 创建位移
 		/// </summary>
@@ -80,6 +75,43 @@ namespace Game.Action
 		protected override void UpdateAction(float dt)
 		{
 			Target.transform.Translate(_Destination * dt / _TotalTime);
+		}
+	}
+
+	/// <summary>
+	/// 旋转到指定角度
+	/// </summary>
+	public class RotateTo : IntervalAction
+	{
+		/// <summary>
+		/// 目标角度
+		/// </summary>
+		private Vector3 _Destination;
+
+		/// <summary>
+		/// 创建位移
+		/// </summary>
+		/// <param name="time">Time.</param>
+		/// <param name="destination">Destination.</param>
+		public RotateTo(float time, Vector3 destination)
+		{
+			_TotalTime = time;
+			_Destination = destination;
+		}
+
+		/// <summary>
+		/// 创建位移
+		/// </summary>
+		/// <param name="time">Time.</param>
+		/// <param name="destination">Destination.</param>
+		public static RotateTo Create(float time, Vector3 destination)
+		{
+			return new RotateTo (time, destination);
+		}
+
+		protected override void UpdateAction(float dt)
+		{
+			Target.transform.Rotate(_Destination * dt / _TotalTime);
 		}
 	}
 }

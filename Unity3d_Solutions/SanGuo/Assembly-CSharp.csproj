@@ -55,13 +55,18 @@
      <Compile Include="Assets\Scripts\Controller\AI\AStar\AStarNode.cs" />
      <Compile Include="Assets\Scripts\Controller\AI\AStar\AStarPath.cs" />
      <Compile Include="Assets\Scripts\Controller\AI\DStar\DStarPath.cs" />
+     <Compile Include="Assets\Scripts\Controller\AI\Movement\ICommander.cs" />
+     <Compile Include="Assets\Scripts\Controller\AI\Movement\IMoveUnit.cs" />
+     <Compile Include="Assets\Scripts\Controller\AI\Movement\MoveCommand.cs" />
+     <Compile Include="Assets\Scripts\Controller\AI\Movement\MoveGroup.cs" />
+     <Compile Include="Assets\Scripts\Controller\AI\Movement\MoveType.cs" />
+     <Compile Include="Assets\Scripts\Controller\AI\Movement\Place.cs" />
+     <Compile Include="Assets\Scripts\Controller\AI\Movement\Traveler.cs" />
      <Compile Include="Assets\Scripts\Controller\AI\Navmesh\NavigationMesh.cs" />
      <Compile Include="Assets\Scripts\Controller\AI\Navmesh\NavigationNode.cs" />
      <Compile Include="Assets\Scripts\Controller\AI\Task\ITask.cs" />
      <Compile Include="Assets\Scripts\Controller\AI\Task\StateMachine.cs" />
      <Compile Include="Assets\Scripts\Controller\AI\Task\TaskQueue.cs" />
-     <Compile Include="Assets\Scripts\Controller\AI\Trajectory.cs" />
-     <Compile Include="Assets\Scripts\Controller\AI\Traveler.cs" />
      <Compile Include="Assets\Scripts\Controller\Account\UserInfo.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\AI\SpellCaster.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\AI\UnitBehaviour.cs" />
@@ -69,11 +74,11 @@
      <Compile Include="Assets\Scripts\Controller\Battle\Command.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Field.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Identifier.cs" />
-     <Compile Include="Assets\Scripts\Controller\Battle\Map.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\MapLoader.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Member\MemberAction.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Member\MemberModel.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Member\MemberTransform.cs" />
+     <Compile Include="Assets\Scripts\Controller\Battle\Member\MemeberMovement.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Spell\FindTargetMethod.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Spell\ISelectedTargetParameters.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Spell\ITargetSelect.cs" />
@@ -82,7 +87,9 @@
      <Compile Include="Assets\Scripts\Controller\Battle\Spell\TargetSelectType.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Task\UnitTask.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Team.cs" />
-     <Compile Include="Assets\Scripts\Controller\Battle\Traffic.cs" />
+     <Compile Include="Assets\Scripts\Controller\Battle\Terrain\Map.cs" />
+     <Compile Include="Assets\Scripts\Controller\Battle\Terrain\Traffic.cs" />
+     <Compile Include="Assets\Scripts\Controller\Battle\Terrain\Trajectory.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\Unit.cs" />
      <Compile Include="Assets\Scripts\Controller\Battle\UnitSheet.cs" />
      <Compile Include="Assets\Scripts\Controller\Container\UserBag.cs" />
@@ -98,6 +105,7 @@
      <Compile Include="Assets\Scripts\Data\Map\TrackMap.cs" />
      <Compile Include="Assets\Scripts\Data\XmlFileName.cs" />
      <Compile Include="Assets\Scripts\Data\XmlFilePath.cs" />
+     <Compile Include="Assets\Scripts\Foundation\Algorithm\Matrix.cs" />
      <Compile Include="Assets\Scripts\Foundation\Base\ConvertHelp.cs" />
      <Compile Include="Assets\Scripts\Foundation\Base\Instance.cs" />
      <Compile Include="Assets\Scripts\Foundation\Base\ObjectHelp.cs" />
@@ -137,6 +145,7 @@
      <Compile Include="Assets\Scripts\Game\Constants\AssetBundleConstants.cs" />
      <Compile Include="Assets\Scripts\Game\Constants\FormatConstants.cs" />
      <Compile Include="Assets\Scripts\Game\Constants\XmlDataConstants.cs" />
+     <Compile Include="Assets\Scripts\Game\Controller\ArrowController.cs" />
      <Compile Include="Assets\Scripts\Game\Controller\CameraController.cs" />
      <Compile Include="Assets\Scripts\Game\Controller\DownloadController.cs" />
      <Compile Include="Assets\Scripts\Game\Controller\FirstPersonController.cs" />
@@ -147,6 +156,7 @@
      <Compile Include="Assets\Scripts\Game\Controller\ThirdPersonController.cs" />
      <Compile Include="Assets\Scripts\Game\Controller\TouchController.cs" />
      <Compile Include="Assets\Scripts\Game\Controller\TrackController.cs" />
+     <Compile Include="Assets\Scripts\Game\Controller\UICameraController.cs" />
      <Compile Include="Assets\Scripts\Game\Controller\UnitActionController.cs" />
      <Compile Include="Assets\Scripts\Game\DownLoad\DownloadItem.cs" />
      <Compile Include="Assets\Scripts\Game\DownLoad\DownloadTaskSheet.cs" />
@@ -195,6 +205,7 @@
      <Compile Include="Assets\Scripts\Game\Shapes\ShapeType.cs" />
      <Compile Include="Assets\Scripts\Game\Shapes\Triangle.cs" />
      <Compile Include="Assets\Scripts\Game\Table\TableConfig.cs" />
+     <Compile Include="Assets\Scripts\Game\Track\Curve.cs" />
      <Compile Include="Assets\Scripts\Model\Base\BuffType.cs" />
      <Compile Include="Assets\Scripts\Model\Base\CoolDown.cs" />
      <Compile Include="Assets\Scripts\Model\Base\EffectType.cs" />

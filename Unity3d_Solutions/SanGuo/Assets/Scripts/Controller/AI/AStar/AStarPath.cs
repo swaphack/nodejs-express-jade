@@ -21,6 +21,11 @@ namespace Controller.AI.AStar
 		/// 相邻节点 { 节点， 相邻节点信息 { 节点， 距离}}
 		/// </summary>
 		private Dictionary<AStarNode, Dictionary<AStarNode, float>> _NeighborNodes;
+
+		// 寻路待考虑的点
+		private List<AStarNode> _OpenList;
+		// 不在寻路考虑范围的点
+		private HashSet<AStarNode> _ClosedList;
 		/// <summary>
 		/// 相邻节点
 		/// </summary>
@@ -28,6 +33,14 @@ namespace Controller.AI.AStar
 			get { 
 				return _NeighborNodes;
 			}
+		}
+
+		public AStarPath()
+		{
+			_NeighborNodes = new Dictionary<AStarNode, Dictionary<AStarNode, float>> ();
+
+			_OpenList = new List<AStarNode> ();
+			_ClosedList = new HashSet<AStarNode> ();
 		}
 
 		/// <summary>
@@ -90,11 +103,6 @@ namespace Controller.AI.AStar
 			path.Reverse ();
 
 			return path;
-		}
-
-		public AStarPath()
-		{
-			_NeighborNodes = new Dictionary<AStarNode, Dictionary<AStarNode, float>> ();
 		}
 
 
@@ -200,6 +208,18 @@ namespace Controller.AI.AStar
 		}
 
 		/// <summary>
+		/// 计算距离
+		/// </summary>
+		/// <returns>The distance.</returns>
+		/// <param name="startNode">Start node.</param>
+		/// <param name="endNode">End node.</param>
+		protected virtual float CalDistance(AStarNode startNode, AStarNode endNode)
+		{
+			return float.MaxValue;
+		}
+
+
+		/// <summary>
 		/// 查找从起点到终点的路
 		/// </summary>
 		/// <returns>The way.</returns>
@@ -211,32 +231,31 @@ namespace Controller.AI.AStar
 				return null;
 			}
 
-			// 寻路待考虑的点
-			List<AStarNode> openList = new List<AStarNode> ();
-			// 不在寻路考虑范围的点
-			HashSet<AStarNode> closedList = new HashSet<AStarNode> ();
+			_OpenList.Clear ();
+			_ClosedList.Clear ();
+
 
 			AStarNode currentNode;
-			openList.Add (startNode);
+			_OpenList.Add (startNode);
 
 			int count = 0;
 			int i = 0;
 			AStarNode item = null;
 			//Log.Warning ("Begin Find Way From :(" + src.x + "," + src.y + "),To :(" +dest.x + "," + dest.y + ")");
-			while (openList.Count > 0) {
-				currentNode = openList[0];
+			while (_OpenList.Count > 0) {
+				currentNode = _OpenList[0];
 
 				// 查找最小权值
-				count = openList.Count;
+				count = _OpenList.Count;
 				for (i = 0; i < count; i++) {
-					if (openList [i].TotalDistance <= currentNode.TotalDistance
-						&& openList [i].DestDistance < currentNode.DestDistance) {
-						currentNode = openList [i];
+					if (_OpenList [i].TotalDistance <= currentNode.TotalDistance
+						&& _OpenList [i].DestDistance < currentNode.DestDistance) {
+						currentNode = _OpenList [i];
 					}
 				}
 
-				openList.Remove (currentNode);
-				closedList.Add (currentNode);
+				_OpenList.Remove (currentNode);
+				_ClosedList.Add (currentNode);
 
 				// 找到目标，生成路径
 				if (currentNode == endNode) {
@@ -252,20 +271,20 @@ namespace Controller.AI.AStar
 				for (i = 0; i< count; i++) {
 					item = neighborItems [i];
 					// 不可通过、已查找过
-					if (item == null || !item.CanPass || closedList.Contains (item)) {
+					if (item == null || !item.CanPass || _ClosedList.Contains (item)) {
 						continue;
 					}
 
 					float newCost = currentNode.SrcDistance + GetDistance (currentNode, item);
 
 					// 距离小，或者未在考虑表中
-					if (newCost < item.SrcDistance || !openList.Contains (item)) {
+					if (newCost < item.SrcDistance || !_OpenList.Contains (item)) {
 						item.SrcDistance = newCost;
-						item.DestDistance = GetDistance (item, endNode);
+						item.DestDistance = CalDistance (item, endNode);
 						item.Previous = currentNode;
 
-						if (!openList.Contains (item)) {
-							openList.Add (item);
+						if (!_OpenList.Contains (item)) {
+							_OpenList.Add (item);
 						} 
 
 						//Log.Warning ("Node : (" + currentNode.Position.x + "," + currentNode.Position.y + ")" + "Src : " + item.SrcDistance + ", Dest :" + item.DestDistance);

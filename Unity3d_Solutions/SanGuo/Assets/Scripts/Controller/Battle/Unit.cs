@@ -8,6 +8,7 @@ using Controller.AI;
 using Controller.Battle.AI;
 using Game.Helper;
 using Controller.Battle.Member;
+using Controller.Battle.Terrain;
 
 namespace Controller.Battle
 {
@@ -23,7 +24,7 @@ namespace Controller.Battle
 		/// <summary>
 		/// 单位信息
 		/// </summary>
-		//private UnitModel _UnitModel;
+		private UnitModel _UnitModel;
 		/// <summary>
 		/// 单位属性
 		/// </summary>
@@ -45,13 +46,13 @@ namespace Controller.Battle
 		/// </summary>
 		private MemberTransform _MemberTranform;
 		/// <summary>
-		/// 空间变换对象
+		/// 模型
 		/// </summary>
 		private MemberModel _MemberModel;
 		/// <summary>
-		/// 旅行者
+		/// 运动
 		/// </summary>
-		private Traveler _Walker;
+		private MemeberMovement _MemeberMovement;
 		/// <summary>
 		/// 单位行为
 		/// </summary>
@@ -72,6 +73,10 @@ namespace Controller.Battle
 		/// 动作播放停止
 		/// </summary>
 		public event OnUnitActionBroadcast OnUnitActionEnd;
+		/// <summary>
+		/// 最近一次攻击的单位编号
+		/// </summary>
+		private int _LastHitUnitID;
 		/// <summary>
 		/// 所属队伍编号
 		/// </summary>
@@ -129,6 +134,16 @@ namespace Controller.Battle
 				return _MemberModel;
 			}
 		}
+
+		/// <summary>
+		/// 运动模型
+		/// </summary>
+		/// <value>The memeber movement.</value>
+		public MemeberMovement MemeberMovement {
+			get { 
+				return _MemeberMovement;
+			}
+		}
 		/// <summary>
 		/// 对象
 		/// </summary>
@@ -139,18 +154,21 @@ namespace Controller.Battle
 		}
 
 		/// <summary>
-		/// 旅行者
+		/// 行为
 		/// </summary>
-		/// <value>The walker.</value>
-		public Traveler Walker {
-			get { 
-				return _Walker;
-			}
-		}
-
+		/// <value>The unit behaviour.</value>
 		public UnitBehaviour UnitBehaviour {
 			get { 
 				return _UnitBehaviour;
+			}
+		}
+		/// <summary>
+		/// 单位数据
+		/// </summary>
+		/// <value>The model.</value>
+		public UnitModel MemberData {
+			get { 
+				return _UnitModel;
 			}
 		}
 
@@ -170,6 +188,18 @@ namespace Controller.Battle
 			}
 		}
 
+		/// <summary>
+		/// 最近一次攻击的单位编号
+		/// </summary>
+		public int LastHitUnitID {
+			get { 
+				return _LastHitUnitID;
+			}
+			set { 
+				_LastHitUnitID = value;
+			}
+		}
+
 		public Unit()
 		{
 			_MemberTranform = new MemberTransform ();
@@ -179,12 +209,13 @@ namespace Controller.Battle
 			_UnitSkill = new UnitSkill ();
 			_UnitBuff = new UnitBuff ();
 
-			_Walker = new Traveler ();
-
 			_UnitBehaviour = new UnitBehaviour ();
 			_UnitBehaviour.Field = BattleHelp.Field;
 			_UnitBehaviour.Target = this;
 			_UnitBehaviour.Init ();
+
+			_MemeberMovement = new MemeberMovement ();
+			_MemeberMovement.Target = this;
 
 			IsCollider = true;
 
@@ -254,7 +285,7 @@ namespace Controller.Battle
 				return;
 			}
 
-			//_UnitModel = paper;
+			_UnitModel = paper;
 
 			// 初始化属性
 			if (paper.Attributes != null) {
@@ -343,9 +374,6 @@ namespace Controller.Battle
 			// 更新技能
 			UpdateSkill (dt);
 
-			// 行走
-			UpdateWalk(dt);
-
 			// 更新行为
 			UpdateBehaviour (dt);
 		}
@@ -406,89 +434,17 @@ namespace Controller.Battle
 		}
 
 		/// <summary>
-		/// 是否在行走中
-		/// </summary>
-		/// <param name="dt">Dt.</param>
-		private void UpdateWalk(float dt) {
-			// 静止行走的buff
-			if (Buff.HasType (BuffType.ForbiddenWalk)) {
-				return;
-			}
-
-			// 死亡
-			if (Property.Dead) {
-				return;
-			}
-
-			// 抵达目标
-			if (!RunningMove (dt)) { 
-				return;
-			}
-		}
-
-		/// <summary>
-		/// 碰撞检测
-		/// </summary>
-		/// <returns><c>true</c> if this instance is collision with others; otherwise, <c>false</c>.</returns>
-		public bool IsCollisionWithOthers()
-		{
-			if (GameObject == null) {
-				return false;
-			}
-			if (MemberTransform.Collider == null) {
-				return false;
-			}
-
-			Field field = BattleHelp.Field;
-			foreach (KeyValuePair<int, Team> item in field.AliveTeams) {
-				UnitSheet aliveUnits = item.Value.AliveUnits;
-				foreach (KeyValuePair<int, Unit> item2 in aliveUnits.Units) {
-					if (ID != item2.Key 
-						&& item2.Value.IsCollider 
-						&& !item2.Value.Property.Dead
-						&& item2.Value.MemberTransform.Collider != null) {
-						if (MemberTransform.IsCollision (item2.Value.MemberTransform)) {
-							return true;
-						}
-					}
-				}
-			}
-
-			return false;
-		}
-		/// <summary>
-		/// 行走
-		/// </summary>
-		/// <param name="dt">Dt.</param>
-		private bool RunningMove(float dt) 
-		{
-			// 停止走路，站立
-			if (Walker.Empty) {
-				return false;
-			}
-
-			Vector3 nextPosition;
-			if (!Walker.GetNextStation (dt, out nextPosition)) {
-				return false;
-			}
-
-			MemberModel.PlayWalk ();
-			MemberModel.LookAt (nextPosition);
-			MemberTransform.WalkTo (nextPosition);
-
-			return true;
-		}
-
-		/// <summary>
 		/// 更新行为
 		/// </summary>
 		/// <param name="dt">Dt.</param>
 		private void UpdateBehaviour(float dt) {
 			if (_UnitBehaviour.RunTask) {
 				_UnitBehaviour.Update (dt);
-			} else {
+			}
+			/* else {
 				_UnitBehaviour.Switch (UnitStateType.PlaySpell);
 			}
+			*/
 		}
 
 		/// <summary>
@@ -498,10 +454,34 @@ namespace Controller.Battle
 		public void StopWalk(bool cleanPath = false)
 		{
 			if (cleanPath) {
-				_Walker.Clear ();
+				_MemeberMovement.Clear ();
 			}
-			if (MemberModel.IsPlay (UnitAction.t_walk)) {
-				MemberModel.PlayIdle ();
+
+			MemberModel.PlayIdle ();
+		}
+
+		/// <summary>
+		/// 是否可以碰撞
+		/// </summary>
+		/// <returns><c>true</c> if this instance can collision; otherwise, <c>false</c>.</returns>
+		public bool CanCollision {
+			get { 
+				return !Property.Dead
+					&& IsCollider
+					&& MemberTransform.Collider != null
+					&& MemberTransform.Collider.enabled;
+			}
+		}
+
+		/// <summary>
+		/// 是否可以行走
+		/// </summary>
+		/// <value><c>true</c> if this instance can walk; otherwise, <c>false</c>.</value>
+		public bool CanWalk {
+			get { 
+				return !Property.Dead
+					&& !Buff.HasType (BuffType.ForbiddenWalk)
+					&& !_MemeberMovement.Empty;
 			}
 		}
 	}

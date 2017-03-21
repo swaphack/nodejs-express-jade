@@ -5,6 +5,7 @@ using Model.Battle;
 using Game;
 using Game.Helper;
 using Model.Base;
+using Controller.AI.Movement;
 
 namespace Controller.Battle
 {
@@ -34,6 +35,10 @@ namespace Controller.Battle
 		/// </summary>
 		private List<Unit> _WaitForRemoveUnits;
 		/// <summary>
+		/// 运动组
+		/// </summary>
+		private MoveGroup _MoveGroup;
+		/// <summary>
 		/// 队伍被摧毁
 		/// </summary>
 		public event OnTeamBroadcast OnDestory;
@@ -45,6 +50,12 @@ namespace Controller.Battle
 		/// 销毁单位资源
 		/// </summary>
 		public event OnUnitBroadcast OnUnitDestory;
+
+		/// <summary>
+		/// 最近一次攻击的队伍编号
+		/// </summary>
+		private int _LastHitTeamID;
+
 		/// <summary>
 		/// 是否被摧毁
 		/// </summary>
@@ -53,6 +64,21 @@ namespace Controller.Battle
 			get {
 				// 所有单位被摧毁
 				return _DeadUnits.Count == _Formation.UnitModels.Count;
+			}
+		}
+
+		/// <summary>
+		/// 是否集结
+		/// </summary>
+		public bool IsBuildUp = false;
+
+		/// <summary>
+		/// 是否加载完毕所有资源
+		/// </summary>
+		/// <value><c>true</c> if this instance is loaded; otherwise, <c>false</c>.</value>
+		public bool IsLoaded {
+			get { 
+				return _Formation.UnitModels.Count == _AliveUnits.Count + _DeadUnits.Count;
 			}
 		}
 
@@ -68,9 +94,31 @@ namespace Controller.Battle
 		/// <summary>
 		/// 死亡的单位
 		/// </summary>
-		private UnitSheet DeadUnits {
+		public UnitSheet DeadUnits {
 			get { 
 				return _DeadUnits;
+			}
+		}
+
+		/// <summary>
+		/// 移动组
+		/// </summary>
+		/// <value>The place.</value>
+		public MoveGroup MoveGroup {
+			get { 
+				return _MoveGroup;
+			}
+		}
+
+		/// <summary>
+		/// 最近一次攻击的队伍编号
+		/// </summary>
+		public int LastHitTeamID {
+			get { 
+				return _LastHitTeamID;
+			}
+			set { 
+				_LastHitTeamID = value;
 			}
 		}
 
@@ -80,6 +128,7 @@ namespace Controller.Battle
 			_DeadUnits = new UnitSheet ();
 
 			_WaitForRemoveUnits = new List<Unit> ();
+			_MoveGroup = new MoveGroup ();
 		}
 
 		/// <summary>
@@ -104,6 +153,15 @@ namespace Controller.Battle
 		{
 			// 更新单位
 			UpdateUnits (dt);
+		}
+
+		/// <summary>
+		/// 更新移动组
+		/// </summary>
+		/// <param name="dt">Dt.</param>
+		public void UpdateMoveGroup(float dt)
+		{
+			_MoveGroup.Update (dt);
 		}
 
 		/// <summary>
@@ -145,13 +203,6 @@ namespace Controller.Battle
 		}
 
 		/// <summary>
-		/// 集结
-		/// </summary>
-		public void BuildUp()
-		{
-		}
-
-		/// <summary>
 		/// 更新单位
 		/// </summary>
 		/// <returns><c>true</c>, if units was updated, <c>false</c> otherwise.</returns>
@@ -168,8 +219,6 @@ namespace Controller.Battle
 		/// <param name="dt">Dt.</param>
 		public void UpdateAliveUnits(float dt)
 		{
-			HandWaitForRemoveUnits ();
-
 			_AliveUnits.Update (dt);
 		}
 
@@ -221,6 +270,7 @@ namespace Controller.Battle
 			unit.SetModel (paper);
 
 			_AliveUnits.AddUnit (unit);
+			_MoveGroup.AddUnit (unit.MemeberMovement);
 
 			if (OnUnitCreate != null) {
 				OnUnitCreate (unit);
@@ -243,7 +293,7 @@ namespace Controller.Battle
 		/// <summary>
 		/// 处理待移除单位事件
 		/// </summary>
-		private void HandWaitForRemoveUnits()
+		public void HandWaitForRemoveUnits()
 		{
 			if (_WaitForRemoveUnits.Count == 0) {
 				return;
@@ -252,6 +302,7 @@ namespace Controller.Battle
 			for (int i = 0; i < count; i++) {
 				_AliveUnits.RemoveUnit (_WaitForRemoveUnits [i].ID);
 				_DeadUnits.AddUnit (_WaitForRemoveUnits [i]);
+				_MoveGroup.RemoveUnit (_WaitForRemoveUnits [i].ID);
 			}
 
 			_WaitForRemoveUnits.Clear ();

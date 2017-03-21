@@ -1,16 +1,14 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Controller\Battle\Map.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Foundation\Algorithm\Matrix.cs">
     <Files>
-      <File FileName="Assets\Scripts\Controller\Battle\Map.cs" Line="155" Column="7" />
-      <File FileName="Assets\Scripts\Controller\Battle\Traffic.cs" Line="128" Column="25" NotebookId="1" />
+      <File FileName="Assets\Scripts\Controller\Battle\Member\MemberModel.cs" Line="138" Column="17" />
+      <File FileName="Assets\Scripts\Foundation\Algorithm\Matrix.cs" Line="110" Column="43" NotebookId="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Controller\AI\AStar2D.cs" line="246" column="1" />
-      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Controller\Battle\Map.cs" line="185" column="1" />
-      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Controller\Battle\Map.cs" line="164" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

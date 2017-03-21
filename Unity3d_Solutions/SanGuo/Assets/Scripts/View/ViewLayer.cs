@@ -14,8 +14,9 @@ namespace View
 	{
 		public ViewLayer ()
 		{
-			//UI.GetInstance().Show<UIHomeLayer>();
-			BattleHelp.StartSimulatorBattle();
+			UI.GetInstance().Show<UIHomeLayer>();
+	
+//			BattleHelp.StartSimulatorBattle();
 
 			GameInstance.GetInstance ().Device.AddEscKeyHandler (() => {
 				Application.Quit();

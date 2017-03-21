@@ -20,6 +20,7 @@ namespace Game.Module
 		public UIPlugin ()
 		{
 			_UI = new UI ();
+			_UI.ScaleType = UIScale.FixedHeight;
 		}
 
 		/// <summary>

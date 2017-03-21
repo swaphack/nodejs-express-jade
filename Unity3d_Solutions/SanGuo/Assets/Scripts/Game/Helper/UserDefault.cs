@@ -107,8 +107,7 @@ namespace Game.Helper
 			bool bNeedSave = false;
 			if (_Configs.ContainsKey (key) == false) {
 				bNeedSave = true;
-			}
-			else if (_Configs [key] != value) {
+			} else if (_Configs [key] != value) {
 				bNeedSave = true;
 			}
 			_Configs [key] = value;

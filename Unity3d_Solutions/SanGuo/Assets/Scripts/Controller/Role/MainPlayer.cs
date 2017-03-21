@@ -52,9 +52,9 @@ namespace Controller.Role
 			if (_bInit) {
 				return;
 			}
-
+			// 初始化资源
 			InitResource ();
-
+			// 初始化任务
 			InitTask ();
 				
 			_bInit = true;
@@ -78,7 +78,7 @@ namespace Controller.Role
 			});
 
 			Resource.AddChangedNotify (ResType.Iron, () => {
-				UserDefault.GetInstance ().Set ("Food", Resource.Iron.ToString());
+				UserDefault.GetInstance ().Set ("Iron", Resource.Iron.ToString());
 			});
 		}
 

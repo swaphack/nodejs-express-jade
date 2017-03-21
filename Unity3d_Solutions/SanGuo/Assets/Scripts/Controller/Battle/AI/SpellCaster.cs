@@ -33,6 +33,14 @@ namespace Controller.Battle.AI
 		/// 是否正在施法
 		/// </summary>
 		private bool _bRunningSkill;
+		/// <summary>
+		/// 是否正在施法
+		/// </summary>
+		public bool IsRunningSKill {
+			get { 
+				return _bRunningSkill;
+			}
+		}
 
 		public SpellCaster()
 		{
@@ -61,6 +69,11 @@ namespace Controller.Battle.AI
 		{
 			base.Update (dt);
 
+			// 正在释放技能
+			if (_bRunningSkill) {
+				return;
+			}
+
 			// 检查生效技能
 			if (_CurrentSkillIndex == SkillIndex.Max) {
 				if (!CheckEnableSkill()) {
@@ -86,34 +99,31 @@ namespace Controller.Battle.AI
 
 			// 离自己最近的目标不可用
 			if (!_SelectedTarget.IsFirstTargetEnabled) {
-				_SelectedTarget = null;
+				IsFinish = true;
 				return;
 			}
 
-			// 是否到达目标
+			// 是否到达攻击范围
 			if (!CheckInSkillRadius ()) {
-				if (Src.Walker.Empty){
+				// 设置路线
+				if (Src.MemeberMovement.Empty){
 					ResetMoveToTarget();
+					return;
 				}
 				return;
 			}
 
-			if (Src.MemberTransform.Position.x != Mathf.Round (Src.MemberTransform.Position.x) 
-				|| Src.MemberTransform.Position.y != Mathf.Round (Src.MemberTransform.Position.y)) {
+			// 不能播放攻击动作
+			if (!CheckCanPlayAttack ()) {
 				return;
 			}
 
-			if (_bRunningSkill) {
-				return;
-			}
-
-			if (!_bRunningSkill && CheckCanPlayAttack()) {
+			if (!_bRunningSkill) {
 				_bRunningSkill = true;
 				// 施法
-				Src.MemberModel.LookAt (_SelectedTarget.FirstTarget.MemberTransform.Position);
+				Src.MemberModel.Transform.LookAt (_SelectedTarget.FirstTarget.MemberTransform.Position);
 				Src.MemberModel.OnActionEnd += OnEndAction;
 				Src.UnitBehaviour.PlayAttack ();
-
 				//Log.Warning ("Src : " + Src.ID + " Start Attack");
 			}
 		}
@@ -196,7 +206,7 @@ namespace Controller.Battle.AI
 			}
 
 			float distance = Vector3.Distance (Src.MemberTransform.Position, _SelectedTarget.FirstTarget.MemberTransform.Position);
-			if (_SkillModel.Radius < distance) {
+			if (_SkillModel.Radius <= distance) {
 				return false;
 			}
 			return true;
@@ -208,12 +218,40 @@ namespace Controller.Battle.AI
 		/// <returns><c>true</c>, if can play attack was checked, <c>false</c> otherwise.</returns>
 		private bool CheckCanPlayAttack()
 		{
+			if (!IsSkillEnable (_CurrentSkillIndex)) {
+				return false;
+			}
+
 			if (Src.MemberModel.IsPlay (UnitAction.t_getHit)
 			    || Src.MemberModel.IsPlay (UnitAction.t_die)) {
 				return false;
 			}
 
 			return true;
+		}
+
+		/// <summary>
+		/// 是否与其他单位碰撞
+		/// </summary>
+		/// <returns><c>true</c> if this instance is collide with others; otherwise, <c>false</c>.</returns>
+		private bool IsCollideWithOthers()
+		{
+			if (Src == null || Src.IsCollider == false) {
+				return false;
+			}
+			Field field = BattleHelp.Field;
+
+			foreach (KeyValuePair<int, Team> item in field.AliveTeams) {
+				foreach (KeyValuePair<int, Unit> item2 in item.Value.AliveUnits.Units) {
+					if (item2.Key != Src.ID && item2.Value.IsCollider) {
+						if (Src.MemberTransform.IsCollideWith(item2.Value.MemberTransform)) {
+							return true;
+						}
+					}
+				}
+			}
+
+			return false;	
 		}
 
 		/// <summary>
@@ -239,10 +277,8 @@ namespace Controller.Battle.AI
 				for (int i = 0; i < count; i++) {
 					Unit target = _SelectedTarget.Targets [i];
 					if (!target.Property.Dead
-						&& !target.MemberModel.IsPlay (UnitAction.t_attack_01)
-						&& !target.MemberModel.IsPlay (UnitAction.t_attack_02)
-						&& !target.MemberModel.IsPlay (UnitAction.t_attack_03)) {
-						int idx = Random.Range (1, 10);
+						&& !target.UnitBehaviour.IsPlayAttack) {
+						int idx = Random.Range (1, 100);
 						if (idx == 1) {
 							target.UnitBehaviour.PlaySimDead ();
 						} else {
@@ -260,6 +296,11 @@ namespace Controller.Battle.AI
 			if (_SelectedTarget == null || _SelectedTarget.FirstTarget == null) {
 				return;
 			}
+
+			if (_SkillModel == null) {
+				return;
+			}
+
 			// 静止行走的buff
 			if (Src.Buff.HasType (BuffType.ForbiddenWalk)) {
 				return;
@@ -271,10 +312,16 @@ namespace Controller.Battle.AI
 				return;
 			}
 
-			List<Vector2> path = Field.Map.FindWay (
-				Src.MemberTransform.Transform,
-				_SelectedTarget.FirstTarget.MemberTransform.Transform);
-			Src.Walker.Set3DWayBy2D (path, Src.MemberTransform.Position.y);
+			Src.MemeberMovement.Traveler.Clear ();
+
+			Vector3 destination = _SelectedTarget.FirstTarget.MemberTransform.Position;
+			/*
+			Vector3 diff = Src.MemberTransform.Position - destination;
+			float angle = Mathf.Atan2 (diff.z, diff.x);
+			destination.x += _SkillModel.Radius * Mathf.Cos (angle) * Random.Range (0.75f, 0.8f);
+			destination.z += _SkillModel.Radius * Mathf.Sin (angle) * Random.Range (0.75f, 0.8f);
+			*/
+			Src.MemeberMovement.MoveTo (destination, true);
 		}
 
 
