@@ -9,6 +9,7 @@ using Controller.Battle.AI;
 using Game.Helper;
 using Controller.Battle.Member;
 using Controller.Battle.Terrain;
+using Controller.AI.Movement;
 
 namespace Controller.Battle
 {
@@ -440,11 +441,9 @@ namespace Controller.Battle
 		private void UpdateBehaviour(float dt) {
 			if (_UnitBehaviour.RunTask) {
 				_UnitBehaviour.Update (dt);
-			}
-			/* else {
+			} else {
 				_UnitBehaviour.Switch (UnitStateType.PlaySpell);
 			}
-			*/
 		}
 
 		/// <summary>

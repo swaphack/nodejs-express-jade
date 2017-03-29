@@ -36,8 +36,8 @@ namespace Controller.Battle.Member
 		/// 模型对象
 		/// </summary>
 		/// <value>The trans form.</value>
-		public Transform Transform {
-			get { 
+		internal Transform Transform {
+			 get { 
 				return _Transform;
 			}
 		}
@@ -167,7 +167,7 @@ namespace Controller.Battle.Member
 		/// </summary>
 		public void PlayAttack01()
 		{
-			PlayAction(UnitAction.t_attack_01);
+			PlayAction(ActionConstants.t_attack_01);
 		}
 
 		/// <summary>
@@ -175,7 +175,7 @@ namespace Controller.Battle.Member
 		/// </summary>
 		public void PlayAttack02()
 		{
-			PlayAction(UnitAction.t_attack_02);
+			PlayAction(ActionConstants.t_attack_02);
 		}
 
 		/// <summary>
@@ -183,7 +183,7 @@ namespace Controller.Battle.Member
 		/// </summary>
 		public void PlayAttack03()
 		{
-			PlayAction(UnitAction.t_attack_03);
+			PlayAction(ActionConstants.t_attack_03);
 		}
 
 		/// <summary>
@@ -191,7 +191,7 @@ namespace Controller.Battle.Member
 		/// </summary>
 		public void PlayWalkBackward()
 		{
-			PlayAction(UnitAction.t_walkBattleBackward);
+			PlayAction(ActionConstants.t_walkBattleBackward);
 		}
 
 		/// <summary>
@@ -199,7 +199,7 @@ namespace Controller.Battle.Member
 		/// </summary>
 		public void PlayWalkForward()
 		{
-			PlayAction(UnitAction.t_walkBattleForward);
+			PlayAction(ActionConstants.t_walkBattleForward);
 		}
 
 		/// <summary>
@@ -207,7 +207,7 @@ namespace Controller.Battle.Member
 		/// </summary>
 		public void PlayWalkLeft()
 		{
-			PlayAction(UnitAction.t_walkBattleLeft);
+			PlayAction(ActionConstants.t_walkBattleLeft);
 		}
 
 		/// <summary>
@@ -215,7 +215,7 @@ namespace Controller.Battle.Member
 		/// </summary>
 		public void PlayWalkRight()
 		{
-			PlayAction(UnitAction.t_walkBattleRight);
+			PlayAction(ActionConstants.t_walkBattleRight);
 		}
 
 		/// <summary>
@@ -223,7 +223,7 @@ namespace Controller.Battle.Member
 		/// </summary>
 		public void PlayDefend()
 		{
-			PlayAction(UnitAction.t_defend);
+			PlayAction(ActionConstants.t_defend);
 		}
 
 		/// <summary>
@@ -231,7 +231,7 @@ namespace Controller.Battle.Member
 		/// </summary>
 		public void PlayDie()
 		{
-			PlayAction(UnitAction.t_die);
+			PlayAction(ActionConstants.t_die);
 		}
 
 		/// <summary>
@@ -239,7 +239,7 @@ namespace Controller.Battle.Member
 		/// </summary>
 		public void PlayGetHit()
 		{
-			PlayAction(UnitAction.t_getHit);
+			PlayAction(ActionConstants.t_getHit);
 		}
 
 		/// <summary>
@@ -247,7 +247,7 @@ namespace Controller.Battle.Member
 		/// </summary>
 		public void PlayJump()
 		{
-			PlayAction(UnitAction.t_jump);
+			PlayAction(ActionConstants.t_jump);
 		}
 
 		/// <summary>
@@ -255,7 +255,7 @@ namespace Controller.Battle.Member
 		/// </summary>
 		public void PlayWalk()
 		{
-			PlayAction(UnitAction.t_walk);
+			PlayAction(ActionConstants.t_walk);
 		}
 
 		/// <summary>
@@ -263,7 +263,7 @@ namespace Controller.Battle.Member
 		/// </summary>
 		public void PlayRun()
 		{
-			PlayAction(UnitAction.t_run);
+			PlayAction(ActionConstants.t_run);
 		}
 
 		/// <summary>
@@ -271,7 +271,7 @@ namespace Controller.Battle.Member
 		/// </summary>
 		public void PlayTaunt()
 		{
-			PlayAction(UnitAction.t_taunt);
+			PlayAction(ActionConstants.t_taunt);
 		}
 
 		/// <summary>
@@ -279,7 +279,7 @@ namespace Controller.Battle.Member
 		/// </summary>
 		public void PlayIdle()
 		{
-			PlayAction (UnitAction.t_idle_01);
+			PlayAction (ActionConstants.t_idle_01);
 		}
 	}
 }

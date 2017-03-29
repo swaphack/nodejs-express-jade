@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using Game.Helper;
 
 namespace Foundation.Algorithm
 {
@@ -159,7 +160,9 @@ namespace Foundation.Algorithm
 				if (mat != null && mat.GetMinimum (out column, out row, out minValue)) {
 					offsetColumn = 0;
 					offsetRow = 0;
+					Log.Info ("Sequenece " + i);
 					foreach (KeyValuePair<int, int> item in pairs) {
+						Log.Info (i + ":" + item.Key + " " + item.Value);	
 						if (column >= item.Key) {
 							offsetColumn++;
 						}
@@ -170,6 +173,7 @@ namespace Foundation.Algorithm
 					mat = mat.Eliminate (column, row);
 					column += offsetColumn;
 					row += offsetRow;
+
 					pairs [column] = row;
 				} else {
 					break;

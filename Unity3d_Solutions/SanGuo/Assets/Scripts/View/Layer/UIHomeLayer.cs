@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System;
-using Game;
+using UnityEngine.UI;
 using Game.Helper;
 using Game.Layer;
 using Controller.Role;
 
 namespace View.Layer
 {
+	/// <summary>
+	/// 主界面
+	/// </summary>
 	public class UIHomeLayer : NormalLayer
 	{
 		/// <summary>
@@ -35,6 +37,10 @@ namespace View.Layer
 		/// 矿石按钮
 		/// </summary>
 		private Button _BtnIron;
+		/// <summary>
+		/// 时间
+		/// </summary>
+		private Text _LabelTime;
 
 		public UIHomeLayer ()
 		{
@@ -53,6 +59,8 @@ namespace View.Layer
 			_BtnFood = FindCanvas<Button> ("CanvasButton.CanvasFood.Button");
 			_BtnWood = FindCanvas<Button> ("CanvasButton.CanvasWood.Button");
 			_BtnIron = FindCanvas<Button> ("CanvasButton.CanvasIron.Button");
+
+			_LabelTime = FindCanvas<Text> ("CanvasMiddle.Text");
 
 			_BtnFood.onClick.AddListener(delegate() {
 				Player.MainPlayer.Resource.Food += 1;
@@ -163,6 +171,16 @@ namespace View.Layer
 		protected override void OnEscapeHandler()
 		{
 			Log.Info ("Press Escape Key");
+		}
+
+		/// <summary>
+		/// 更新UI
+		/// </summary>
+		/// <param name="dt">Dt.</param>
+		protected override void UpdateUI(float dt)
+		{
+			string time = DateTime.Now.ToString("HH:mm:ss");
+			_LabelTime.text = time;
 		}
 	}
 }

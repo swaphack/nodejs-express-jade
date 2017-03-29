@@ -178,8 +178,8 @@ namespace Game.Layer
 			string[] canvasTree = fullCanvasPath.Split ('.');
 
 			Transform target = null;
-
-			for (int i = 0; i < canvasTree.Length; i++) {
+			int length = canvasTree.Length;
+			for (int i = 0; i < length; i++) {
 				if (target == null) {
 					Transform parentObject = _Root.transform.Find (canvasTree [i]);
 					if (parentObject == null) {

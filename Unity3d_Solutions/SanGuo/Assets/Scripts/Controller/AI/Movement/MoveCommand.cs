@@ -33,9 +33,9 @@ namespace Controller.AI.Movement
 			public CommandItem(Vector3 destination, bool bIndividual = true, MoveType tag = MoveType.Normal)
 			{
 				Destination = destination;
-				IsArrived = false;
 				IsIndividual = bIndividual;
 				Tag = tag;
+				IsArrived = false;
 			}
 		}
 
@@ -109,10 +109,11 @@ namespace Controller.AI.Movement
 				return;
 			}
 
-			CommandItem item = _CommandItems.Peek ();
-			if (!item.IsArrived) {
-				item.IsArrived = true;
-			}
+//			CommandItem item = _CommandItems.Peek ();
+//			if (!item.IsArrived) {
+//				item.IsArrived = true;
+//			}
+			_CommandItems.Dequeue();
 		}
 
 		/// <summary>

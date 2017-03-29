@@ -129,7 +129,8 @@ namespace Controller.Battle.Terrain
 		/// <returns>The way.</returns>
 		/// <param name="src">Source.</param>
 		/// <param name="dest">Destination.</param>
-		public List<Vector2> FindWay(Vector3 src, Vector3 dest) 
+		/// <param name="bCheckBox">If set to <c>true</c> b check box.</param>
+		public List<Vector2> FindWay(Vector3 src, Vector3 dest, bool bCheckBox = true) 
 		{
 			_FindWayMethod.Reset ();
 			int count = 0;
@@ -143,12 +144,14 @@ namespace Controller.Battle.Terrain
 					if (item != null) { item.CanPass = false; }
 
 					// 外围
-					int j;
-					int length = 0;
-					length = _MapItems [i].ExtentsAry.Length;
-					for (j = 0; j < length; j++) {
-						item = _FindWayMethod.GetGrid (position + _MapItems[i].ExtentsAry[j]);
-						if (item != null) { item.CanPass = false; }
+					if (bCheckBox) {
+						int j;
+						int length = 0;
+						length = _MapItems [i].ExtentsAry.Length;
+						for (j = 0; j < length; j++) {
+							item = _FindWayMethod.GetGrid (position + _MapItems[i].ExtentsAry[j]);
+							if (item != null) { item.CanPass = false; }
+						}	
 					}
 				}
 			}

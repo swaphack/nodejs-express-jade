@@ -15,19 +15,15 @@ namespace Game.Controller
 		/// <summary>
 		/// 原型
 		/// </summary>
-		private Dictionary<int, TrackMap.PrefabItem> _PrefabItems;
-		/// <summary>
-		/// 赛道元素
-		/// </summary>
-		private List<TrackMap.ElementItem> _ElementItems;
-		/// <summary>
-		/// 资源包名称
-		/// </summary>
-		private string _AssetBundle;
+		TrackMap _TrackMap;
 		/// <summary>
 		/// 已加载数
 		/// </summary>
 		private int _LoadedCount;
+		/// <summary>
+		/// 已加角色
+		/// </summary>
+		private int _LoadedRole;
 		/// <summary>
 		/// 是否已经加载了资源包
 		/// </summary>
@@ -40,19 +36,18 @@ namespace Game.Controller
 		// Use this for initialization
 		void Start ()
 		{
-			TrackMap data = new TrackMap (TrackConfigPath);
-			if (!data.Load ()) {
+			_TrackMap = new TrackMap (TrackConfigPath);
+			if (!_TrackMap.Load ()) {
 				return;
 			}
 
-			_PrefabItems = data.PrefabItems;
-			_ElementItems = data.ElementItems;
-			_AssetBundle = data.AssetBundlePath;
-
-
 #if USE_ASSET_BUNDLE
 			if (!_bLoadedAssetBundle) {
-				FileDataHelp.LoadAssetBundle (_AssetBundle, (bool status) => {
+				FileDataHelp.LoadAssetBundle (_TrackMap.AssetBundlePath, (bool status) => {
+					if (!status) {
+						Log.Warning("Not exists assetbundle, path:" + _TrackMap.AssetBundlePath);
+						return;
+					}
 					_bLoadedAssetBundle = true;
 				});
 			}
@@ -67,42 +62,38 @@ namespace Game.Controller
 			if (!_bLoadedAssetBundle) {
 				return;
 			}
-			LoadElement ();
+			LoadLines ();
+
+			LoadRole ();
 		}
 
 		/// <summary>
 		/// 加载赛道元素
 		/// </summary>
-		private void LoadElement()
+		private void LoadLines()
 		{
-			if (_ElementItems == null) {
+			if (_TrackMap.LineItems == null) {
 				Log.Warning ("Not Exists Element Item");
 				return;
 			}
-			if (_LoadedCount >= _ElementItems.Count) {
+
+			if (_LoadedCount >= _TrackMap.LineItems.Count) {
 				return;
 			}
 
-			TrackMap.ElementItem elementItem = _ElementItems [_LoadedCount];
-			if (!_PrefabItems.ContainsKey (elementItem.PrefabID)) {
+			TrackMap.LineItem item = _TrackMap.LineItems [_LoadedCount];
+			if (!_TrackMap.PrefabItems.ContainsKey (item.PrefabID)) {
 				_LoadedCount++;
 				return;
 			}
-			TrackMap.PrefabItem prefabItem = _PrefabItems [elementItem.PrefabID];
+			TrackMap.PrefabItem prefabItem = _TrackMap.PrefabItems [item.PrefabID];
 #if USE_ASSET_BUNDLE
-			FileDataHelp.CreatePrefabFromAssetBundle (_AssetBundle, prefabItem.Path, (GameObject gameObj)=>{
+			FileDataHelp.CreatePrefabFromAssetBundle (_TrackMap.AssetBundlePath, prefabItem.Path, (GameObject gameObj)=>{
 				if (gameObj == null) {
 					return;
 				}
 
-				GameObject instance = Utility.Clone (gameObj);
-				if (instance == null) {
-					return;
-				}
-				instance.transform.name = elementItem.Name;
-				instance.transform.SetParent (this.transform);
-				instance.transform.localPosition = elementItem.Position;
-				instance.transform.localRotation.Set (0, 0, 0, 1);
+				LoadLineItems(item, gameObj);
 			});
 #else
 			FileDataHelp.CreatePrefabFromAsset (prefabItem.Path, (GameObject gameObj)=>{
@@ -110,17 +101,61 @@ namespace Game.Controller
 					return;
 				}
 
+			LoadLineItems(item, gameObj);
+			});
+#endif
+
+			_LoadedCount++;
+		}
+
+		private void LoadLineItems(TrackMap.LineItem item, GameObject gameObj)
+		{
+			if (gameObj == null) {
+				return;
+			}
+
+			int count = (int)Vector3.Distance (item.Src, item.Dest);
+			Vector3 different = item.Dest - item.Src;
+			for (int i = 0; i <= count; i++) {
 				GameObject instance = Utility.Clone (gameObj);
 				if (instance == null) {
 					return;
 				}
-				instance.transform.name = elementItem.Name;
 				instance.transform.SetParent (this.transform);
-				instance.transform.localPosition = elementItem.Position;
+				instance.transform.localPosition = item.Src + (1.0f * i / count) * different;
 				instance.transform.localRotation.Set (0, 0, 0, 1);
+			}
+		}
+
+		/// <summary>
+		/// 加载角色
+		/// </summary>
+		private void LoadRole()
+		{
+			if (_LoadedRole >= 1) {
+				return;
+			}
+
+			TrackMap.PrefabItem prefabItem = _TrackMap.PrefabItems [_TrackMap.Role.PrefabID];
+			FileDataHelp.CreatePrefabFromAssetBundle (_TrackMap.AssetBundlePath, prefabItem.Path, (GameObject gameObj)=>{
+				if (gameObj == null) {
+					return;
+				}
+
+				GameObject instance = Utility.Clone (gameObj);
+				if (instance == null) {
+					return;
+				}
+				instance.transform.SetParent (this.transform.parent);
+				instance.transform.localPosition = _TrackMap.Role.Position;
+				instance.transform.localRotation.Set (0, 0, 0, 1);
+				instance.AddComponent<AudioListener>();
+				instance.AddComponent<MoveController>();
+				instance.AddComponent<ThirdPersonController>();
+				instance.AddComponent<ViewController>();
 			});
-#endif
-			_LoadedCount++;
+
+			_LoadedRole++;
 		}
 	}
 }

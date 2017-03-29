@@ -184,6 +184,19 @@ namespace Controller.Battle.Member
 		}
 
 		/// <summary>
+		/// 朝向
+		/// </summary>
+		/// <param name="worldPosition">World position.</param>
+		public void LookAt(Vector3 worldPosition)
+		{
+			if (_Transform == null) {
+				return;
+			}
+
+			_Transform.LookAt(worldPosition);
+		}
+
+		/// <summary>
 		/// 碰撞检测
 		/// </summary>
 		/// <returns><c>true</c> if this instance is collide with the specified target; otherwise, <c>false</c>.</returns>
@@ -201,6 +214,8 @@ namespace Controller.Battle.Member
 			if (!Collider.enabled || !target.Collider.enabled) {
 				return false;
 			}
+
+			//return Collider.bounds.Intersects (target.Collider.bounds);
 
 			return MathHelp.IsIntersect (Position, CollisionRadius, target.Position, target.CollisionRadius);
 		}

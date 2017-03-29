@@ -4,6 +4,7 @@ using Model.Battle;
 using Game.Helper;
 using UnityEngine;
 using Controller.Battle.Terrain;
+using Controller.AI.Movement;
 
 namespace Controller.Battle
 {
@@ -44,6 +45,10 @@ namespace Controller.Battle
 		/// 交通管理
 		/// </summary>
 		private Traffic _Traffic;
+		/// <summary>
+		/// 是否是模拟
+		/// </summary>
+		private bool _IsSimulate;
 
 		/// <summary>
 		/// 存活的队伍
@@ -84,6 +89,19 @@ namespace Controller.Battle
 		}
 
 		/// <summary>
+		/// 是否是模拟，不考虑队伍生死
+		/// </summary>
+		/// <value><c>true</c> if this instance is simulate; otherwise, <c>false</c>.</value>
+		public bool IsSimulate {
+			get { 
+				return _IsSimulate;
+			}
+			set { 
+				_IsSimulate = value;
+			}
+		}
+
+		/// <summary>
 		/// 开始战斗
 		/// </summary>
 		//public event OnBattleBroadcast OnBeginBattle;
@@ -103,6 +121,8 @@ namespace Controller.Battle
 			_Traffic = new Traffic ();
 
 			_WaitForRemoveTeams = new List<Team> ();
+
+			_IsSimulate = true;
 		}
 
 		/// <summary>
@@ -279,7 +299,13 @@ namespace Controller.Battle
 				return;
 			}
 
+			// 待移除的队伍
 			HandWaitForRemoveTeams ();
+
+			// 战斗结束
+			if (!IsSimulate && CheckFinishBattle ()) {
+				return;
+			}
 
 			// 将要移除的单位
 			foreach (KeyValuePair<int,Team> item in _AliveTeams) {
@@ -299,7 +325,9 @@ namespace Controller.Battle
 
 			// 活着单位
 			foreach (KeyValuePair<int,Team> item in _AliveTeams) {
-				item.Value.UpdateAliveUnits (dt);
+				if (item.Value.MoveGroup.State == FormationState.Formed) { // 集结完毕
+					item.Value.UpdateAliveUnits (dt);
+				}
 			}
 		}
 
@@ -323,7 +351,14 @@ namespace Controller.Battle
 			}
 
 			_WaitForRemoveTeams.Clear ();
+		}
 
+		/// <summary>
+		/// 检查战斗是否结束
+		/// </summary>
+		/// <returns><c>true</c>, if finish battle was checked, <c>false</c> otherwise.</returns>
+		private bool CheckFinishBattle()
+		{
 			if (_AliveTeams.Count == 1) {
 				foreach (KeyValuePair<int,Team> item in _AliveTeams) {
 					foreach (KeyValuePair<int, Unit> item2 in item.Value.AliveUnits.Units) {
@@ -332,7 +367,10 @@ namespace Controller.Battle
 				}
 
 				Utility.UnloadUnusedObject ();
+				return true;
 			}
+
+			return false;
 		}
 
 		/// <summary>

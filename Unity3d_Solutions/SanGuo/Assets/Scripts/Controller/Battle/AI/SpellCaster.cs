@@ -113,6 +113,12 @@ namespace Controller.Battle.AI
 				return;
 			}
 
+			// 与其他单位发生碰撞
+			/*
+			if (!IsCollideWithOthers ()) {
+				return;
+			}
+			*/
 			// 不能播放攻击动作
 			if (!CheckCanPlayAttack ()) {
 				return;
@@ -121,7 +127,7 @@ namespace Controller.Battle.AI
 			if (!_bRunningSkill) {
 				_bRunningSkill = true;
 				// 施法
-				Src.MemberModel.Transform.LookAt (_SelectedTarget.FirstTarget.MemberTransform.Position);
+				Src.MemberTransform.Transform.LookAt (_SelectedTarget.FirstTarget.MemberTransform.Position);
 				Src.MemberModel.OnActionEnd += OnEndAction;
 				Src.UnitBehaviour.PlayAttack ();
 				//Log.Warning ("Src : " + Src.ID + " Start Attack");
@@ -222,8 +228,8 @@ namespace Controller.Battle.AI
 				return false;
 			}
 
-			if (Src.MemberModel.IsPlay (UnitAction.t_getHit)
-			    || Src.MemberModel.IsPlay (UnitAction.t_die)) {
+			if (Src.MemberModel.IsPlay (ActionConstants.t_getHit)
+			    || Src.MemberModel.IsPlay (ActionConstants.t_die)) {
 				return false;
 			}
 
@@ -261,9 +267,9 @@ namespace Controller.Battle.AI
 		private void OnEndAction(int tag)
 		{
 			// 非攻击动作
-			if (tag != UnitAction.t_attack_01
-				&& tag != UnitAction.t_attack_02
-				&& tag != UnitAction.t_attack_03) {
+			if (tag != ActionConstants.t_attack_01
+				&& tag != ActionConstants.t_attack_02
+				&& tag != ActionConstants.t_attack_03) {
 				return;
 			}
 

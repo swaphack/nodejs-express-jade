@@ -28,8 +28,10 @@ namespace Game.Controller
 		public ThirdPersonController ()
 		{
 			CameraPosition.x = 0;
-			CameraPosition.y = 1;
+			CameraPosition.y = 2;
 			CameraPosition.z = -5;
+
+			IsCameraRotation = true;
 		}
 
 		void Start()

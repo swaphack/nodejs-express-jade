@@ -81,10 +81,10 @@ namespace Controller.Battle.AI
 		/// <value><c>true</c> if this instance is can walk; otherwise, <c>false</c>.</value>
 		public bool IsCanWalk {
 			get { 
-				if (Target.MemberModel.IsPlay (UnitAction.t_attack_01)
-					|| Target.MemberModel.IsPlay (UnitAction.t_attack_02)
-					|| Target.MemberModel.IsPlay (UnitAction.t_attack_03)
-					|| Target.MemberModel.IsPlay (UnitAction.t_getHit)) {
+				if (Target.MemberModel.IsPlay (ActionConstants.t_attack_01)
+					|| Target.MemberModel.IsPlay (ActionConstants.t_attack_02)
+					|| Target.MemberModel.IsPlay (ActionConstants.t_attack_03)
+					|| Target.MemberModel.IsPlay (ActionConstants.t_getHit)) {
 					return false;
 				}
 				return !Target.MemeberMovement.Empty;
@@ -97,9 +97,9 @@ namespace Controller.Battle.AI
 		/// <value><c>true</c> if this instance is play attack; otherwise, <c>false</c>.</value>
 		public bool IsPlayAttack {
 			get { 
-				if (Target.MemberModel.IsPlay (UnitAction.t_attack_01)
-				    || Target.MemberModel.IsPlay (UnitAction.t_attack_02)
-				    || Target.MemberModel.IsPlay (UnitAction.t_attack_03)) {
+				if (Target.MemberModel.IsPlay (ActionConstants.t_attack_01)
+				    || Target.MemberModel.IsPlay (ActionConstants.t_attack_02)
+				    || Target.MemberModel.IsPlay (ActionConstants.t_attack_03)) {
 					return true;
 				}
 

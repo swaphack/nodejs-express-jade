@@ -157,7 +157,6 @@ namespace Game.Layer
 			transform.SetParent (_UIRoot.transform);
 			rect.localPosition = Vector3.zero;
 			rect.localScale = Vector3.one;
-			AutoScale (rect);
 			layer.Visible = true;
 			_UILayers.Add (layer);
 		}

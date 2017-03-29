@@ -80,9 +80,9 @@ namespace Game.Helper
 		/// </summary>
 		/// <returns>方向向量</returns>
 		/// <param name="direction">Direction.</param>
-		public static double GetRotation(Vector3 direction)
+		public static float GetRotation(Vector3 direction)
 		{
-			return Math.Atan2 (direction.z, direction.x) * 180 / Math.PI;
+			return ConvertToAngle(Mathf.Atan2 (direction.z, direction.x));
 		}
 
 		/// <summary>
@@ -128,6 +128,26 @@ namespace Game.Helper
 		public static float Area(Vector2 srcPos, Vector2 destPos)
 		{
 			return Mathf.Abs ((srcPos.x - destPos.x) * (srcPos.y - destPos.y));
+		}
+
+		/// <summary>
+		/// 弧度转角度
+		/// </summary>
+		/// <returns>The to angle.</returns>
+		/// <param name="radian">Radian.</param>
+		public static float ConvertToAngle(float radian)
+		{
+			return radian / Mathf.PI * 180;
+		}
+
+		/// <summary>
+		/// 角度转弧度
+		/// </summary>
+		/// <returns>The to radian.</returns>
+		/// <param name="angle">Angle.</param>
+		public static float ConvertToRadian(float angle)
+		{
+			return angle / 180 * Mathf.PI;
 		}
 	}
 }

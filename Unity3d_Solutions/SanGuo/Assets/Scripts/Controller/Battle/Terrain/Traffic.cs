@@ -28,19 +28,26 @@ namespace Controller.Battle.Terrain
 			
 			foreach (KeyValuePair<int, Team> item in _Field.AliveTeams) {
 				item.Value.MoveGroup.CalGroupInfo ();
-				if (item.Value.LastHitTeamID == 0) {
-					item.Value.LastHitTeamID = FindNearTeamID (item.Key);
-					item.Value.MoveGroup.Concentrate ();
-				} else {
-					if (_Field.GetDeadTeam (item.Value.LastHitTeamID) != null) {
-						item.Value.LastHitTeamID = 0;
+				if (_Field.IsSimulate) { // 模拟
+					if (item.Value.LastHitTeamID == 0) { // 分配自己
+						item.Value.LastHitTeamID = item.Key;
+						item.Value.MoveGroup.Concentrate ();
+					}
+				} else { // 实际
+					if (item.Value.LastHitTeamID == 0) { // 分配最近目标
+						item.Value.LastHitTeamID = FindNearTeamID (item.Key);
+						item.Value.MoveGroup.Concentrate ();
+					} else {
+						if (_Field.GetDeadTeam (item.Value.LastHitTeamID) != null) { // 最近攻击队伍死亡，重置
+							item.Value.LastHitTeamID = 0;
+						}
 					}
 				}
 
 				item.Value.UpdateMoveGroup (dt);
 			}
 
-			PreCheckPath ();
+			PreCheckPath (dt);
 		}
 
 		/// <summary>
@@ -73,7 +80,8 @@ namespace Controller.Battle.Terrain
 		/// <summary>
 		/// 检查路线
 		/// </summary>
-		private void PreCheckPath()
+		/// <param name="dt">Dt.</param>
+		private void PreCheckPath(float dt)
 		{
 			// 计算路径
 			foreach (KeyValuePair<int, Team> item in _Field.AliveTeams) {
@@ -84,7 +92,7 @@ namespace Controller.Battle.Terrain
 							continue;
 						}
 
-						CheckUnitPath (item2.Value);
+						CheckUnitPath (item2.Value, dt);
 					}
 				}
 			}
@@ -93,8 +101,9 @@ namespace Controller.Battle.Terrain
 		/// <summary>
 		/// 检查单位路线
 		/// </summary>
+		/// <param name="src">Source.</param>
 		/// <param name="dt">Dt.</param>
-		private void CheckUnitPath(Unit src)
+		private void CheckUnitPath(Unit src, float dt)
 		{
 			if (src == null) {
 				return;
@@ -104,7 +113,7 @@ namespace Controller.Battle.Terrain
 				UnitSheet aliveUnits = item.Value.AliveUnits;
 				foreach (KeyValuePair<int, Unit> item2 in aliveUnits.Units) {
 					if (src.ID != item2.Key && item2.Value.CanCollision) {
-						if (src.MemeberMovement.IsTargetOnPath (item2.Value.MemberTransform.Position, item2.Value.MemberTransform.CollisionRadius)
+						if (src.MemeberMovement.IsTargetOnPath (dt, item2.Value.MemberTransform.Position, item2.Value.MemberTransform.CollisionRadius)
 							|| src.MemeberMovement.IsCollideWith(item2.Value.MemeberMovement)
 						) {
 							//src.MemeberMovement.ResetWaitForFindWayTime ();

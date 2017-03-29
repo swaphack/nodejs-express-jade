@@ -11,16 +11,18 @@ namespace Game.Controller
 	{
 		public Transform Target;
 
+		private NavMeshAgent _Agent;
+
 		// Use this for initialization
 		void Start ()
 		{
-			GetComponent<NavMeshAgent> ().SetDestination (Target.position);
+			_Agent = this.GetComponent<NavMeshAgent> ();
 		}
 
 		// Update is called once per frame
 		void Update ()
 		{	
-			
+			_Agent.SetDestination (Target.position);
 		}
 	}
 }

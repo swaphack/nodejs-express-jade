@@ -280,7 +280,7 @@ namespace Controller.Battle.Member
 				if (detla > _RemainRotation) {
 					detla = _RemainRotation;
 				}
-				_Target.MemberModel.Transform.Rotate (0, detla, 0);
+				_Target.MemberTransform.RotateBy (new Vector3(0, detla, 0));
 				_RemainRotation -= detla;
 				return;
 			}
@@ -294,7 +294,7 @@ namespace Controller.Battle.Member
 			Vector3 nextStation;
 			_Target.MemeberMovement.Traveler.GetStation (0, out nextStation);
 
-			Vector3 v0 = _Target.MemberModel.Transform.forward;
+			Vector3 v0 = _Target.MemberTransform.Orientation;
 			Vector3 v1 = nextStation - nextPosition;
 			float angle = Quaternion.FromToRotation (v0, v1).eulerAngles.y;
 			angle = 0;
@@ -306,7 +306,7 @@ namespace Controller.Battle.Member
 				_RemainRotation = angle;
 			} else { // 共线
 				_Target.MemberModel.PlayWalk ();
-				_Target.MemberModel.Transform.LookAt (nextPosition);
+				_Target.MemberTransform.LookAt (nextPosition);
 				_Target.MemberTransform.WalkTo (nextPosition);
 			}
 		}
@@ -333,7 +333,7 @@ namespace Controller.Battle.Member
 			}
 
 			/*if (Vector3.Distance(Position, _NextStation) <= 0.01f) {*/
-			if (Position == _NextStation) {
+			if (Position == _NextStation) { // 抵达目标
 				_Traveler.Clear ();
 				_MoveCommand.ArrivedDestination ();
 				if (!isIndividual) {
@@ -342,7 +342,7 @@ namespace Controller.Battle.Member
 				_Tag = 0;
 			} else {
 				Field field = BattleHelp.Field;
-				List<Vector2> path = field.Map.FindWay (Position, _NextStation);
+				List<Vector2> path = field.Map.FindWay (Position, _NextStation, !isIndividual);
 				if (path != null && path.Count != 0) {
 					_IsIndividual = isIndividual;
 					_Tag = tag;
@@ -400,73 +400,28 @@ namespace Controller.Battle.Member
 			return _Traveler.TryGetNextStation(dt, out nextPosition);
 		}
 
-
 		/// <summary>
 		/// 目标是否在路线上
 		/// </summary>
-		/// <returns><c>true</c> if this instance is target on path the specified position radius; otherwise, <c>false</c>.</returns>
+		/// <returns><c>true</c> if this instance is target on path the specified dt position radius; otherwise, <c>false</c>.</returns>
+		/// <param name="dt">Dt.</param>
 		/// <param name="position">Position.</param>
 		/// <param name="radius">Radius.</param>
-		public bool IsTargetOnPath(Vector3 position, float radius)
+		public bool IsTargetOnPath(float dt, Vector3 position, float radius)
 		{
 			if (_Target == null || _Traveler.Empty) {
 				return false;
 			}
-			Vector3 _TargetPos = _Traveler.CurrentPosition;
-			Vector3 destPos = _Traveler.NextPosition;
 
-			Vector3 v0 = destPos - _TargetPos;
-			Vector3 v1 = position - _TargetPos;
-
-			float length = Mathf.Abs(Vector3.Dot(v1, v0) / Vector3.Distance (destPos, _TargetPos));
+			Vector3 destPos;
+			if (!TryGetNextStation (dt, out destPos)) {
+				return false;
+			}
 
 			float targetRadius = _Target.MemberTransform.CollisionRadius;
 
-			if (length <= targetRadius + radius) {
+			if (Vector3.Distance (position, destPos) <= targetRadius + radius) {
 				return true;
-			}
-
-			return false;
-		}
-
-		/// <summary>
-		/// 目标是否在路线上
-		/// </summary>
-		/// <returns><c>true</c> if this instance is target on path the specified position radius; otherwise, <c>false</c>.</returns>
-		/// <param name="position">Position.</param>
-		/// <param name="radius">Radius.</param>
-		public bool IsTargetOnAllPaths(Vector3 position, float radius)
-		{
-			if (_Target == null || _Traveler.Empty) {
-				return false;
-			}
-
-			if (!IsTargetOnPath(position, radius)) {
-				return true;
-			}
-
-			int count = _Traveler.Count;
-			Vector3 _TargetPos;
-			Vector3 destPos;
-			for (int i = 0; i < count - 1; i++) {
-				if (!_Traveler.GetStation(i, out _TargetPos)) {
-					break;
-				}
-
-				if (!_Traveler.GetStation(i + 1, out destPos)) {
-					break;
-				}
-
-				Vector3 v0 = destPos - _TargetPos;
-				Vector3 v1 = position - _TargetPos;
-
-				float length = Mathf.Abs(Vector3.Dot(v1, v0) / Vector3.Distance (destPos, _TargetPos));
-
-				float targetRadius = _Target.MemberTransform.CollisionRadius;
-
-				if (length <= targetRadius + radius) {
-					return true;
-				}	
 			}
 
 			return false;

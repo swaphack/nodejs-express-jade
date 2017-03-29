@@ -1,14 +1,17 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Foundation\Algorithm\Matrix.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Shaders\Test\Simple.shader">
     <Files>
-      <File FileName="Assets\Scripts\Controller\Battle\Member\MemberModel.cs" Line="138" Column="17" />
-      <File FileName="Assets\Scripts\Foundation\Algorithm\Matrix.cs" Line="110" Column="43" NotebookId="1" />
+      <File FileName="Assets\Shaders\Test\Simple.shader" Line="6" Column="13" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Controller\AI\AStar2D.cs" line="246" column="1" />
+      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Controller\AI\Movement\MoveCommand.cs" line="38" column="5" />
+      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Foundation\Algorithm\Matrix.cs" line="126" column="27" />
+      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Foundation\Algorithm\Matrix.cs" line="127" column="1" />
+      <Breakpoint file="E:\Solution\Unity3d_Solutions\SanGuo\Assets\Scripts\Foundation\Algorithm\Matrix.cs" line="125" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

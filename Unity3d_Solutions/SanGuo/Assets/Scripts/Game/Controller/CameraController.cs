@@ -12,22 +12,30 @@ namespace Game.Controller
 		/// <summary>
 		/// 滑轮转化视角系数
 		/// </summary>
-		public float SrollExchangeViewFieldRate = 0.5f;
+		public float SrollExchangeViewFieldRate;
 
 		/// <summary>
 		/// 触屏转化视角系数
 		/// </summary>
-		public float TouchExchangeViewFieldRate = 0.1f;
+		public float TouchExchangeViewFieldRate;
 
 		/// <summary>
 		/// 是否可用
 		/// </summary>
-		private bool _IsEnabled = false;
+		private bool _IsEnabled;
 
 		/// <summary>
 		/// 保留最近一次两只手指在屏幕的距离
 		/// </summary>
-		private float _LastTowTouchDistance = -1;
+		private float _LastTowTouchDistance;
+
+		public CameraController()
+		{
+			_LastTowTouchDistance = -1;
+
+			SrollExchangeViewFieldRate = 0.5f;
+			TouchExchangeViewFieldRate = 0.1f;
+		}
 
 		void Start() {
 			Camera camera = this.GetComponent<Camera> ();
@@ -85,7 +93,7 @@ namespace Game.Controller
 			}
 			Camera camera = this.GetComponent<Camera> ();
 			float newValue = camera.fieldOfView;
-			newValue += value;
+			newValue -= value;
 			if (newValue < 1) {
 				newValue = 1;
 			}

@@ -93,7 +93,7 @@ namespace Game.Local
 
 			LoadItem item;
 
-			// 已有改路径
+			// 已有此路径
 			if (_LoadItems.ContainsKey (filePath)) {
 				item = _LoadItems [filePath];
 				if (item.IsLoaded) {

@@ -322,7 +322,7 @@ namespace Controller.Battle
 				return;
 			}
 
-			if (tag == UnitAction.t_die) {
+			if (tag == ActionConstants.t_die) {
 				if (OnUnitDestory != null) {
 					OnUnitDestory (unit);
 				}

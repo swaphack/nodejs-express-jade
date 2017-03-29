@@ -50,7 +50,7 @@ namespace Game.Controller
 		{
 			Animator animation = this.GetComponent<Animator> ();
 			AnimatorStateInfo stateInfo = animation.GetCurrentAnimatorStateInfo (0);
-			if (stateInfo.tagHash == UnitAction.t_die) {
+			if (stateInfo.tagHash == ActionConstants.t_die) {
 				Log.Info ("normalizedTime : " + stateInfo.normalizedTime);
 			}
 		}

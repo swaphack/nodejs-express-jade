@@ -29,20 +29,36 @@ namespace Data.Map
 		/// <summary>
 		/// 赛道元素项
 		/// </summary>
-		public struct ElementItem
+		public struct LineItem
 		{
 			/// <summary>
-			/// 资源路径
+			/// 起始位置
 			/// </summary>
-			public string Name;
+			public Vector3 Src;
+			/// <summary>
+			/// 目标位置
+			/// </summary>
+			public Vector3 Dest;
 			/// <summary>
 			/// 编号
 			/// </summary>
 			public int PrefabID;
+		}
+
+
+		/// <summary>
+		/// 角色项
+		/// </summary>
+		public struct RoleItem
+		{
 			/// <summary>
-			/// 位置
+			/// 起始位置
 			/// </summary>
 			public Vector3 Position;
+			/// <summary>
+			/// 编号
+			/// </summary>
+			public int PrefabID;
 		}
 			
 		/// <summary>
@@ -52,7 +68,7 @@ namespace Data.Map
 		/// <summary>
 		/// 赛道元素
 		/// </summary>
-		private List<ElementItem> _ElementItems;
+		private List<LineItem> _LineItems;
 		/// <summary>
 		/// 资源包路径
 		/// </summary>
@@ -61,6 +77,10 @@ namespace Data.Map
 		/// 配置所在路径
 		/// </summary>
 		private string _ConfigPath;
+		/// <summary>
+		/// 角色项
+		/// </summary>
+		private RoleItem _RoleItem;
 		/// <summary>
 		/// 配置所在路径
 		/// </summary>
@@ -80,9 +100,15 @@ namespace Data.Map
 		/// <summary>
 		/// 赛道元素
 		/// </summary>
-		public List<ElementItem> ElementItems {
+		public List<LineItem> LineItems {
 			get { 
-				return _ElementItems;
+				return _LineItems;
+			}
+		}
+
+		public RoleItem Role {
+			get { 
+				return _RoleItem;
 			}
 		}
 
@@ -100,7 +126,7 @@ namespace Data.Map
 		{
 			_ConfigPath = configpath;
 			_PrefabItems = new Dictionary<int, PrefabItem> ();
-			_ElementItems = new List<ElementItem> ();
+			_LineItems = new List<LineItem> ();
 		}
 
 
@@ -134,7 +160,7 @@ namespace Data.Map
 		/// 加载元素
 		/// </summary>
 		/// <param name="node">Node.</param>
-		private void LoadElement(XmlNode node)
+		private void LoadLine(XmlNode node)
 		{
 			if (node == null) {
 				return;
@@ -144,14 +170,36 @@ namespace Data.Map
 			while (itemNode != null) {
 				XmlElement element = (XmlElement)itemNode;
 
-				ElementItem item = new ElementItem();
-				item.Name = element.GetAttribute ("Name");
+				LineItem item = new LineItem();
 				item.PrefabID = Int32.Parse(element.GetAttribute ("PrefabID"));
-				item.Position = StringHelp.ConvertToVector3 (element.GetAttribute ("Position"));
-				_ElementItems.Add(item);
+				item.Src = StringHelp.ConvertToVector3 (element.GetAttribute ("Src"));
+				item.Dest = StringHelp.ConvertToVector3 (element.GetAttribute ("Dest"));
+				_LineItems.Add(item);
 
 				itemNode = itemNode.NextSibling;
 			}
+		}
+
+		/// <summary>
+		/// 加载角色
+		/// </summary>
+		/// <param name="node">Node.</param>
+		private void LoadRole(XmlNode node)
+		{
+			if (node == null) {
+				return;
+			}
+
+			XmlNode itemNode = node.FirstChild;
+			while (itemNode != null) {
+				XmlElement element = (XmlElement)itemNode;
+
+				_RoleItem.PrefabID = Int32.Parse(element.GetAttribute ("PrefabID"));
+				_RoleItem.Position = StringHelp.ConvertToVector3 (element.GetAttribute ("Position"));
+
+				itemNode = itemNode.NextSibling;
+			}
+			
 		}
 
 		/// <summary>
@@ -169,8 +217,10 @@ namespace Data.Map
 			while (node != null) {
 				if (node.Name == "Prefabs") {
 					LoadPrefab (node);
-				} else if (node.Name == "Elements") {
-					LoadElement (node);
+				} else if (node.Name == "Lines") {
+					LoadLine (node);
+				} else if (node.Name == "Role") {
+					LoadRole (node);
 				}
 				
 				node = node.NextSibling;
@@ -184,7 +234,7 @@ namespace Data.Map
 		public void Clear ()
 		{
 			_PrefabItems.Clear ();
-			_ElementItems.Clear ();
+			_LineItems.Clear ();
 		}
 	}
 }
