@@ -1,6 +1,4 @@
-﻿// Upgrade NOTE: replaced '_LightMatrix0' with 'unity_WorldToLight'
-
-Shader "Custom/Shadow/ShadowUseBuildIn" {
+﻿Shader "Custom/Shadow/ShadowUseBuildIn" {
 	Properties {
 		_Diffuse("Diffuse", Color) = (1.0,1.0,1.0,1.0)
 		_Specular("Specular", Color) = (1.0,1.0,1.0,1.0)
@@ -139,7 +137,7 @@ Shader "Custom/Shadow/ShadowUseBuildIn" {
 			#ifdef USING_DIRECTIONAL_LIGHT
 				atten = 1.0;
 			#else
-				float3 lightCoord = mul(unity_WorldToLight, float4(i.worldPos, 1)).xyz;
+				float3 lightCoord = mul(_LightMatrix0, float4(i.worldPos, 1)).xyz;
 				atten = tex2D(_LightTexture0, dot(lightCoord, lightCoord).rr).UNITY_ATTEN_CHANNEL;
 			#endif
 				return fixed4(ambient + (diffuse + specular) * atten, 1.0);
