@@ -33,7 +33,6 @@ Shader "Custom/Light/DiffuseVertexLevel" {
 				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
 				
 				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
-
 				fixed3 worldNormal = normalize(mul(v.normal, (float3x3)unity_WorldToObject));
 				fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
 				fixed lambert = saturate(dot(worldNormal, worldLightDir));

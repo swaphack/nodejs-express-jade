@@ -1,7 +1,5 @@
 ﻿// Upgrade NOTE: replaced '_LightMatrix0' with 'unity_WorldToLight'
 
-// Upgrade NOTE: replaced '_LightMatrix0' with 'unity_WorldToLight'
-
 Shader "Custom/Shadow/Shadow" {
 	Properties {
 		_Diffuse("Diffuse", Color) = (1.0,1.0,1.0,1.0)
