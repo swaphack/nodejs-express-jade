@@ -1,3 +1,7 @@
+﻿// Upgrade NOTE: replaced '_LightMatrix0' with 'unity_WorldToLight'
+
+// Upgrade NOTE: replaced '_LightMatrix0' with 'unity_WorldToLight'
+
 // Upgrade NOTE: replaced '_LightMatrix0' with 'unity_WorldToLight'
 
 // Upgrade NOTE: replaced '_LightMatrix0' with 'unity_WorldToLight'
