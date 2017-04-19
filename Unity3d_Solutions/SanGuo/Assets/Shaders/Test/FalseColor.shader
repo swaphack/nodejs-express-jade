@@ -1,4 +1,5 @@
-﻿Shader "Test/FalseColor" {
+﻿// 假色
+Shader "Custom/Test/FalseColor" {
 	SubShader {
 		Pass {
 			CGPROGRAM

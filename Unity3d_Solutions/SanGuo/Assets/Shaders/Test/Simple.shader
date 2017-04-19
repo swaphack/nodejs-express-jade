@@ -1,4 +1,4 @@
-﻿Shader "Test/Simple" {
+﻿Shader "Custom/Test/Simple" {
 	Properties {
 		_COLOR("Color", Color) = (1.0,1.0,1.0,1.0)
 	}

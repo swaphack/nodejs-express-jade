@@ -103,22 +103,17 @@ namespace Controller.Battle.AI
 				return;
 			}
 
-			// 是否到达攻击范围
-			if (!CheckInSkillRadius ()) {
-				// 设置路线
-				if (Src.MemeberMovement.Empty){
-					ResetMoveToTarget();
-					return;
-				}
+			// 设置路线
+			if (Src.MemeberMovement.Empty) {
+				ResetMoveToTarget();
 				return;
 			}
 
-			// 与其他单位发生碰撞
-			/*
-			if (!IsCollideWithOthers ()) {
+			// 是否到达攻击范围
+			if (!IsTargetInSkillRange ()) {
 				return;
 			}
-			*/
+
 			// 不能播放攻击动作
 			if (!CheckCanPlayAttack ()) {
 				return;
@@ -204,8 +199,8 @@ namespace Controller.Battle.AI
 		/// <summary>
 		/// 是否在攻击范围内
 		/// </summary>
-		/// <returns><c>true</c>, if in skill radius was checked, <c>false</c> otherwise.</returns>
-		private bool CheckInSkillRadius()
+		/// <returns><c>true</c> if this instance is target in skill range; otherwise, <c>false</c>.</returns>
+		private bool IsTargetInSkillRange()
 		{
 			if (_SkillModel == null || _SelectedTarget == null || _SelectedTarget.FirstTarget == null) {
 				return false;
@@ -234,30 +229,6 @@ namespace Controller.Battle.AI
 			}
 
 			return true;
-		}
-
-		/// <summary>
-		/// 是否与其他单位碰撞
-		/// </summary>
-		/// <returns><c>true</c> if this instance is collide with others; otherwise, <c>false</c>.</returns>
-		private bool IsCollideWithOthers()
-		{
-			if (Src == null || Src.IsCollider == false) {
-				return false;
-			}
-			Field field = BattleHelp.Field;
-
-			foreach (KeyValuePair<int, Team> item in field.AliveTeams) {
-				foreach (KeyValuePair<int, Unit> item2 in item.Value.AliveUnits.Units) {
-					if (item2.Key != Src.ID && item2.Value.IsCollider) {
-						if (Src.MemberTransform.IsCollideWith(item2.Value.MemberTransform)) {
-							return true;
-						}
-					}
-				}
-			}
-
-			return false;	
 		}
 
 		/// <summary>

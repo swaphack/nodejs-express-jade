@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR_WIN
+using UnityEngine;
 using System.Collections;
 using System;
 using Game.Local;
@@ -127,7 +128,8 @@ namespace Game.Controller
 				AudioSrc.Stop ();
 			}
 		}
+
 	}
 }
 
-
+#endif

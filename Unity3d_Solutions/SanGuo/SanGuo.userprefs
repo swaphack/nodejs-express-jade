@@ -1,8 +1,8 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Shaders\Test\Simple.shader">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Shaders\Shadow\ShadowUseBuildIn.shader">
     <Files>
-      <File FileName="Assets\Shaders\Test\Simple.shader" Line="6" Column="13" />
+      <File FileName="Assets\Shaders\Shadow\ShadowUseBuildIn.shader" Line="161" Column="28" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

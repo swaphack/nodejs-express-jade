@@ -1,0 +1,21 @@
+﻿漫反射公式
+兰伯特定律： c(diffuse) = c(light) * m(diffuse) * max(0, n * I)
+c(light) 场景光
+m(diffuse) 环境光
+其中 n为法线方向，I为光线方向
+
+半兰伯特定律,用于修正背光过于昏暗的情况
+half = 0.5 * max(0, n * I) + 0.5;
+c(diffuse) = c(light) * m(diffuse) * half
+
+
+高光反射公式
+Phone模型：c(specular) = c(light) * m(specular) * max(0, v * r) ^ m(gloss)
+其中 c(light) 场景光
+m(specular) 反射光
+m(gloss) 光泽度，亮度
+其中 v为物体表面到视线的方向，r为反射方向
+
+Blinn模型 ： 
+h = (v + I) / |v + I|
+c(specular) = c(light) * m(specular) * max(0, n * h) ^ m(gloss)

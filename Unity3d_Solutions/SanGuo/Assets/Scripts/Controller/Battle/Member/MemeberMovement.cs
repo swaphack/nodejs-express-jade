@@ -332,7 +332,6 @@ namespace Controller.Battle.Member
 				_State = UnitState.Broken;
 			}
 
-			/*if (Vector3.Distance(Position, _NextStation) <= 0.01f) {*/
 			if (Position == _NextStation) { // 抵达目标
 				_Traveler.Clear ();
 				_MoveCommand.ArrivedDestination ();

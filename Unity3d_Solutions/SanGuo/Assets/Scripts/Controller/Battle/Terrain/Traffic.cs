@@ -114,9 +114,7 @@ namespace Controller.Battle.Terrain
 				foreach (KeyValuePair<int, Unit> item2 in aliveUnits.Units) {
 					if (src.ID != item2.Key && item2.Value.CanCollision) {
 						if (src.MemeberMovement.IsTargetOnPath (dt, item2.Value.MemberTransform.Position, item2.Value.MemberTransform.CollisionRadius)
-							|| src.MemeberMovement.IsCollideWith(item2.Value.MemeberMovement)
-						) {
-							//src.MemeberMovement.ResetWaitForFindWayTime ();
+							|| src.MemeberMovement.IsCollideWith(item2.Value.MemeberMovement)) { // 碰撞检查，重新选择路径
 							src.MemeberMovement.RefindWay();
 							break;
 						}

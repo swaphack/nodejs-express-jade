@@ -1,0 +1,133 @@
+[Info]Load Message Config Succesful
+[Info]Load Message Language Succesful
+[Info]Application.dataPath : E:/Solution/u3dproj/Test_Data
+[Info]Application.persistentDataPath : C:/Users/Administrator/AppData/LocalLow/OpenWorld/SanGuo
+[Info]Application.streamingAssetsPath : E:/Solution/u3dproj/Test_Data/StreamingAssets
+[Info]Application.temporaryCachePath : C:/Users/ADMINI~1/AppData/Local/Temp/OpenWorld/SanGuo
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]AssetName : assets/prefabs/map/pillar.prefab
+[Info]AssetName : assets/prefabs/role/player.prefab
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/map/pillar.prefab
+[Info]Asset Bundle Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]File Path : E:/Solution/u3dproj/Test_Data/StreamingAssets/AssetBundle/prefabs
+[Info]Item Name : assets/prefabs/role/player.prefab

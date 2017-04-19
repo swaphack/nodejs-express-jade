@@ -16,7 +16,7 @@
     <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
-    <UnityVersion>5.4.1f1</UnityVersion>
+    <UnityVersion>5.5.2f1</UnityVersion>
     <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
@@ -27,7 +27,7 @@
     <IntermediateOutputPath>Temp\UnityVS_obj\Debug\</IntermediateOutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_4_1;UNITY_5_4;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_EDITOR_RETINA;ENABLE_RETINA_GUISTYLES;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;ENABLE_VSTU;UNITY_PRO_LICENSE;CROSS_PLATFORM_INPUT</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_5_2;UNITY_5_5;UNITY_5;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VIDEO;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;ENABLE_VSTU;UNITY_PRO_LICENSE;CROSS_PLATFORM_INPUT</DefineConstants>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -37,7 +37,7 @@
     <IntermediateOutputPath>Temp\UnityVS_obj\Release\</IntermediateOutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_4_1;UNITY_5_4;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_EDITOR_RETINA;ENABLE_RETINA_GUISTYLES;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;ENABLE_VSTU;UNITY_PRO_LICENSE;CROSS_PLATFORM_INPUT</DefineConstants>
+    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_5_2;UNITY_5_5;UNITY_5;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VIDEO;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;ENABLE_VSTU;UNITY_PRO_LICENSE;CROSS_PLATFORM_INPUT</DefineConstants>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
@@ -58,42 +58,300 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.PlaymodeTestsRunner">
+      <HintPath>Library\UnityAssemblies\UnityEngine.PlaymodeTestsRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HoloLens">
+      <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VR">
+      <HintPath>Library\UnityAssemblies\UnityEngine.VR.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Foundation\Base\ConvertHelp.cs" />
-    <Compile Include="Assets\Foundation\Base\XmlConfig.cs" />
-    <Compile Include="Assets\Foundation\DataBase\DB.cs" />
-    <Compile Include="Assets\Foundation\DataBase\DBRecord.cs" />
-    <Compile Include="Assets\Foundation\DataBase\DBStep.cs" />
-    <Compile Include="Assets\Foundation\DataBase\DBTable.cs" />
-    <Compile Include="Assets\Foundation\DataBase\IDB.cs" />
-    <Compile Include="Assets\Foundation\DataBase\IDBRecord.cs" />
-    <Compile Include="Assets\Foundation\DataBase\IDBStep.cs" />
-    <Compile Include="Assets\Foundation\DataBase\IDBTable.cs" />
-    <Compile Include="Assets\Foundation\Net\Client.cs" />
-    <Compile Include="Assets\Foundation\Net\NetCenter.cs" />
-    <Compile Include="Assets\Foundation\Net\PacketController.cs" />
-    <Compile Include="Assets\Foundation\Net\PacketHeader.cs" />
-    <Compile Include="Assets\Foundation\Net\Remote.cs" />
-    <Compile Include="Assets\Scripts\Config\ServerConfig.cs" />
-    <Compile Include="Assets\Scripts\Game\FilePath.cs" />
+    <Compile Include="Assets\Footman\Script\MaterialChange.cs" />
+    <Compile Include="Assets\Footman\Script\playerControl.cs" />
+    <Compile Include="Assets\Scripts\Controller\AI\AStar\ASGridNode.cs" />
+    <Compile Include="Assets\Scripts\Controller\AI\AStar\ASGridPath.cs" />
+    <Compile Include="Assets\Scripts\Controller\AI\AStar\ASPointNode.cs" />
+    <Compile Include="Assets\Scripts\Controller\AI\AStar\ASPointPath.cs" />
+    <Compile Include="Assets\Scripts\Controller\AI\AStar\AStarNode.cs" />
+    <Compile Include="Assets\Scripts\Controller\AI\AStar\AStarPath.cs" />
+    <Compile Include="Assets\Scripts\Controller\AI\DStar\DStarPath.cs" />
+    <Compile Include="Assets\Scripts\Controller\AI\Movement\ICommander.cs" />
+    <Compile Include="Assets\Scripts\Controller\AI\Movement\IMoveUnit.cs" />
+    <Compile Include="Assets\Scripts\Controller\AI\Movement\MoveCommand.cs" />
+    <Compile Include="Assets\Scripts\Controller\AI\Movement\MoveGroup.cs" />
+    <Compile Include="Assets\Scripts\Controller\AI\Movement\MoveType.cs" />
+    <Compile Include="Assets\Scripts\Controller\AI\Movement\Place.cs" />
+    <Compile Include="Assets\Scripts\Controller\AI\Movement\Traveler.cs" />
+    <Compile Include="Assets\Scripts\Controller\AI\Navmesh\NavigationMesh.cs" />
+    <Compile Include="Assets\Scripts\Controller\AI\Navmesh\NavigationNode.cs" />
+    <Compile Include="Assets\Scripts\Controller\AI\Task\ITask.cs" />
+    <Compile Include="Assets\Scripts\Controller\AI\Task\StateMachine.cs" />
+    <Compile Include="Assets\Scripts\Controller\AI\Task\TaskQueue.cs" />
+    <Compile Include="Assets\Scripts\Controller\Account\UserInfo.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\AI\SpellCaster.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\AI\UnitBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\BattleCallback.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\Command.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\Field.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\Identifier.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\MapLoader.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\Member\MemberAction.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\Member\MemberModel.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\Member\MemberTransform.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\Member\MemeberMovement.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\Spell\FindTargetMethod.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\Spell\ISelectedTargetParameters.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\Spell\ITargetSelect.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\Spell\SelectedTarget.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\Spell\TargetSelectMechanism.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\Spell\TargetSelectType.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\Task\UnitTask.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\Team.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\Terrain\Map.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\Terrain\Traffic.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\Terrain\Trajectory.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\Unit.cs" />
+    <Compile Include="Assets\Scripts\Controller\Battle\UnitSheet.cs" />
+    <Compile Include="Assets\Scripts\Controller\Container\UserBag.cs" />
+    <Compile Include="Assets\Scripts\Controller\Container\UserTask.cs" />
+    <Compile Include="Assets\Scripts\Controller\Role\MainPlayer.cs" />
+    <Compile Include="Assets\Scripts\Controller\Role\Player.cs" />
+    <Compile Include="Assets\Scripts\Controller\Role\Resource.cs" />
+    <Compile Include="Assets\Scripts\Controller\Role\RoleInfo.cs" />
+    <Compile Include="Assets\Scripts\Data\Battle\FieldData.cs" />
+    <Compile Include="Assets\Scripts\Data\Config\RemoteConfig.cs" />
+    <Compile Include="Assets\Scripts\Data\Map\LinkPointMap.cs" />
+    <Compile Include="Assets\Scripts\Data\Map\NavMeshMap.cs" />
+    <Compile Include="Assets\Scripts\Data\Map\TrackMap.cs" />
+    <Compile Include="Assets\Scripts\Data\XmlFileName.cs" />
+    <Compile Include="Assets\Scripts\Data\XmlFilePath.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Algorithm\Matrix.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Base\ConvertHelp.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Base\Instance.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Base\ObjectHelp.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Base\XmlConfig.cs" />
+    <Compile Include="Assets\Scripts\Foundation\DataBase\DataBase.cs" />
+    <Compile Include="Assets\Scripts\Foundation\DataBase\DataLoadStep.cs" />
+    <Compile Include="Assets\Scripts\Foundation\DataBase\DataRecord.cs" />
+    <Compile Include="Assets\Scripts\Foundation\DataBase\DataTable.cs" />
+    <Compile Include="Assets\Scripts\Foundation\DataBase\IDataBase.cs" />
+    <Compile Include="Assets\Scripts\Foundation\DataBase\IDataLoadStep.cs" />
+    <Compile Include="Assets\Scripts\Foundation\DataBase\IDataRecord.cs" />
+    <Compile Include="Assets\Scripts\Foundation\DataBase\IDataTable.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Interface\IControl.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Interface\ISystem.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Interface\ITime.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Net\Client.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Net\IPacket.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Net\PacketController.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Net\PacketHeader.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Net\Protocols.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Net\RemoteConfig.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Notify\Notifition.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Notify\NotifyEvent.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Notify\NotifyHandler.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Notify\NotifyPair.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Plugin\IPlugin.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Plugin\PluginCenter.cs" />
+    <Compile Include="Assets\Scripts\Foundation\Progress\ProgressItem.cs" />
+    <Compile Include="Assets\Scripts\Game\Action\ActionStatus.cs" />
+    <Compile Include="Assets\Scripts\Game\Action\BaseAction.cs" />
+    <Compile Include="Assets\Scripts\Game\Action\GOAction.cs" />
+    <Compile Include="Assets\Scripts\Game\Action\IAction.cs" />
+    <Compile Include="Assets\Scripts\Game\Action\InstantAction.cs" />
+    <Compile Include="Assets\Scripts\Game\Action\IntervalAction.cs" />
+    <Compile Include="Assets\Scripts\Game\Action\SequenceActions.cs" />
+    <Compile Include="Assets\Scripts\Game\Action\SpawnActions.cs" />
+    <Compile Include="Assets\Scripts\Game\Constants\AssetBundleConstants.cs" />
+    <Compile Include="Assets\Scripts\Game\Constants\FormatConstants.cs" />
+    <Compile Include="Assets\Scripts\Game\Constants\XmlDataConstants.cs" />
+    <Compile Include="Assets\Scripts\Game\Controller\ArrowController.cs" />
+    <Compile Include="Assets\Scripts\Game\Controller\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Game\Controller\DownloadController.cs" />
+    <Compile Include="Assets\Scripts\Game\Controller\EllipseController.cs" />
+    <Compile Include="Assets\Scripts\Game\Controller\FirstPersonController.cs" />
+    <Compile Include="Assets\Scripts\Game\Controller\MirrorController.cs" />
+    <Compile Include="Assets\Scripts\Game\Controller\MoveController.cs" />
+    <Compile Include="Assets\Scripts\Game\Controller\PathFindController.cs" />
+    <Compile Include="Assets\Scripts\Game\Controller\RotationController.cs" />
+    <Compile Include="Assets\Scripts\Game\Controller\ShapController.cs" />
+    <Compile Include="Assets\Scripts\Game\Controller\ThirdPersonController.cs" />
+    <Compile Include="Assets\Scripts\Game\Controller\TouchController.cs" />
+    <Compile Include="Assets\Scripts\Game\Controller\TrackController.cs" />
+    <Compile Include="Assets\Scripts\Game\Controller\UICameraController.cs" />
+    <Compile Include="Assets\Scripts\Game\Controller\UnitActionController.cs" />
+    <Compile Include="Assets\Scripts\Game\Controller\VideoController.cs" />
+    <Compile Include="Assets\Scripts\Game\Controller\ViewController.cs" />
+    <Compile Include="Assets\Scripts\Game\DownLoad\DownloadItem.cs" />
+    <Compile Include="Assets\Scripts\Game\DownLoad\DownloadTaskSheet.cs" />
+    <Compile Include="Assets\Scripts\Game\DownLoad\Downloader.cs" />
+    <Compile Include="Assets\Scripts\Game\DownLoad\HttpDownloader.cs" />
+    <Compile Include="Assets\Scripts\Game\DownLoad\WWWDownloader.cs" />
     <Compile Include="Assets\Scripts\Game\GameInstance.cs" />
-    <Compile Include="Assets\Scripts\Game\LanguagueType.cs" />
-    <Compile Include="Assets\Scripts\Game\LocalConfig.cs" />
-    <Compile Include="Assets\Scripts\Game\LocalText.cs" />
-    <Compile Include="Assets\Scripts\Layer\Control.cs" />
-    <Compile Include="Assets\Scripts\Layer\UIButtonClickEvt.cs" />
-    <Compile Include="Assets\Scripts\Protocols\PacketID.cs" />
-    <Compile Include="Assets\Scripts\Protocols\Packets.cs" />
-    <Compile Include="Assets\Scripts\UIBase\UIBase.cs" />
+    <Compile Include="Assets\Scripts\Game\Helper\BattleHelper.cs" />
+    <Compile Include="Assets\Scripts\Game\Helper\Callback.cs" />
+    <Compile Include="Assets\Scripts\Game\Helper\FileDataHelp.cs" />
+    <Compile Include="Assets\Scripts\Game\Helper\FilePathHelp.cs" />
+    <Compile Include="Assets\Scripts\Game\Helper\Log.cs" />
+    <Compile Include="Assets\Scripts\Game\Helper\MathHelp.cs" />
+    <Compile Include="Assets\Scripts\Game\Helper\PacketHelp.cs" />
+    <Compile Include="Assets\Scripts\Game\Helper\ShapHelp.cs" />
+    <Compile Include="Assets\Scripts\Game\Helper\StringHelp.cs" />
+    <Compile Include="Assets\Scripts\Game\Helper\UserDefault.cs" />
+    <Compile Include="Assets\Scripts\Game\Helper\Utility.cs" />
+    <Compile Include="Assets\Scripts\Game\Helper\XmlHelp.cs" />
+    <Compile Include="Assets\Scripts\Game\Layer\ILayer.cs" />
+    <Compile Include="Assets\Scripts\Game\Layer\NormalLayer.cs" />
+    <Compile Include="Assets\Scripts\Game\Layer\UI.cs" />
+    <Compile Include="Assets\Scripts\Game\Layer\UILayer.cs" />
+    <Compile Include="Assets\Scripts\Game\Local\AssetBundleLoader.cs" />
+    <Compile Include="Assets\Scripts\Game\Local\AssetLoader.cs" />
+    <Compile Include="Assets\Scripts\Game\Local\FilePathLoader.cs" />
+    <Compile Include="Assets\Scripts\Game\Local\Macros.cs" />
+    <Compile Include="Assets\Scripts\Game\Module\ActionPlugin.cs" />
+    <Compile Include="Assets\Scripts\Game\Module\BattlePlugin.cs" />
+    <Compile Include="Assets\Scripts\Game\Module\DataBasePlugin.cs" />
+    <Compile Include="Assets\Scripts\Game\Module\DevicePlugin.cs" />
+    <Compile Include="Assets\Scripts\Game\Module\ModuleType.cs" />
+    <Compile Include="Assets\Scripts\Game\Module\NetPlugin.cs" />
+    <Compile Include="Assets\Scripts\Game\Module\TextPlugin.cs" />
+    <Compile Include="Assets\Scripts\Game\Module\UIPlugin.cs" />
+    <Compile Include="Assets\Scripts\Game\Platform\ITouchDispatcher.cs" />
+    <Compile Include="Assets\Scripts\Game\Platform\KeyBoard.cs" />
+    <Compile Include="Assets\Scripts\Game\Platform\TouchCenter.cs" />
+    <Compile Include="Assets\Scripts\Game\Platform\TouchProtocol.cs" />
+    <Compile Include="Assets\Scripts\Game\Shapes\IDrawable.cs" />
+    <Compile Include="Assets\Scripts\Game\Shapes\IShape.cs" />
+    <Compile Include="Assets\Scripts\Game\Shapes\Line.cs" />
+    <Compile Include="Assets\Scripts\Game\Shapes\Points.cs" />
+    <Compile Include="Assets\Scripts\Game\Shapes\Polygon.cs" />
+    <Compile Include="Assets\Scripts\Game\Shapes\Rectangle.cs" />
+    <Compile Include="Assets\Scripts\Game\Shapes\ShapeType.cs" />
+    <Compile Include="Assets\Scripts\Game\Shapes\Triangle.cs" />
+    <Compile Include="Assets\Scripts\Game\Table\TableConfig.cs" />
+    <Compile Include="Assets\Scripts\Game\Track\Curve.cs" />
+    <Compile Include="Assets\Scripts\Model\Base\ActionConstants.cs" />
+    <Compile Include="Assets\Scripts\Model\Base\BuffType.cs" />
+    <Compile Include="Assets\Scripts\Model\Base\CoolDown.cs" />
+    <Compile Include="Assets\Scripts\Model\Base\EffectType.cs" />
+    <Compile Include="Assets\Scripts\Model\Base\IModelItem.cs" />
+    <Compile Include="Assets\Scripts\Model\Base\IModelSample.cs" />
+    <Compile Include="Assets\Scripts\Model\Base\ModelItem.cs" />
+    <Compile Include="Assets\Scripts\Model\Base\ModelSheet.cs" />
+    <Compile Include="Assets\Scripts\Model\Base\PropertyType.cs" />
+    <Compile Include="Assets\Scripts\Model\Base\SkillIndex.cs" />
+    <Compile Include="Assets\Scripts\Model\Base\SkillType.cs" />
+    <Compile Include="Assets\Scripts\Model\Base\TargetType.cs" />
+    <Compile Include="Assets\Scripts\Model\Base\UnitStateType.cs" />
+    <Compile Include="Assets\Scripts\Model\Battle\Formation.cs" />
+    <Compile Include="Assets\Scripts\Model\Battle\Property.cs" />
+    <Compile Include="Assets\Scripts\Model\Battle\UnitBuff.cs" />
+    <Compile Include="Assets\Scripts\Model\Battle\UnitModel.cs" />
+    <Compile Include="Assets\Scripts\Model\Battle\UnitProperty.cs" />
+    <Compile Include="Assets\Scripts\Model\Battle\UnitSkill.cs" />
+    <Compile Include="Assets\Scripts\Model\Buff\BuffModel.cs" />
+    <Compile Include="Assets\Scripts\Model\Buff\BuffPropertyValue.cs" />
+    <Compile Include="Assets\Scripts\Model\Item\ItemInfo.cs" />
+    <Compile Include="Assets\Scripts\Model\Item\ItemModel.cs" />
+    <Compile Include="Assets\Scripts\Model\Item\ItemProperty.cs" />
+    <Compile Include="Assets\Scripts\Model\Item\ItemType.cs" />
+    <Compile Include="Assets\Scripts\Model\ModelType.cs" />
+    <Compile Include="Assets\Scripts\Model\Models.cs" />
+    <Compile Include="Assets\Scripts\Model\Sheet\BuffSheet.cs" />
+    <Compile Include="Assets\Scripts\Model\Sheet\ItemSheet.cs" />
+    <Compile Include="Assets\Scripts\Model\Sheet\SkillSheet.cs" />
+    <Compile Include="Assets\Scripts\Model\Sheet\TaskSheet.cs" />
+    <Compile Include="Assets\Scripts\Model\Skill\SkillModel.cs" />
+    <Compile Include="Assets\Scripts\Model\Task\TaskCondition.cs" />
+    <Compile Include="Assets\Scripts\Model\Task\TaskConditionType.cs" />
+    <Compile Include="Assets\Scripts\Model\Task\TaskModel.cs" />
+    <Compile Include="Assets\Scripts\Protocol\PacketID.cs" />
+    <Compile Include="Assets\Scripts\Protocol\Packets.cs" />
+    <Compile Include="Assets\Scripts\View\Layer\UIHeroEquipmentLayer.cs" />
+    <Compile Include="Assets\Scripts\View\Layer\UIHomeLayer.cs" />
+    <Compile Include="Assets\Scripts\View\Layer\UILoginLayer.cs" />
+    <Compile Include="Assets\Scripts\View\ViewLayer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Config\Language.xml" />
-    <None Include="Assets\Config\Remote.xml" />
-    <None Include="Assets\Language\Lan_ZH.xml" />
+    <None Include="Assets\Resources\DataBase\Battle\Test.xml" />
+    <None Include="Assets\Resources\DataBase\Config\Language.xml" />
+    <None Include="Assets\Resources\DataBase\Config\Remote.xml" />
+    <None Include="Assets\Resources\DataBase\Data\AdminLevel.xml" />
+    <None Include="Assets\Resources\DataBase\Data\BuildLevel.xml" />
+    <None Include="Assets\Resources\DataBase\Data\BuildProperty.xml" />
+    <None Include="Assets\Resources\DataBase\Data\BuildType.xml" />
+    <None Include="Assets\Resources\DataBase\Data\ResourceType.xml" />
+    <None Include="Assets\Resources\DataBase\Data\RoleLevel.xml" />
+    <None Include="Assets\Resources\DataBase\Language\Lan_ZH.xml" />
+    <None Include="Assets\Resources\DataBase\Map\LinkPoint.xml" />
+    <None Include="Assets\Resources\DataBase\Map\NavMesh.xml" />
+    <None Include="Assets\Resources\DataBase\Map\Track.xml" />
+    <None Include="Assets\Shaders\CGIncludes\AutoLight.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\HLSLSupport.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\Lighting.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\SpeedTreeBillboardCommon.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\SpeedTreeCommon.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\SpeedTreeVertex.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\SpeedTreeWind.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\TerrainEngine.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\TerrainSplatmapCommon.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\Tessellation.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityBuiltin2xTreeLibrary.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityBuiltin3xTreeLibrary.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityCG.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityDeferredLibrary.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityDeprecated.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityGBuffer.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityGlobalIllumination.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityImageBasedLighting.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityInstancing.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityLightingCommon.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityMetaPass.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityPBSLighting.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityShaderVariables.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityShadowLibrary.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityStandardBRDF.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityStandardConfig.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityStandardCore.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityStandardCoreForward.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityStandardCoreForwardSimple.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityStandardInput.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityStandardMeta.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityStandardShadow.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityStandardUtils.cginc" />
+    <None Include="Assets\Shaders\CGIncludes\UnityUI.cginc" />
+    <None Include="Assets\Shaders\Light\DiffuseHalfLambert.shader" />
+    <None Include="Assets\Shaders\Light\DiffusePixelLevel.shader" />
+    <None Include="Assets\Shaders\Light\DiffuseVertexLevel.shader" />
+    <None Include="Assets\Shaders\Light\SpecularBlinnePhong.shader" />
+    <None Include="Assets\Shaders\Light\SpecularPixelLevel.shader" />
+    <None Include="Assets\Shaders\Light\SpecularVertexLevel.shader" />
+    <None Include="Assets\Shaders\Light\光线说明.txt" />
+    <None Include="Assets\Shaders\OutLight.shader" />
+    <None Include="Assets\Shaders\Test\FalseColor.shader" />
+    <None Include="Assets\Shaders\Test\SamplePixel.shader" />
+    <None Include="Assets\Shaders\Test\SampleUsual.shader" />
+    <None Include="Assets\Shaders\Test\SampleVertex.shader" />
+    <None Include="Assets\Shaders\Test\Simple.shader" />
+    <None Include="Assets\Shaders\Texture\GrayTexture.shader" />
+    <None Include="Assets\Shaders\Texture\NormalMapTangentSpace.shader" />
+    <None Include="Assets\Shaders\Texture\NormalMapWorldSpace.shader" />
+    <None Include="Assets\Shaders\Texture\SingleTexture.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>
