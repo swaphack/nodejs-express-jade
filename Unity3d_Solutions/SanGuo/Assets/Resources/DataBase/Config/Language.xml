@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<Root>
-	<Lan ID="6" Describe="中文" Path="DataBase/Language/Lan_ZH" format="xml"/>
-	<Lan ID="10" Describe="英文" Path="DataBase/Language/Lan_EN" format="xml" />
-</Root>
