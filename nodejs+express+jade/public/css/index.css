@@ -1,0 +1,57 @@
+body {
+    margin:0 auto;
+    text-align: center;
+    min-width: 1024px;
+    min-height: 768px;
+}
+
+#header {
+    text-align: center;
+}
+
+#body {
+    width: auto;
+    text-align: center;
+    min-height: 500px;
+}
+
+#footer {
+    text-align: center;
+}
+
+#left {
+    float: left;
+    width: 20%;
+    min-width: 200px;
+    background-color: burlywood;
+}
+
+#middle {
+    float: left;
+    position: relative;
+    left: 10px;
+    top: -10px;
+    text-align: center;
+}
+
+hr#vertical {
+    width: 1px;
+    height: 400px;
+}
+
+#right {
+    float: right;
+    width: 78%;
+    min-width: 800px;
+    background-color: darkgray;
+}
+
+#nav {
+    padding-left: 20px;
+    text-align: left;
+    min-width: 100px;
+}
+
+#content {
+    text-align: center;
+}

@@ -1,4 +1,3 @@
-const json = require("./json3");
 
 var string = {};
     /*
@@ -15,18 +14,6 @@ string.format = function (arg) {
         }
         return args[currentIndex + 1];
     });
-};
-
-// 打印对象
-string.printObject = function (obj) {
-    if (obj == undefined) {
-        console.log("undefined");
-    } else if (obj == null) {
-        console.log("null");
-    } else {
-        var str = obj.toString();
-        console.log(str);
-    }
 };
 
 module.exports = string;

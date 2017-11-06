@@ -2,14 +2,16 @@
 
 const fs = require("fs");
 
-// 搜索路径
-var searchPath = [];
-// 路径缓存
-var pathCache = {};
-
 var res = {};
 
-// 目录
+// 搜索路径
+res._searchPath = [];
+// 路径缓存
+res._pathCache = {};
+// 键值对
+res._keyValueParis = {};
+
+// 根目录
 res.root = function () {
         return process.cwd();
     };
@@ -19,7 +21,7 @@ res.setSearchPath = function (path) {
     for (var key in path) {
         console.log("set search path : " + path[key]);
     }
-    searchPath = path;
+    res._searchPath = path;
 };
 
 // 完整路径
@@ -28,23 +30,36 @@ res.getFullPath = function (fileName) {
         return null;
     }
 
-    if (!searchPath) {
+    if (!res._searchPath) {
         return null;
     }
 
-    if (pathCache[fileName]) {
-        return pathCache[fileName];
+    if (res._pathCache[fileName]) {
+        return res._pathCache[fileName];
     }
-    for (var dir in searchPath) {
-        var fullPath = searchPath[dir] + fileName;
+    for (var dir in res._searchPath) {
+        var fullPath = res._searchPath[dir] + fileName;
         var result = fs.existsSync(fullPath);
         if (result) {
-            console.log("search full path : " + fullPath);
-            pathCache[fileName] = fullPath;
+            res._pathCache[fileName] = fullPath;
             return fullPath;
         }
     }
     return null;
 };
+
+res.set = function (key, path) {
+    if (!key || !path) {
+        return;
+    }
+    res._keyValueParis[key] = path;
+}
+
+res.get = function (key) {
+    if (!key) {
+        return null;
+    }
+    return res._keyValueParis[key];
+}
 
 module.exports = res;

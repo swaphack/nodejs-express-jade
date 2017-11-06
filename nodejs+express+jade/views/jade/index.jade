@@ -1,0 +1,28 @@
+doctype html
+html
+    head
+        title Home Page
+        script(type="text/javascript", src="common/jquery-3.2.1.js")
+        script(type="text/javascript", src="public/js/index.js")
+        link(type="text/css", rel="stylesheet", href="public/css/index.css")
+    body
+        div#header
+            h1 Home Page
+            hr
+        div#body
+            div#left
+                div#nav
+                    if params.nav
+                        each val,key in params.nav
+                            li
+                                a(href=key) #{val}
+            div#middle
+                hr#vertical
+            div#right
+                div#content
+                    video(src="files/video/3.mp4", controls="controls")
+        div#footer
+            hr
+            p @copyright homepage
+
+
