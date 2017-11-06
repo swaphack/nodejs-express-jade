@@ -36,7 +36,7 @@ body {
 
 hr#vertical {
     width: 1px;
-    height: 400px;
+    height: 490px;
 }
 
 #right {
@@ -54,4 +54,6 @@ hr#vertical {
 
 #content {
     text-align: center;
+    width: 640px;
+    height: 480px;
 }

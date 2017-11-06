@@ -3,9 +3,15 @@ const res = require("../resource");
 
 // 获取目录下所有文件
 function readDir() {
-    var fullPath = res.root() + "/files";
+    var result = {};
+    var fullPath = res.root() + "/files/video/";
+    var files = fs.readdirSync(fullPath, "utf-8");
+    for (var i in files) {
+        console.log(files[i]);
+        result[files[i]] = "/files/video/" + files[i];
+    }
 
-    return fs.readdirSync(fullPath, "utf-8");
+    return result;
 }
 
 module.exports = function (url, params, callback) {
