@@ -12,7 +12,7 @@ body {
 #body {
     width: auto;
     text-align: center;
-    min-height: 500px;
+    height: 500px;
 }
 
 #footer {
@@ -22,7 +22,7 @@ body {
 #left {
     float: left;
     width: 20%;
-    min-width: 200px;
+    min-width: 180px;
     background-color: burlywood;
 }
 
@@ -31,29 +31,36 @@ body {
     position: relative;
     left: 10px;
     top: -10px;
+    height: 500px;
     text-align: center;
 }
 
 hr#vertical {
     width: 1px;
-    height: 490px;
+    height: 100%;;
 }
 
 #right {
-    float: right;
-    width: 78%;
-    min-width: 800px;
+    float: left;
+    position: relative;
+    left: 20px;
+    width: 76%;
+    min-width: 780px;
     background-color: darkgray;
 }
 
 #nav {
     padding-left: 20px;
     text-align: left;
-    min-width: 100px;
 }
 
 #content {
     text-align: center;
-    width: 640px;
-    height: 480px;
+    width: 100%;
+    height: 500px;
+}
+
+#content video {
+    text-align: center;
+    height: 100%;
 }

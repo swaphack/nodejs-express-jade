@@ -1,0 +1,9 @@
+{
+  "name": "nodejs+express+jade",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "^4.16.2",
+    "jade": "^1.11.0",
+    "mysql": "^2.15.0",
+  }
+}
