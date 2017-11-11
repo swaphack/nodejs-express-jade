@@ -12,7 +12,7 @@ body {
 #body {
     width: auto;
     text-align: center;
-    height: 500px;
+    /*min-height: 500px;*/
 }
 
 #footer {
@@ -23,21 +23,10 @@ body {
     float: left;
     width: 20%;
     min-width: 180px;
-    background-color: burlywood;
-}
-
-#middle {
-    float: left;
-    position: relative;
-    left: 10px;
-    top: -10px;
-    height: 500px;
-    text-align: center;
-}
-
-hr#vertical {
-    width: 1px;
-    height: 100%;;
+    border-color: silver;
+    border-style:solid;
+    border-width: 0 1px 0 0;
+    background-color: white;
 }
 
 #right {
@@ -52,6 +41,11 @@ hr#vertical {
 #nav {
     padding-left: 20px;
     text-align: left;
+}
+
+#nav ol li:hover{
+    background-color: darkkhaki;
+    text-decoration:underline;
 }
 
 #content {

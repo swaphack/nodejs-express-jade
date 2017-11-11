@@ -17,12 +17,49 @@ res.root = function () {
     };
 
 // 搜索目录
-res.setSearchPath = function (path) {
-    for (var key in path) {
-        console.log("set search path : " + path[key]);
+res.setSearchPath = function (paths) {
+    res._searchPath = [];
+    if (!paths) {
+        return;
     }
-    res._searchPath = path;
+    if (!(paths instanceof Array)) {
+        return;
+    }
+    for (var key in paths) {
+        console.log("set search path : " + paths[key]);
+        res._searchPath.push(res._getUnixPath(paths[key]));
+    }
 };
+
+// 追加搜索路径
+res.appendSearchPath = function (path) {
+    if (!path) {
+        return;
+    }
+
+    var p = res._getUnixPath(path);
+
+    res._searchPath.push(p);
+}
+
+res._getUnixPath = function (url) {
+    if (!url) {
+        return null;
+    }
+    return url.replace("\\", "/");
+}
+
+res._getPath = function (path, fileName) {
+    if (!path || !fileName) {
+        return null;
+    }
+    var fullPath = path;
+    if (fullPath.lastIndexOf("/") != fullPath.length - 1) {
+        fullPath += "/";
+    }
+    fullPath += fileName;
+    return fullPath.replace("//", "/");
+}
 
 // 完整路径
 res.getFullPath = function (fileName) {
@@ -34,14 +71,19 @@ res.getFullPath = function (fileName) {
         return null;
     }
 
-    if (res._pathCache[fileName]) {
-        return res._pathCache[fileName];
+    var file = fileName;
+    if (file.indexOf("/") == 0) {
+        file = file.substr(1, file.length - 1);
+    }
+
+    if (res._pathCache[file]) {
+        return res._pathCache[file];
     }
     for (var dir in res._searchPath) {
-        var fullPath = res._searchPath[dir] + fileName;
+        var fullPath = res._getPath(res._searchPath[dir], file);
         var result = fs.existsSync(fullPath);
         if (result) {
-            res._pathCache[fileName] = fullPath;
+            res._pathCache[file] = fullPath;
             return fullPath;
         }
     }

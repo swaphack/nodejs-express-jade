@@ -3,8 +3,9 @@ html
     head
         title Home Page
         script(type="text/javascript", src="common/jquery-3.2.1.js")
-        script(type="text/javascript", src="public/js/index.js")
-        link(type="text/css", rel="stylesheet", href="public/css/index.css")
+        script(type="text/javascript", src="js/layout.js")
+        script(type="text/javascript", src="js/index.js")
+        link(type="text/css", rel="stylesheet", href="css/index.css")
     body
         div#header
             h1 Home Page
@@ -13,14 +14,13 @@ html
             div#left
                 div#nav
                     if params.nav
-                        each val,key in params.nav
-                            li
-                                a(src=val) #{key}
-            div#middle
-                hr#vertical
+                        ol
+                            each val,key in params.nav
+                                li
+                                    a(src=val) #{key}
             div#right
                 div#content
-                    video(src="", controls="controls")
+                    video#media(src="", controls="controls" autoplay="autoplay")
         div#footer
             hr
             p Copyright(C)2010-2017
