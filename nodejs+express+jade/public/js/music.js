@@ -23,7 +23,11 @@
 
         $("#nav li").click(function () {
             var name = musicAry[$(this).attr("index")];
+			console.log(name);
             name = Base64.encode(name);
+			console.log(name);
+			name = encodeURIComponent(name);
+			console.log(name);
             $("#left video").attr("src", http.getDataURL("data/music?action=play&name="+ name));
         });
 

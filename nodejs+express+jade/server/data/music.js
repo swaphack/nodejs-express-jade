@@ -10,7 +10,7 @@ var Music = function () {
 Music.prototype = new Protocol();
 Music.prototype.constructor = Music;
 
-var musicDir = "E:/CloudMusic/";
+var musicDir = "I:/KuGou/";
 
 var music = new Music();
 music.setID("action");
@@ -33,12 +33,16 @@ music.register("menu", function (query, resp) {
 
 // 播放音乐
 music.register("play", function (query, resp) {
-    var name = new Buffer(query.name, 'base64').toString();
+	console.log(query.name);
+	var name = decodeURIComponent(query.name);
+	console.log(name);
+	
+    var name = new Buffer(name, 'base64').toString();
+	console.log(name);
     if (!name) {
         resp.sendStatus(404);
         return;
     }
-
     resp.sendFile(musicDir + name);
 });
 
