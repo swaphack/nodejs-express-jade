@@ -1,0 +1,29 @@
+doctype html
+html
+    head
+        title Home Page
+        script(type="text/javascript", src="common/jquery-3.2.1.js")
+        script(type="text/javascript", src="common/json3.js")
+        script(type="text/javascript", src="common/base64.js")
+        script(type="text/javascript", src="public/client/layout.js")
+        script(type="text/javascript", src="public/client/http.js")
+        script(type="text/javascript", src="public/js/music.js")
+        link(type="text/css", rel="stylesheet", href="public/css/music.css")
+    body
+        div#header
+            h1 Music Play
+            hr
+        div#body
+            div#left
+                video#media(src="files/audio/Delacey - Dream It Possible.mp3", controls="controls" autoplay="autoplay" loop="loop")
+            div#right
+                div#action
+                    input#pre(type="button" value="pre")
+                    a#pageNum 1/100
+                    input#next(type="button" value="next")
+                div#nav
+                    ol
+        div#footer
+            hr
+
+

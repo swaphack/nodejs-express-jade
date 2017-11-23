@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+    <building id="1" name="房屋">
+        <item lvl="1" resource="1" capacity="10" wood="10" upgrade_food="10"/>
+    </building>
+    <building id="101" name="农场">
+        <item lvl="1" resource="2" capacity="10" wood="10" food="10"/>
+    </building>
+    <building id="102" name="林场">
+        <item lvl="1" resource="3" capacity="10" wood="10" food="10"/>
+    </building>
+</root>
+<!--
+    store_resource 存储资源类型
+    store_capacity 存储资源数量
+    upgrade_wood   升级所需木材
+-->

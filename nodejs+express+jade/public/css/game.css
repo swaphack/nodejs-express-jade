@@ -1,0 +1,55 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+body {
+    width: 100%;
+    text-align: center;
+}
+
+#header {
+    height: 100px;
+    width: 100%;
+    background-color: silver;
+}
+
+#body {
+    height: 500px;
+    background-color: #4dc71f;
+}
+
+#shop {
+    float: left;
+    width: 200px;
+    height: 100%;
+    background-color: #a7dbd8;
+}
+
+#user {
+    height: inherit;
+    margin-left: 200px;
+    background-color: #abef98;
+}
+
+#info {
+    width: 100%;
+    height: 50px;
+    background-color: darkgray;
+}
+
+#bag {
+    height: 100%;
+    background-color: burlywood;
+}
+
+#bag a {
+    bottom: 0;
+}
+
+#footer {
+    float: left;
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    background-color: brown;
+}

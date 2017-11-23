@@ -4,16 +4,28 @@
 var ini = {};
 module.exports = ini;
 
+// 资源路径
+ini.res = {
+    root : "/",
+    pubic : "/public/",
+    files : "/files/",
+    views : "/views/"
+};
+
 // 服务器
 ini.server = {
     host : 'localhost',
-    port : 8080,
+    port : 8080
 };
 
+// 定位符
 ini.url = {
-    home_jade : "index",
-    home_url : "/index",
-}
+    // 主页
+    home : {
+        jade : "index",
+        url : "/index"
+    }
+};
 
 // 数据库
 ini.database = {
@@ -21,5 +33,5 @@ ini.database = {
     port : 3306,
     user : 'root',
     password : '12345',
-    database : '',
-}
+    database : ''
+};
