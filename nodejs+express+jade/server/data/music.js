@@ -12,11 +12,21 @@ Music.prototype.constructor = Music;
 
 var musicDir = "I:/KuGou/";
 
-var music = new Music();
-music.setID("action");
+var mod = new Music();
+mod.setID("action");
+
+module.exports = function (req, resp) {
+    if (!req || !resp) {
+        return false;
+    }
+
+    if (!mod.hand(req, resp)) {
+        resp.send([]);
+    }
+};
 
 // 菜单
-music.register("menu", function (query, resp) {
+mod.register("menu", function (query, resp) {
     if (this.musicFiles) {
         resp.send(this.musicFiles);
         return;
@@ -32,7 +42,7 @@ music.register("menu", function (query, resp) {
 });
 
 // 播放音乐
-music.register("play", function (query, resp) {
+mod.register("play", function (query, resp) {
 	console.log(query.name);
 	var name = decodeURIComponent(query.name);
 	console.log(name);
@@ -45,14 +55,3 @@ music.register("play", function (query, resp) {
     }
     resp.sendFile(musicDir + name);
 });
-
-// 音乐文件请求
-module.exports = function (req, resp) {
-    if (!req || !resp) {
-        return false;
-    }
-
-    if (!music.hand(req, resp)) {
-        resp.send([]);
-    }
-};

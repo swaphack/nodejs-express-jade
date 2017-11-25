@@ -1,10 +1,23 @@
 var express = require('express');
-var app = express();
+var session = require('express-session');
+
+require("../common/string");
 
 var path = require("path");
 var filePath = require("./common/filePath");
 var views = require("./views/_index");
 
+// 请求网址
+function baseUrl(url) {
+    var spot = url.indexOf("?");
+    if (spot != -1) {
+        url = url.substr(0, spot);
+    }
+    
+    return url;
+}
+
+// 资源处理
 function doRes(req, resp) {
     var baseUrl = req.params[0];
     var fullPath = filePath.getFullPath(baseUrl);
@@ -18,6 +31,7 @@ function doRes(req, resp) {
     }
 }
 
+// 视图处理
 function doView(req, resp) {
     try {
         views.direct(req, resp);
@@ -26,14 +40,12 @@ function doView(req, resp) {
     }
 }
 
+// 数据处理
 function doData(req, resp) {
-    var baseUrl = req.url;
-    var spot = baseUrl.indexOf("?");
-    if (spot != -1) {
-        baseUrl = baseUrl.substr(0, spot);
-    }
+    var url = baseUrl(req.url);
+    
     try {
-        var script = require("./" + baseUrl);
+        var script = require("./" + url);
         if (script) {
             script(req, resp);
         }
@@ -47,19 +59,26 @@ function doData(req, resp) {
 }
 
 module.exports.init = function (server) {
+
+    var app = express();
+
     // 视图引擎设置
     app.set('views', './views');
     app.set('view engine', 'jade');
     app.engine('jade', require('jade').__express);
 
+    // session
+    app.use(session({
+        secret: String.randomWord(20),
+        cookie: {maxAge: 60 * 1000 * 30},
+        resave: false,
+        saveUninitialized: true
+    }));
+
     // 视图
     app.get("/views/*", function (req, resp) {
-        var baseUrl = req.url;
-        var spot = baseUrl.indexOf("?");
-        if (spot != -1) {
-            baseUrl = baseUrl.substr(0, spot);
-        }
-        if (path.extname(baseUrl)) {
+        var url = baseUrl(req.url);
+        if (path.extname(url)) {
             doRes(req, resp);
         } else {
             doView(req, resp);

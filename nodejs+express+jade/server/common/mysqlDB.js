@@ -2,8 +2,18 @@ var mysql = require("mysql");
 
 var pool = null;
 
+// 初始化
+function init(dbConfig) {
+    pool = pool || (function (params) {
+        var connect = mysql.createPool(params);
+        if (!connect) {
+            console.log("connect database failure");
+        }
+        return connect;
+    }(dbConfig));
+}
 // 查询
-module.exports.query = function (sql, func) {
+function query(sql, func) {
     if (!sql || !func) {
         return;
     }
@@ -17,6 +27,7 @@ module.exports.query = function (sql, func) {
         connection.query(sql, function (qerr, values, fields) {
             connection.release();
             if (qerr) {
+                console.log(qerr.message);
                 func(qerr, null, null);
             } else {
                 func(qerr, values, fields);
@@ -24,23 +35,15 @@ module.exports.query = function (sql, func) {
         })
     });
 }
-
 // 关闭
-module.exports.close = function () {
+function close() {
     if (!pool) {
         return;
     }
-
     pool.end();
 }
 
-// 初始化
-module.exports.init = function (dbConfig) {
-    pool = pool || (function (params) {
-        var connect = mysql.createPool(params);
-        if (!connect) {
-            console.log("connect database failure");
-        }
-        return connect;
-    }(dbConfig));
-};
+module.exports.init = init;
+module.exports.close = close;
+module.exports.query = query;
+

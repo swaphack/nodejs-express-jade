@@ -1,6 +1,7 @@
 var Protocol = function () {
     this._protocls = {};
     this._id = "";
+    this._req = null;
 }
 
 Protocol.prototype.setID = function (id) {
@@ -10,6 +11,10 @@ Protocol.prototype.setID = function (id) {
 Protocol.prototype.getID = function () {
     return this._id;
 }
+
+Protocol.prototype.getRequest = function () {
+    return this._req;
+};
 
 Protocol.prototype.register = function (id, handler) {
     if (!id || !handler) {
@@ -30,6 +35,8 @@ Protocol.prototype.hand = function (req, resp) {
     if (!req || !resp) {
         return false;
     }
+
+    this._req = req;
 
     var query = req.query;
     if (!query) {

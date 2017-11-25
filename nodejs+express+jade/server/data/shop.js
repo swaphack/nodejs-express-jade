@@ -10,18 +10,26 @@ var Game = function () {
 Game.prototype = new Protocol();
 Game.prototype.constructor = Game;
 
-var game = new Game();
-game.setID("action");
+var mod = new Game();
+mod.setID("action");
+
+module.exports = function (req, resp) {
+    if (!req || !resp) {
+        return false;
+    }
+
+    if (!mod.hand(req, resp)) {
+        resp.send([]);
+    }
+};
 
 // 数据
-game.register("userdata", function (query, resp) {
+mod.register("userdata", function (query, resp) {
     var id = query.id;
-    var name = query.name;
-    var pwd = query.pwd;
 });
 
 // 菜单
-game.register("menu", function (query, resp) {
+mod.register("menu", function (query, resp) {
     var sql = "select * from db_shop_item";
     mysql.query(sql, function (qerr, values, fields) {
         if (qerr) {
@@ -35,22 +43,12 @@ game.register("menu", function (query, resp) {
 });
 
 // 购买
-game.register("buy", function (query, resp) {
+mod.register("buy", function (query, resp) {
 
 });
 
 // 出售
-game.register("buy", function (query, resp) {
+mod.register("buy", function (query, resp) {
 
 });
 
-// 游戏文件请求
-module.exports = function (req, resp) {
-    if (!req || !resp) {
-        return false;
-    }
-
-    if (!game.hand(req, resp)) {
-        resp.send([]);
-    }
-};
