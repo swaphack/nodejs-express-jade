@@ -1,7 +1,9 @@
+// 加载通用资源
+require("../common/base64");
+require("../common/string");
+
 var express = require('express');
 var session = require('express-session');
-
-require("../common/string");
 
 var path = require("path");
 var filePath = require("./common/filePath");

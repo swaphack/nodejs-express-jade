@@ -1,19 +1,55 @@
 (function () {
-    var musicAry = null;
-    var pageItemCount = 10;
-    var pageNum = 0;
-    var totalPageCount = 0;
+    var musicAry = null; // 音乐信息
+    var pageItemCount = 10; // 每页显示的数量
+    var pageNum = 0; // 当前页数
+    var totalPageCount = 0; // 总页数
+    var indexOfMusic = 0; // 当前播放的音乐索引
 
-    function setMusicPage(page) {
-        if (!musicAry) {
+    // 设置播放的音乐
+    function playMusic(index) {
+        if (index === null) {
             return;
         }
-        pageNum = page;
+        if (index < 0 || index >= musicAry.length) {
+            return;
+        }
+        var name = String.encode(musicAry[index]);
+        if (!name) {
+            return;
+        }
 
-        var totalCount = musicAry.length;
+        $("#left video").attr("src", http.getRootURL("data/music?action=play&name="+ name));
+        var lastChild = $("#nav ol").find("li[index=" + indexOfMusic +"]");
+        if (lastChild) {
+            lastChild.css("background-color","white");
+        }
+
+        var curChild = $("#nav ol").find("li[index=" + index +"]");
+        if (curChild) {
+            curChild.css("background-color","silver");
+        }
+        indexOfMusic = index;
+    }
+
+    // 设置音乐页面
+    function refreshMusicPage(page) {
+        if (page === null) {
+            return;
+        }
+
+        if (page < 0 || page > totalPageCount) {
+            return;
+        }
 
         var nav = $("#nav ol");
         nav.empty();
+
+        if (!musicAry) {
+            $("#pageNum").text(0 + "/" + 0);
+            return;
+        }
+
+        var totalCount = musicAry.length;
         for (var i = 0; i < pageItemCount; i++) {
             var index = page * pageItemCount + i;
             if (index < totalCount) {
@@ -22,16 +58,13 @@
         }
 
         $("#nav li").click(function () {
-            var name = musicAry[$(this).attr("index")];
-			console.log(name);
-            name = Base64.encode(name);
-			console.log(name);
-			name = encodeURIComponent(name);
-			console.log(name);
-            $("#left video").attr("src", http.getDataURL("data/music?action=play&name="+ name));
+            var index = $(this).attr("index");
+            playMusic(index);
         });
 
-        $("#pageNum").text(pageNum + 1 + "/" + totalPageCount);
+        $("#pageNum").text(page + 1 + "/" + totalPageCount);
+
+        pageNum = page;
     }
 
     $(document).ready(function () {
@@ -41,7 +74,7 @@
                pageNum = 0;
                return;
            }
-           setMusicPage(pageNum);
+            refreshMusicPage(pageNum);
         });
 
         $("#next").click(function () {
@@ -50,7 +83,22 @@
                 pageNum = totalPageCount - 1;
                 return;
             }
-            setMusicPage(pageNum);
+            refreshMusicPage(pageNum);
+        });
+
+        $("#left video").bind("ended", function () {
+            console.log("play end");
+            var nextIndex = parseInt(indexOfMusic) + 1;
+            if (nextIndex >= musicAry.length) {
+                nextIndex = 0;
+            }
+            var page = Math.floor(nextIndex / pageItemCount);
+
+            console.log(page, nextIndex);
+
+            refreshMusicPage(page);
+            playMusic(nextIndex);
+
         });
 
         http.get("data/music", { action :"menu"}, function (data) {
@@ -59,7 +107,8 @@
             }
             musicAry = data;
             totalPageCount = Math.ceil(musicAry.length / pageItemCount);
-            setMusicPage(0);
+            refreshMusicPage(0);
+            playMusic(0);
         });
     });
 }());

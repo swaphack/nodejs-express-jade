@@ -1,3 +1,4 @@
+
 var fs = require("fs");
 var Protocol = new require("./protocol").Protocol;
 
@@ -43,12 +44,9 @@ mod.register("menu", function (query, resp) {
 
 // 播放音乐
 mod.register("play", function (query, resp) {
-	console.log(query.name);
-	var name = decodeURIComponent(query.name);
-	console.log(name);
-	
-    var name = new Buffer(name, 'base64').toString();
-	console.log(name);
+    console.log(query.name);
+    var name = String.decode(query.name);
+    console.log(name);
     if (!name) {
         resp.sendStatus(404);
         return;

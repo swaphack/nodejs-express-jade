@@ -1,5 +1,4 @@
 // 文本字符串相关
-
 (function () {
     var randLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -27,6 +26,18 @@
         var str = String.randomWord(min);
         str += String.randomWord(max - min);
         return str;
+    };
+
+    // url 编码
+    String.encode = function (value) {
+        var val = Base64.encode(value);
+        return encodeURIComponent(val);
+    };
+
+    // url 解码
+    String.decode = function (value) {
+        var val = decodeURIComponent(value);
+        return Base64.decode(value);
     };
 }());
 
