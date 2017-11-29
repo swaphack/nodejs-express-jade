@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+    <class name="user">
+        <action name="singUp" type="request" params="name;pwd" />
+        <action name="singUp" type="response" params="result" />
+    </class>
+</root>
+
+<!--
+
+class 类别
+name 类别名称
+
+action 操作
+name 操作名称
+type 操作类别
+params 参数
+
+
+-->

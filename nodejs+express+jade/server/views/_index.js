@@ -8,7 +8,6 @@ function View() {
 // 直接访问
 function direct(req, resp) {
     var url = req.params[0];
-    url = url.substr(url.indexOf("/") + 1);
     resp.render(url);
 }
 

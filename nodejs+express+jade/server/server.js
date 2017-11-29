@@ -38,23 +38,24 @@ function doView(req, resp) {
     try {
         views.direct(req, resp);
     } catch (err) {
-        resp.sendStatus(404);
+        resp.sendStatus(200);
     }
 }
 
 // 数据处理
 function doData(req, resp) {
     var url = baseUrl(req.url);
-    
     try {
-        var script = require("./" + url);
+        var script = require("./" +  url);
         if (script) {
             script(req, resp);
         }
     } catch (err) {
+        console.log("err : " + err);
         try {
             views.direct(req, resp);
         } catch (perr) {
+            console.log("perr : " + perr);
             resp.sendStatus(400);
         }
     }
@@ -76,6 +77,16 @@ module.exports.init = function (server) {
         resave: false,
         saveUninitialized: true
     }));
+
+    // 跨域访问
+    app.get("*", function (req, resp, next) {
+        resp.header("Access-Control-Allow-Origin", "*");
+        resp.header("Access-Control-Allow-Headers", "X-Requested-With");
+        resp.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+        resp.header("X-Powered-By",' 3.2.1');
+        //resp.header("Content-Type", "application/json;charset=utf-8");
+        next();
+    });
 
     // 视图
     app.get("/views/*", function (req, resp) {

@@ -1,5 +1,5 @@
 var mysql = require("../common/mysqlDB");
-var Protocol = new require("./protocol").Protocol;
+var Protocol = new require("../common/protocol").Protocol;
 
 var Game = function () {
     Protocol.call(this);
@@ -22,7 +22,7 @@ module.exports = function (req, resp) {
         resp.send([]);
     }
 };
-
+//////////////////////////////////////////////////////////////////
 // 数据
 mod.register("userdata", function (query, resp) {
     var id = query.id;
@@ -48,7 +48,7 @@ mod.register("buy", function (query, resp) {
 });
 
 // 出售
-mod.register("buy", function (query, resp) {
+mod.register("sell", function (query, resp) {
 
 });
 

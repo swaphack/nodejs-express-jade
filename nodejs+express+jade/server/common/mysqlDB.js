@@ -41,6 +41,7 @@ function close() {
         return;
     }
     pool.end();
+    pool = null;
 }
 
 module.exports.init = init;

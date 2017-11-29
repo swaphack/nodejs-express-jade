@@ -1,5 +1,5 @@
 var mysql = require("../common/mysqlDB");
-var Protocol = new require("./protocol").Protocol;
+var Protocol = new require("../common/protocol").Protocol;
 
 var User = function () {
     Protocol.call(this);
@@ -61,5 +61,5 @@ mod.register("signIn", function (query, resp) {
 
 // 请求基础信息
 mod.register("userInfo", function (query, resp) {
-
+    var id =
 });

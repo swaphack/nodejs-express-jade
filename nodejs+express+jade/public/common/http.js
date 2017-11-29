@@ -8,11 +8,13 @@ var http = (function (mod) {
     };
 
     mod.getRootURL = function (url) {
-        return "../" + url;
+        return mod.remoteURL() + url;
     };
 
     mod.get = function (url, data, callback) {
-        $.get(mod.getRootURL(url), data, callback, 'json');
+        var httpUrl = mod.getRootURL(url);
+        console.log(httpUrl);
+        $.get(httpUrl, data, callback, 'json');
     };
 
     mod.post = function (url, data, callback) {

@@ -1,6 +1,6 @@
 
 var fs = require("fs");
-var Protocol = new require("./protocol").Protocol;
+var Protocol = new require("../common/protocol").Protocol;
 
 var Music = function () {
     Protocol.call(this);
@@ -11,7 +11,7 @@ var Music = function () {
 Music.prototype = new Protocol();
 Music.prototype.constructor = Music;
 
-var musicDir = "I:/KuGou/";
+var musicDir = "E:/CloudMusic/";
 
 var mod = new Music();
 mod.setID("action");
@@ -25,7 +25,7 @@ module.exports = function (req, resp) {
         resp.send([]);
     }
 };
-
+//////////////////////////////////////////////////////////////////
 // 菜单
 mod.register("menu", function (query, resp) {
     if (this.musicFiles) {
