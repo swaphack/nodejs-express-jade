@@ -1,16 +1,7 @@
 var mysql = require("../common/mysqlDB");
-var Protocol = new require("../common/protocol").Protocol;
+var lg = require("../common/index");
 
-var Game = function () {
-    Protocol.call(this);
-
-    this.musicFiles = null;
-}
-
-Game.prototype = new Protocol();
-Game.prototype.constructor = Game;
-
-var mod = new Game();
+var mod = new lg.protocol.Protocol();
 mod.setID("action");
 
 module.exports = function (req, resp) {
@@ -35,8 +26,6 @@ mod.register("menu", function (query, resp) {
         if (qerr) {
             resp.send([]);
         } else {
-            console.log(values);
-            console.log(fields);
             resp.send(values);
         }
     });

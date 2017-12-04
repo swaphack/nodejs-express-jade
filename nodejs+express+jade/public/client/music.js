@@ -18,7 +18,7 @@
             return;
         }
 
-        $("#left video").attr("src", http.getRootURL("data/music?action=play&name="+ name));
+        $("#left video").attr("src", http.getLogicURL("data/music?action=play&name="+ name));
         var lastChild = $("#nav ol").find("li[index=" + indexOfMusic +"]");
         if (lastChild) {
             lastChild.css("background-color","white");
@@ -101,7 +101,7 @@
 
         });
 
-        http.get("data/music", { action :"menu"}, function (data) {
+        http.getLogic("data/music", { action :"menu"}, function (data) {
             if (!data) {
                 return;
             }

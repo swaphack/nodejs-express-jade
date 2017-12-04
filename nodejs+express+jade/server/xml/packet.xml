@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <root>
     <class name="user">
-        <action name="singUp" type="request" params="name;pwd" />
-        <action name="singUp" type="response" params="result" />
+        <action name="singUp" request="name;pwd" response="result" desc="注册"/>
+        <action name="signIn" request="name;pwd" desc="登录"/>
     </class>
 </root>
 

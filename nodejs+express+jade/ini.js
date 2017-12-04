@@ -35,3 +35,7 @@ ini.database = {
     password : '123456',
     database : 'game'
 };
+
+ini.xmlConfig = {
+  dir : '/xml/',
+};

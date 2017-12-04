@@ -1,14 +1,6 @@
-var mysql = require("../common/mysqlDB");
-var Protocol = new require("../common/protocol").Protocol;
+var lg = require("../common/index");
 
-var User = function () {
-    Protocol.call(this);
-}
-
-User.prototype = new Protocol();
-User.prototype.constructor = User;
-
-var mod = new User();
+var mod = new lg.protocol.Protocol();
 mod.setID("action");
 
 module.exports = function (req, resp) {
@@ -20,18 +12,23 @@ module.exports = function (req, resp) {
         resp.send([]);
     }
 };
-
+//////////////////////////////////////////////////////////////////
 // 注册
 mod.register("signUp", function (query, resp) {
     var name = query.name;
     var pwd = query.pwd;
+    if (!name || !pwd) {
+        resp.sendStatus(400);
+        return;
+    }
+
     var sql = "select * from user where name='{0}'";
     sql = sql.format(name);
-    mysql.query(sql, function (serr, svalues, sfields) {
-       if (serr) {
+    lg.mysql.query(sql, function (serr, svalues, sfields) {
+       if (svalues.length != 0) {
            sql = "insert into user(name, pwd) values('{0}', '{1}')";
            sql = sql.format(name, pwd);
-           mysql.query(sql, function (ierr, ivalues, ifields) {
+           lg.mysql.query(sql, function (ierr, ivalues, ifields) {
                if (ierr) {
                    resp.sendStatus(500);
                } else {
@@ -48,18 +45,22 @@ mod.register("signUp", function (query, resp) {
 mod.register("signIn", function (query, resp) {
     var name = query.name;
     var pwd = query.pwd;
+    if (!name || !pwd) {
+        resp.sendStatus(400);
+        return;
+    }
     var sql = "select * from user where name='{0}' and pwd='{1}'";
     sql = sql.format(name, pwd);
-    mysql.query(sql, function (serr, svalues, sfields) {
-        if (!serr) {
-            resp.send({result : "success"});
+    lg.mysql.query(sql, function (serr, svalues, sfields) {
+        if (svalues.length != 0) {
+            resp.send({result : "success", id : svalues[sfields["id"]]});
         } else {
-            resp.send({result : "error"});
+            resp.send({result : "not exists this role"});
         }
     });
 });
 
 // 请求基础信息
 mod.register("userInfo", function (query, resp) {
-    var id =
+    var id = query.id;
 });

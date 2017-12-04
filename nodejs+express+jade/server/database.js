@@ -1,10 +1,22 @@
-var mysql = require("./common/mysqlDB");
+var lg = require("./common/index");
 
-module.exports.init = function (dbConfig) {
+// 初始化数据库
+module.exports.initMysql = function (dbConfig) {
     if (!dbConfig) {
         return;
     }
-    mysql.init(dbConfig);
+    lg.mysql.init(dbConfig);
 };
 
-module.exports.mysql = mysql;
+// 初始化xml配置
+module.exports.initXml = function (xmlConfig) {
+    if (!xmlConfig) {
+        return;
+    }
+
+    lg.xml.init();
+    lg.xml.load(__dirname + xmlConfig.dir);
+};
+
+module.exports.mysql = lg.mysql;
+module.exports.xml = lg.xml;

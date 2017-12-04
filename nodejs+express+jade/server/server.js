@@ -4,9 +4,10 @@ require("../common/string");
 
 var express = require('express');
 var session = require('express-session');
+var bodyParser = require('body-parser');
 
 var path = require("path");
-var filePath = require("./common/filePath");
+var lg = require("./common/index");
 var views = require("./views/_index");
 
 // 请求网址
@@ -21,10 +22,10 @@ function baseUrl(url) {
 
 // 资源处理
 function doRes(req, resp) {
-    var baseUrl = req.params[0];
-    var fullPath = filePath.getFullPath(baseUrl);
+    var reqUrl = req.params[0];
+    var fullPath = lg.filePath.getFullPath(reqUrl);
     if (!fullPath) {
-        fullPath = filePath.getFullPath(baseUrl.substr(baseUrl.indexOf("/") + 1));
+        fullPath = lg.filePath.getFullPath(reqUrl.substr(reqUrl.indexOf("/") + 1));
     }
     if (fullPath) {
         resp.sendFile(fullPath);
@@ -44,7 +45,7 @@ function doView(req, resp) {
 
 // 数据处理
 function doData(req, resp) {
-    var url = baseUrl(req.url);
+    var url = baseUrl(req.params[0]);
     try {
         var script = require("./" +  url);
         if (script) {
@@ -78,14 +79,27 @@ module.exports.init = function (server) {
         saveUninitialized: true
     }));
 
+    app.use(bodyParser.urlencoded({ extended: true }));
+
     // 跨域访问
     app.get("*", function (req, resp, next) {
+        //console.log(req.url);
         resp.header("Access-Control-Allow-Origin", "*");
         resp.header("Access-Control-Allow-Headers", "X-Requested-With");
         resp.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
         resp.header("X-Powered-By",' 3.2.1');
         //resp.header("Content-Type", "application/json;charset=utf-8");
         next();
+    });
+
+    app.get("/", function (req, resp) {
+        var url = baseUrl(req.url);
+        if (path.extname(url)) {
+            doRes(req, resp);
+        } else {
+            var url = "welcome";
+            resp.render(url);
+        }
     });
 
     // 视图
@@ -98,8 +112,38 @@ module.exports.init = function (server) {
         }
     });
 
-    // 数据
-    app.get("/data/*", function (req, resp) {
+    // 逻辑数据
+    app.get("/logic/*", function (req, resp) {
+        doData(req, resp);
+    });
+
+    // 公共文件
+    app.get("/files/*", function (req, resp) {
+        doRes(req, resp);
+    });
+
+    // 公共代码
+    app.get("/common/*", function (req, resp) {
+        doRes(req, resp);
+    });
+
+    // 公共界面用到的资源
+    app.get("/public/*", function (req, resp) {
+        doRes(req, resp);
+    });
+
+    //////////////////////////////////////////////////////////////////////
+    app.post("*", function (req, resp, next) {
+        console.log(req.url);
+        resp.header("Access-Control-Allow-Origin", "*");
+        resp.header("Access-Control-Allow-Headers", "X-Requested-With");
+        resp.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+        resp.header("X-Powered-By",' 3.2.1');
+        //resp.header("Content-Type", "application/json;charset=utf-8");
+        next();
+    });
+
+    app.post("/logic/*", function (req, resp) {
         doData(req, resp);
     });
 

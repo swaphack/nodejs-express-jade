@@ -1,15 +1,6 @@
 var Protocol = new require("../common/protocol").Protocol;
 
-var Packet = function () {
-    Protocol.call(this);
-
-    this.musicFiles = null;
-}
-
-Packet.prototype = new Protocol();
-Packet.prototype.constructor = Packet;
-
-var mod = new Packet();
+var mod = new Protocol();
 mod.setID("action");
 
 module.exports = function (req, resp) {
@@ -22,4 +13,8 @@ module.exports = function (req, resp) {
     }
 };
 //////////////////////////////////////////////////////////////////
+// 请求协议号
+mod.register("packetIds", function (query, resp) {
+    xmldb
+});
 

@@ -11,20 +11,17 @@
     </resource>
     <building>
         <item id="1" name="房屋"/>
-
         <item id="101" name="农场"/>
         <item id="102" name="林场"/>
         <item id="103" name="畜牧场"/>
         <item id="104" name="渔场"/>
         <item id="105" name="采集场"/>
         <item id="106" name="猎场"/>
-
         <item id="201" name="煤炭场"/>
         <item id="202" name="石油天然气场"/>
         <item id="203" name="黑色金属场"/>
         <item id="204" name="有色金属场"/>
         <item id="205" name="非金属场"/>
-
         <item id="211" name="农副食品厂"/>
         <item id="212" name="食品制造厂"/>
         <item id="213" name="饮料厂"/>

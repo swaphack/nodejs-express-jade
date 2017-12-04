@@ -1,19 +1,11 @@
 
 var fs = require("fs");
-var Protocol = new require("../common/protocol").Protocol;
+var lg = require("../common/index");
 
-var Music = function () {
-    Protocol.call(this);
-
-    this.musicFiles = null;
-}
-
-Music.prototype = new Protocol();
-Music.prototype.constructor = Music;
-
+var musicFiles = null;
 var musicDir = "E:/CloudMusic/";
 
-var mod = new Music();
+var mod = new lg.protocol.Protocol();
 mod.setID("action");
 
 module.exports = function (req, resp) {
@@ -28,16 +20,16 @@ module.exports = function (req, resp) {
 //////////////////////////////////////////////////////////////////
 // 菜单
 mod.register("menu", function (query, resp) {
-    if (this.musicFiles) {
-        resp.send(this.musicFiles);
+    if (musicFiles) {
+        resp.send(musicFiles);
         return;
     }
     fs.readdir(musicDir, function (err, files) {
         if (err) {
             resp.send([]);
         } else {
-            this.musicFiles = files;
-            resp.send(this.musicFiles);
+            musicFiles = files;
+            resp.send(musicFiles);
         }
     });
 });
