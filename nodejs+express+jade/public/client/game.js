@@ -6,20 +6,28 @@
 
     // 更新时间
     function updateTime() {
-        scheduler.schedule(function () {
+        lg.scheduler.schedule(function () {
             var date = new Date();
             $("#time").text(date.format("yyyy/MM/dd hh:mm:ss"));
         }, 1000);
     }
 
+    function autoLogin() {
+        var p = packet.createPacket();
+        p.setValue("action", "signIn");
+        p.setValue("name", "root");
+        p.setValue("pwd", "123");
+        lg.http.getLogic("data/user", p, function (error, data) {
+            if (error) {
+                return;
+            }
+        });
+    }
+
     $(document).ready(function () {
         updateTime();
 
-        http.get("data/user", {action:"signIn", name:"root", pwd:"123"}, function (data) {
-            console.log(data);
-           if (!data) {
-               return;
-           }
-        });
+        autoLogin();
+
     });
-}());
+})();

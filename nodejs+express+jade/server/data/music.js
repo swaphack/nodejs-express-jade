@@ -13,31 +13,35 @@ module.exports = function (req, resp) {
         return false;
     }
 
-    if (!mod.hand(req, resp)) {
-        resp.send([]);
-    }
+    mod.hand(req, resp);
 };
 //////////////////////////////////////////////////////////////////
 // 菜单
-mod.register("menu", function (query, resp) {
+mod.register("menu", function (packet, resp) {
     if (musicFiles) {
-        resp.send(musicFiles);
+        var p = lg.packet.createPacket();
+        p.setContent(musicFiles);
+        resp.sendPacket(p);
         return;
     }
     fs.readdir(musicDir, function (err, files) {
+        var p = lg.packet.createPacket();
         if (err) {
-            resp.send([]);
+            p.setError(err);
+            resp.sendPacket(p);
         } else {
             musicFiles = files;
-            resp.send(musicFiles);
+            p.setContent(musicFiles);
+            resp.sendPacket(p);
         }
     });
 });
 
 // 播放音乐
-mod.register("play", function (query, resp) {
-    console.log(query.name);
-    var name = String.decode(query.name);
+mod.register("play", function (packet, resp) {
+    var name = packet.getValue("name");
+    console.log(name);
+    name = String.decodeURL(name);
     console.log(name);
     if (!name) {
         resp.sendStatus(404);

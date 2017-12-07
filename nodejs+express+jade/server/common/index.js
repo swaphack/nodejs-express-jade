@@ -4,13 +4,17 @@
     var mysql = require("./mysql");
     var protocol = require("./protocol");
     var xml = require("./xml");
+    var view = require("./view");
+    var packet = require("./packet");
 
     var lg = {
         cache: cache,
         filePath: filePath,
         mysql: mysql,
         protocol: protocol,
-        xml: xml
+        xml: xml,
+        view : view,
+        packet : packet
     };
 
     if (typeof module !== 'undefined' && module.exports) {

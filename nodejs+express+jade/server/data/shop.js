@@ -9,35 +9,28 @@ module.exports = function (req, resp) {
         return false;
     }
 
-    if (!mod.hand(req, resp)) {
-        resp.send([]);
-    }
+    mod.hand(req, resp);
 };
 //////////////////////////////////////////////////////////////////
 // 数据
-mod.register("userdata", function (query, resp) {
-    var id = query.id;
+mod.register("userdata", function (packet, resp) {
+    var id = packet.getValue("id");
 });
 
 // 菜单
-mod.register("menu", function (query, resp) {
+mod.register("menu", function (packet, resp) {
     var sql = "select * from db_shop_item";
     mysql.query(sql, function (qerr, values, fields) {
-        if (qerr) {
-            resp.send([]);
-        } else {
-            resp.send(values);
-        }
     });
 });
 
 // 购买
-mod.register("buy", function (query, resp) {
+mod.register("buy", function (packet, resp) {
 
 });
 
 // 出售
-mod.register("sell", function (query, resp) {
+mod.register("sell", function (packet, resp) {
 
 });
 

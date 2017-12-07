@@ -1,18 +1,20 @@
-var text = (function (mod) {
-    mod._texts = {};
-    mod.get = function (name) {
-        if (!name) {
-            return "";
-        }
+(function () {
+    var text = {
+        _texts : {},
 
-        return mod._texts[name];
-    };
+        get : function (name) {
+            if (!name) {
+                return "";
+            }
 
-    mod.set = function (name, value) {
-        if (!name) {
-            return;
+            return mod._texts[name];
+        },
+
+        set : function (name, value) {
+            if (!name) {
+                return;
+            }
+            mod._texts[name] = value;
         }
-        mod._texts[name] = value;
     };
-    return mod;
-}({}));
+})();

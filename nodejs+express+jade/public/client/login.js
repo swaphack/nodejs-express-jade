@@ -7,10 +7,15 @@
                 alert("Username or Password not be null!");
                 return;
             }
+            var p = packet.createPacket();
+            p.setValue("action", "signIn");
+            p.setValue("name", username);
+            p.setValue("pwd", password);
 
-            http.postLogic("data/user", { action : "signIn", name : username, pwd : password }, function (data) {
-                console.log(data);
+            lg.http.postLogic("data/user", p, function (error, data) {
+                alert(error);
+                alert(data);
             });
         });
     });
-}());
+})();

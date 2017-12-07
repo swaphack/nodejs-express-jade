@@ -1,7 +1,7 @@
 // 页面布局相关 jquery
-var layout = (function (mod) {
+(function (mod) {
     // 设置高度为最大高度
-    mod.setMaxHeight = function(arg) {
+     function setMaxHeight(arg) {
         var args = arguments;
         if (!args) {
             return;
@@ -17,7 +17,7 @@ var layout = (function (mod) {
         }
     }
     // 设置宽度为最大高度
-    mod.setMaxWidth = function (arg) {
+    function setMaxWidth(arg) {
         var args = arguments;
         if (!args) {
             return;
@@ -35,7 +35,7 @@ var layout = (function (mod) {
     }
 
     // 子类处于居中状态
-    mod.setCenter = function (child, parent) {
+    function setCenter(child, parent) {
         if (!child) {
             return;
         }
@@ -50,5 +50,18 @@ var layout = (function (mod) {
         });
     };
 
-    return mod;
-}({}));
+     var layout = {
+         setMaxHeight : setMaxHeight,
+         setMaxWidth : setMaxWidth,
+         setCenter : setCenter
+     };
+
+     if (mod) {
+         mod.lg = mod.lg || {};
+         mod.lg.layout = layout;
+     }
+})(typeof self !== 'undefined' ? self
+    : typeof window !== 'undefined' ? window
+    : typeof global !== 'undefined' ? global
+    : this
+);

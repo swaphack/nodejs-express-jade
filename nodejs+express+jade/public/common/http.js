@@ -1,36 +1,72 @@
 // http请求
-var http = (function (mod) {
+(function (mod) {
     // 远程地址
-    mod.remoteURL = function () {
+    function getRemoteURL () {
         return "http://localhost:8080/";
-    };
+    }
     // 逻辑地址
-    mod.logicURL = function () {
+    function getLogicURL() {
         return "http://localhost:8080/logic/";
-    };
+    }
 
     // 访问根目录的数据
-    mod.getRootURL = function (url) {
-        return mod.remoteURL() + url;
-    };
+    function getRootURL (url) {
+        return getRemoteURL() + url;
+    }
 
     // 访问逻辑目录的数据
-    mod.getLogicURL = function (url) {
-        return mod.logicURL() + url;
-    };
+    function getLogicURI (url) {
+        return getLogicURL() + url;
+    }
+
     // get 请求方式
-    mod.getLogic = function (url, data, callback) {
-        var httpUrl = mod.getLogicURL(url);
+    function getLogic(url, data, callback) {
+        var httpUrl = getLogicURI(url);
         console.log("get url", httpUrl);
-        $.get(httpUrl, data, callback, 'json');
-    };
+        var value = null;
+        if (data instanceof packet.Packet) {
+            value = data.data();
+        } else {
+            value = data;
+        }
+        $.get(httpUrl, value, function (result) {
+            console.log(result);
+            if (callback) {
+                callback(result.error, result.content);
+            }
+        }, 'json');
+    }
 
     // post 请求方式
-    mod.postLogic = function (url, data, callback) {
-        var httpUrl = mod.getLogicURL(url);
+    function postLogic(url, data, callback) {
+        var httpUrl = getLogicURI(url);
         console.log("post url", httpUrl);
-        $.post(httpUrl, data, callback, 'json');
+        var value = null;
+        if (data instanceof packet.Packet) {
+            value = data.data();
+        } else {
+            value = data;
+        }
+        $.post(httpUrl, value, function (result) {
+            console.log(result);
+            if (callback) {
+                callback(result.error, result.content);
+            }
+        }, 'json');
+    }
+
+    var http = {
+        getLogicURI : getLogicURI,
+        getLogic : getLogic,
+        postLogic : postLogic,
     };
 
-    return mod;
-}({}));
+    if (mod) {
+        mod.lg = mod.lg || {};
+        mod.lg.http = http;
+    }
+}(typeof self !== 'undefined' ? self
+    : typeof window !== 'undefined' ? window
+    : typeof global !== 'undefined' ? global
+    : this
+));

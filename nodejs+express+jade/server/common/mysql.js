@@ -2,6 +2,7 @@
     var db = require("mysql");
     var pool = null;
     var mysql = {
+        // 初始化
         init : function(dbConfig) {
             pool = pool || (function (params) {
                 var connect = db.createPool(params);
@@ -11,6 +12,7 @@
                 return connect;
             }(dbConfig));
         },
+        // 查询
         query :  function (sql, func) {
             if (!sql || !func) {
                 return;
@@ -26,6 +28,7 @@
                     connection.release();
                     if (qerr) {
                         console.log(qerr.message);
+                        console.log(qerr.sql);
                         func(qerr, null, null);
                     } else {
                         func(qerr, values, fields);
@@ -33,6 +36,21 @@
                 })
             });
         },
+        // 拼接查询语句
+        format : function (sql, params) {
+            if (!sql) {
+                return sql;
+            }
+
+            var args = arguments;
+            var ary = [];
+            for (var i = 1; i < args.length; i++) {
+                ary.push(pool.escape(args[i]));
+            }
+
+            return sql.format(ary);
+        },
+        // 关闭
         close : function () {
             if (!pool) {
                 return;

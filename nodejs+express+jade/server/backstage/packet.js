@@ -14,7 +14,7 @@ module.exports = function (req, resp) {
 };
 //////////////////////////////////////////////////////////////////
 // 请求协议号
-mod.register("packetIds", function (query, resp) {
-    xmldb
+mod.register("packetIds", function (packet, resp) {
+
 });
 

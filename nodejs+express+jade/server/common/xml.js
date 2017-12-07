@@ -81,7 +81,7 @@
                         }(fileName, function (fileName, json) {
                             var index = fileName.lastIndexOf(".");
                             var name = null;
-                            if (index != -1) {
+                            if (index !== -1) {
                                 name = fileName.substr(0, index);
                             } else {
                                 name = fileName;

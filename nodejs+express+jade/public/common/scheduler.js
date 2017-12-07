@@ -1,11 +1,7 @@
 // 定时器
 (function (mod) {
-    if (mod === undefined) {
-        return;
-    }
-
     // 执行一次
-    mod.property.scheduleOnce = function (func, delay) {
+    function scheduleOnce(func, delay) {
         if (!func) {
             return;
         }
@@ -14,7 +10,7 @@
     };
 
     // 重复执行
-    mod.property.schedule = function (func, interval, delay) {
+    function schedule(func, interval, delay) {
         if (!func) {
             return null;
         }
@@ -27,12 +23,25 @@
     };
 
     // 移除定时器
-    mod.property.unschedule = function (scheduleId) {
+    function unSchedule(scheduleId) {
         if (!scheduleId) {
             return;
         }
         window.clearInterval(scheduleId);
     };
 
-    return mod;
-}(HTMLElement));
+    var scheduler = {
+        scheduleOnce : scheduleOnce,
+        schedule : schedule,
+        unSchedule : unSchedule,
+    };
+
+    if (mod) {
+        mod.lg = mod.lg || {};
+        mod.lg.scheduler = scheduler;
+    }
+})(typeof self !== 'undefined' ? self
+    : typeof window !== 'undefined' ? window
+    : typeof global !== 'undefined' ? global
+    : this
+);

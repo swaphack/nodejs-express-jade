@@ -1,6 +1,7 @@
 // 加载通用资源
 require("../common/base64");
 require("../common/string");
+require("../common/packet");
 
 var express = require('express');
 var session = require('express-session');
@@ -8,12 +9,11 @@ var bodyParser = require('body-parser');
 
 var path = require("path");
 var lg = require("./common/index");
-var views = require("./views/_index");
 
 // 请求网址
 function baseUrl(url) {
     var spot = url.indexOf("?");
-    if (spot != -1) {
+    if (spot !== -1) {
         url = url.substr(0, spot);
     }
     
@@ -37,7 +37,7 @@ function doRes(req, resp) {
 // 视图处理
 function doView(req, resp) {
     try {
-        views.direct(req, resp);
+        lg.view.direct(req, resp);
     } catch (err) {
         resp.sendStatus(200);
     }
@@ -54,7 +54,7 @@ function doData(req, resp) {
     } catch (err) {
         console.log("err : " + err);
         try {
-            views.direct(req, resp);
+            lg.view.direct(req, resp);
         } catch (perr) {
             console.log("perr : " + perr);
             resp.sendStatus(400);
@@ -63,9 +63,7 @@ function doData(req, resp) {
 }
 
 module.exports.init = function (server) {
-
     var app = express();
-
     // 视图引擎设置
     app.set('views', './views');
     app.set('view engine', 'jade');
@@ -83,7 +81,7 @@ module.exports.init = function (server) {
 
     // 跨域访问
     app.get("*", function (req, resp, next) {
-        //console.log(req.url);
+        console.log(req.url);
         resp.header("Access-Control-Allow-Origin", "*");
         resp.header("Access-Control-Allow-Headers", "X-Requested-With");
         resp.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");

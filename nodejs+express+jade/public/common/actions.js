@@ -1,16 +1,5 @@
 // 动作
-(function (mod) {
-    if (mod === undefined) {
-        return;
-    }
-
-    mod.prototype.runAction = function (action) {
-        if (!(action instanceof Action)) {
-            return;
-        }
-    }
-
-    //////////////////////////////////////////////////////////
+(function () {
     function Action() {
         this.running = true;
 
@@ -37,11 +26,10 @@
     };
     //////////////////////////////////////////////////////////
     function ActionManager() {
-        actions = {};
+        this.actions = {};
     }
 
     ActionManager.addAction = function(action) {
-        action
     }
 
     //////////////////////////////////////////////////////////
@@ -68,4 +56,4 @@
     };
 
     //////////////////////////////////////////////////////////
-}(HTMLElement));
+}());
