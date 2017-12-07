@@ -78,7 +78,7 @@
     }
 
     function createErrorPacket(msg) {
-        return new Packet(msg);
+        return new ErrorPacket(msg);
     }
 
     var packet = {

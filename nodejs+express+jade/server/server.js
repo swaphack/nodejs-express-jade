@@ -81,7 +81,7 @@ module.exports.init = function (server) {
 
     // 跨域访问
     app.get("*", function (req, resp, next) {
-        console.log(req.url);
+        console.log("get : " + req.url);
         resp.header("Access-Control-Allow-Origin", "*");
         resp.header("Access-Control-Allow-Headers", "X-Requested-With");
         resp.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
@@ -132,7 +132,7 @@ module.exports.init = function (server) {
 
     //////////////////////////////////////////////////////////////////////
     app.post("*", function (req, resp, next) {
-        console.log(req.url);
+        console.log("post : " + req.url);
         resp.header("Access-Control-Allow-Origin", "*");
         resp.header("Access-Control-Allow-Headers", "X-Requested-With");
         resp.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
