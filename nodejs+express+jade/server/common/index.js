@@ -1,4 +1,4 @@
-(function (global) {
+(function () {
     var cache = require("./cache");
     var filePath = require("./filePath");
     var mysql = require("./mysql");
@@ -23,4 +23,4 @@
         // AMD. Register as an anonymous module.
         define([], function(){ return lg });
     }
-}(this));
+})();

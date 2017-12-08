@@ -89,4 +89,4 @@
         // AMD. Register as an anonymous module.
         define([], function(){ return filePath });
     }
-}());
+})();

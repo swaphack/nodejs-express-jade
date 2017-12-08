@@ -5,7 +5,7 @@ mod.setID("action");
 
 module.exports = function (req, resp) {
     if (!req || !resp) {
-        return false;
+        return;
     }
 
     mod.hand(req, resp);

@@ -161,5 +161,5 @@
         // AMD. Register as an anonymous module.
         define([], function(){ return mysql });
     }
-}());
+})();
 

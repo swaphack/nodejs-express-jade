@@ -6,7 +6,7 @@ mod.setID("action");
 
 module.exports = function (req, resp) {
     if (!req || !resp) {
-        return false;
+        return;
     }
 
     mod.hand(req, resp);
@@ -15,6 +15,7 @@ module.exports = function (req, resp) {
 // 数据
 var cache = lg.cache.createCache();
 cache.set("dir", "E:/CloudMusic/");
+cache.set("dir", "I:/KuGou/");
 cache.set("files", null);
 
 // 菜单
@@ -25,7 +26,8 @@ mod.register("menu", function (packet, resp) {
         resp.sendPacket(p);
         return;
     }
-    fs.readdir(cache.get("dir"), function (err, files) {
+    var dir = cache.get("dir");
+    fs.readdir(dir, function (err, files) {
         var p = lg.packet.createPacket();
         if (err) {
             p.setError(err);

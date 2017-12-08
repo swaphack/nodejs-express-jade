@@ -5,12 +5,9 @@ mod.setID("action");
 
 module.exports = function (req, resp) {
     if (!req || !resp) {
-        return false;
+        return;
     }
-
-    if (!mod.hand(req, resp)) {
-        resp.send([]);
-    }
+    mod.hand(req, resp);
 };
 //////////////////////////////////////////////////////////////////
 // 请求协议号
