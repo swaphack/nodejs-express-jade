@@ -19,7 +19,7 @@
             }
         }
         return strFormat;
-    }
+    };
 
     function UTCToLocalTimeString(d, format) {
         var timeOffsetInHours = (new Date().getTimezoneOffset()/60)  + -10;
@@ -29,7 +29,7 @@
 
     var dateTime = {
         UTCToLocalTimeString : UTCToLocalTimeString,
-    }
+    };
 
     if (mod) {
         mod.lg = mod.lg || {};

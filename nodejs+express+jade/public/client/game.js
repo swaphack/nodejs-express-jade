@@ -1,8 +1,11 @@
 (function () {
-    var name = localStorage.name || "swaphack";
+    var _shopData = new set.PageSet();
+    _shopData.setPerPageItemCount(10);
 
-    // 编号 名称 价格基准值 价格浮动值 更新时间
-    var shopDataAry = [];
+    var _listView = new lg.ui.TableView();
+    _listView.setItemModel("<tr><td>{0}</td><td>{1}</td></tr>");
+
+    var id = lg.userData.get("id");
 
     // 更新时间
     function updateTime() {
@@ -12,22 +15,22 @@
         }, 1000);
     }
 
-    function autoLogin() {
+    function getShopItems() {
         var p = packet.createPacket();
-        p.setValue("action", "signIn");
-        p.setValue("name", "root");
-        p.setValue("pwd", "123");
-        lg.http.getLogic("data/user", p, function (error, data) {
+        p.setValue("action", "menu");
+        lg.http.getLogic("data/shop", p, function (error, data) {
             if (error) {
-                return;
+                alert(error);
+            } else {
+                _shopData.setData(data);
+                _listView.flushData(_shopData.getPageData(0));
             }
         });
     }
 
     $(document).ready(function () {
-        updateTime();
+        _listView.setParent($("#shop"));
 
-        autoLogin();
-
+        getShopItems();
     });
 })();

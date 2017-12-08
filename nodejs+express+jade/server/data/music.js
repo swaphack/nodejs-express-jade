@@ -1,11 +1,7 @@
-
 var fs = require("fs");
 var lg = require("../common/index");
 
-var musicFiles = null;
-var musicDir = "E:/CloudMusic/";
-
-var mod = new lg.protocol.Protocol();
+var mod = lg.protocol.createProtocol();
 mod.setID("action");
 
 module.exports = function (req, resp) {
@@ -16,22 +12,27 @@ module.exports = function (req, resp) {
     mod.hand(req, resp);
 };
 //////////////////////////////////////////////////////////////////
+// 数据
+var cache = lg.cache.createCache();
+cache.set("dir", "E:/CloudMusic/");
+cache.set("files", null);
+
 // 菜单
 mod.register("menu", function (packet, resp) {
-    if (musicFiles) {
+    if (cache.get("files")) {
         var p = lg.packet.createPacket();
-        p.setContent(musicFiles);
+        p.setContent(cache.get("files"));
         resp.sendPacket(p);
         return;
     }
-    fs.readdir(musicDir, function (err, files) {
+    fs.readdir(cache.get("dir"), function (err, files) {
         var p = lg.packet.createPacket();
         if (err) {
             p.setError(err);
             resp.sendPacket(p);
         } else {
-            musicFiles = files;
-            p.setContent(musicFiles);
+            cache.set("files", files);
+            p.setContent(cache.get("files"));
             resp.sendPacket(p);
         }
     });
@@ -40,12 +41,10 @@ mod.register("menu", function (packet, resp) {
 // 播放音乐
 mod.register("play", function (packet, resp) {
     var name = packet.getValue("name");
-    console.log(name);
-    name = String.decodeURL(name);
-    console.log(name);
+    name = String.decodeURI(name);
     if (!name) {
         resp.sendStatus(404);
         return;
     }
-    resp.sendFile(musicDir + name);
+    resp.sendFile(cache.get("dir") + name);
 });

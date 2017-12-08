@@ -1,7 +1,6 @@
-var mysql = require("../common/mysqlDB");
 var lg = require("../common/index");
 
-var mod = new lg.protocol.Protocol();
+var mod = lg.protocol.createProtocol();
 mod.setID("action");
 
 module.exports = function (req, resp) {
@@ -13,14 +12,15 @@ module.exports = function (req, resp) {
 };
 //////////////////////////////////////////////////////////////////
 // 数据
-mod.register("userdata", function (packet, resp) {
-    var id = packet.getValue("id");
-});
+var fixCache = lg.mysql.createFixCache();
 
 // 菜单
 mod.register("menu", function (packet, resp) {
     var sql = "select * from db_shop_item";
-    mysql.query(sql, function (qerr, values, fields) {
+    fixCache.query("shop_items", sql, function (data) {
+        var p = lg.packet.createPacket();
+        p.setContent(data);
+        resp.sendPacket(p);
     });
 });
 

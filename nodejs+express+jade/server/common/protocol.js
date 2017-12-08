@@ -137,8 +137,13 @@
     };
 
     //////////////////////////////////////////////////////////////////////
+
+    function createProtocol() {
+        return new Protocol();
+    }
+
     var protocol = {
-        Protocol : Protocol,
+        createProtocol : createProtocol,
     };
 
     if (typeof module !== 'undefined' && module.exports) {

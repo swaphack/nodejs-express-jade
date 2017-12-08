@@ -24,7 +24,7 @@
         return String(this).replace(pattern, function (match, index) {
             var currentIndex = parseInt(index);
             if (currentIndex >= args.length || currentIndex < 0) {
-                throw new Error("out of index");
+                throw new Error("Out of index");
             }
             return args[currentIndex];
         });
@@ -45,13 +45,13 @@
     };
 
     // url 编码
-    String.encodeURL = function (value) {
+    String.encodeURI = function (value) {
         var val = Base64.encode(value);
         return encodeURIComponent(val);
     };
 
     // url 解码
-    String.decodeURL = function (value) {
+    String.decodeURI = function (value) {
         var val = decodeURIComponent(value);
         return Base64.decode(val);
     };

@@ -1,8 +1,12 @@
 // http请求
 (function (mod) {
     // 远程地址
-    function getRemoteURL () {
+    function getRootURL () {
         return "http://localhost:8080/";
+    }
+    // 逻辑视图地址
+    function getViewURL() {
+        return "http://localhost:8080/views/";
     }
     // 逻辑地址
     function getLogicURL() {
@@ -10,13 +14,18 @@
     }
 
     // 访问根目录的数据
-    function getRootURL (url) {
-        return getRemoteURL() + url;
+    function getRootURI (url) {
+        return getRootURL() + url;
     }
 
     // 访问逻辑目录的数据
     function getLogicURI (url) {
         return getLogicURL() + url;
+    }
+
+    // 跳转界面
+    function getViewURI(url) {
+        return getViewURL() + url;
     }
 
     // get 请求方式
@@ -55,10 +64,16 @@
         }, 'json');
     }
 
+    // 跳转界面
+    function redirect(url) {
+        location.href = getViewURI(url);
+    }
+
     var http = {
         getLogicURI : getLogicURI,
         getLogic : getLogic,
         postLogic : postLogic,
+        redirect: redirect
     };
 
     if (mod) {

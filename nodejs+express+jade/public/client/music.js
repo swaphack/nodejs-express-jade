@@ -1,34 +1,32 @@
 (function () {
-    var _musicAry = null; // 音乐信息
-    var _pageItemCount = 10; // 每页显示的数量
-    var _pageNum = 0; // 当前页数
-    var _totalPageCount = 0; // 总页数
-    var _indexOfMusic = 0; // 当前播放的音乐索引
+    var _pageNum = null;
+    var _video = null;
+    var _listRoot = null;
+
+    var _musicData = new set.PageSet();
+    _musicData.setPerPageItemCount(10);
+
+    var _listView = new lg.ui.ListView();
+    _listView.setMark("ol");
+    _listView.setItemModel("<li index={0}>{1}</li>");
 
     // 设置播放的音乐
     function playMusic(index) {
-        if (index === null) {
-            return;
+        var name = _musicData.getItemData(index);
+        if (name) {
+            name = String.encodeURI(name);
+            _video.attr("src", lg.http.getLogicURI("data/music?action=play&name="+ name));
         }
-        if (index < 0 || index >= _musicAry.length) {
-            return;
-        }
-        var name = String.encodeURL(_musicAry[index]);
-        if (!name) {
-            return;
-        }
-
-        $("#left video").attr("src", lg.http.getLogicURI("data/music?action=play&name="+ name));
-        var lastChild = $("#nav ol").find("li[index=" + _indexOfMusic +"]");
+        var str = "li[index={0}]";
+        var lastChild = _listRoot.find(str.format(_musicData.getItemIndex()));
         if (lastChild) {
             lastChild.css("background-color","white");
         }
-
-        var curChild = $("#nav ol").find("li[index=" + index +"]");
+        var curChild = _listRoot.find(str.format(index));
         if (curChild) {
-            curChild.css("background-color","silver");
+            curChild.css("background-color", "silver");
         }
-        _indexOfMusic = index;
+        _musicData.setItemIndex(index);
     }
 
     // 设置音乐页面
@@ -37,79 +35,100 @@
             return;
         }
 
-        if (page < 0 || page > _totalPageCount) {
-            return;
-        }
-
-        var nav = $("#nav ol");
-        nav.empty();
-
-        if (!_musicAry) {
-            $("#pageNum").text(0 + "/" + 0);
-            return;
-        }
-
-        var totalCount = _musicAry.length;
-        for (var i = 0; i < _pageItemCount; i++) {
-            var index = page * _pageItemCount + i;
-            if (index < totalCount) {
-                nav.append("<li index='" + index +"'>" + _musicAry[index] + "</li>");
+        var dataAry = _musicData.getPageData(page);
+        _listView.removeAllItems();
+        if (dataAry) {
+            for (var i = 0; i < dataAry.length; i++) {
+                var index = page * _musicData.getPerPageItemCount() + i;
+                _listView.appendItem(index, dataAry[i]);
             }
         }
+        _listView.flush();
 
         $("#nav li").click(function () {
             var index = $(this).attr("index");
-            playMusic(index);
+            playMusic(parseInt(index));
         });
 
-        var indexTxt = page + 1 + "/" + _totalPageCount;
-        $("#pageNum").text(indexTxt);
+        _musicData.setPageIndex(page);
 
-        _pageNum = page;
+        if (_musicData.getTotalPageCount() === 0) {
+            _pageNum.text("0/0");
+        } else {
+            var str = "{0}/{1}";
+            str = str.format(_musicData.getPageIndex()+ 1, _musicData.getTotalPageCount());
+            _pageNum.text(str);
+        }
+    }
+    // 请求前一页
+    function gotoPrePage() {
+        var page = _musicData.getPageIndex();
+        page = page -1;
+        if (page < 0) {
+            return;
+        }
+        refreshMusicPage(page);
     }
 
-    $(document).ready(function () {
-        $("#pre").click(function () {
-           _pageNum = _pageNum -1;
-           if (_pageNum < 0) {
-               _pageNum = 0;
-               return;
-           }
-            refreshMusicPage(_pageNum);
-        });
+    // 请求后一页
+    function gotoNextPage() {
+        var page = _musicData.getPageIndex();
+        page = page + 1;
+        if (page >= _musicData.getTotalPageCount()) {
+            return;
+        }
+        refreshMusicPage(page);
+    }
+    // 播放结束
+    function onEndPlayVideo() {
+        var nextIndex = _musicData.getItemIndex();
+        nextIndex += 1;
+        if (nextIndex >= _musicData.getDataLength()) {
+            nextIndex = 0;
+        }
 
-        $("#next").click(function () {
-            _pageNum = _pageNum + 1;
-            if (_pageNum >= _totalPageCount) {
-                _pageNum = _totalPageCount - 1;
-                return;
-            }
-            refreshMusicPage(_pageNum);
-        });
+        _musicData.setItemIndex(nextIndex);
+        var page = _musicData.getPageIndex();
 
-        $("#left video").bind("ended", function () {
-            console.log("play end");
-            var nextIndex = parseInt(_indexOfMusic) + 1;
-            if (nextIndex >= _musicAry.length) {
-                nextIndex = 0;
-            }
-            var page = Math.floor(nextIndex / _pageItemCount);
+        console.log(page, nextIndex);
 
-            console.log(page, nextIndex);
+        refreshMusicPage(page);
+        playMusic(nextIndex);
+    }
+    // 请求音乐数据
+    function requestMusicData() {
+        var p = packet.createPacket();
+        p.setValue("action", "menu");
 
-            refreshMusicPage(page);
-            playMusic(nextIndex);
-
-        });
-
-        lg.http.getLogic("data/music", { action :"menu"}, function (error, data) {
+        lg.http.getLogic("data/music", p, function (error, data) {
             if (!data) {
                 return;
             }
-            _musicAry = data;
-            _totalPageCount = Math.ceil(_musicAry.length / _pageItemCount);
+            _musicData.setData(data);
             refreshMusicPage(0);
             playMusic(0);
         });
+    }
+
+    $(document).ready(function () {
+        _listRoot = $("#nav");
+        _pageNum = $("#pageNum");
+        _video = $("#left video");
+
+        _listView.setParent(_listRoot);
+
+        $("#pre").click(function () {
+            gotoPrePage();
+        });
+
+        $("#next").click(function () {
+            gotoNextPage();
+        });
+
+        $("#left video").bind("ended", function () {
+            onEndPlayVideo();
+        });
+
+        requestMusicData();
     });
 })();

@@ -1,5 +1,5 @@
 (function (global) {
-    var cache = require("./cache")
+    var cache = require("./cache");
     var filePath = require("./filePath");
     var mysql = require("./mysql");
     var protocol = require("./protocol");

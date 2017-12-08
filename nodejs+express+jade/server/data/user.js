@@ -1,6 +1,6 @@
 var lg = require("../common/index");
 
-var mod = new lg.protocol.Protocol();
+var mod = lg.protocol.createProtocol();
 mod.setID("action");
 
 module.exports = function (req, resp) {
@@ -24,25 +24,27 @@ mod.register("signUp", function (packet, resp) {
     sql = lg.mysql.format(sql, name);
     lg.mysql.query(sql, function (serr, svalues, sfields) {
         if (serr) {
-            resp.sendStatus(400);
+            resp.sendStatus(500);
             return;
         }
-       if (svalues.length !== 0) {
+       if (svalues.length !== 0) { // 有数据
+           resp.sendPacket(lg.packet.createErrorPacket("exists name"));
+       } else {
            sql = "insert into user(name, pwd) values({0}, {1})";
            sql = lg.mysql.format(sql, name, pwd);
            lg.mysql.query(sql, function (ierr, ivalues, ifields) {
                if (ierr) {
-                   resp.sendStatus(400);
+                   resp.sendStatus(500);
                    return;
                }
-               if (ierr) {
+               if (ivalues.length !== 0) {
                    resp.sendStatus(500);
                } else {
-                   resp.sendPacket(lg.packet.createPacket());
+                   var p = lg.packet.createPacket();
+                   p.setContent(ivalues[0]["id"]);
+                   resp.sendPacket(p);
                }
            });
-       } else {
-           resp.sendPacket(lg.packet.createErrorPacket("exists name"));
        }
     });
 });
@@ -59,7 +61,7 @@ mod.register("signIn", function (packet, resp) {
     sql = lg.mysql.format(sql, name, pwd);
     lg.mysql.query(sql, function (serr, svalues, sfields) {
         if (serr) {
-            resp.sendStatus(400);
+            resp.sendStatus(500);
             return;
         }
         if (svalues.length !== 0) {

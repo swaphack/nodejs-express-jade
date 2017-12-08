@@ -1,7 +1,102 @@
 (function () {
+    var cache = require("./cache");
+    // 固定mysql缓存
+    var FixCache = function () {
+        this._sqlCache = cache.createCache();
+        this._callbackCache = cache.createCache();
+        this._memCache = cache.createCache();
+    };
+
+    // 添加sql绑定
+    FixCache.prototype.bindSQL = function (name, sql) {
+        this._sqlCache.set(name, sql);
+    };
+
+    // 获取sql
+    FixCache.prototype.getSQL = function (name) {
+        return this._sqlCache.get(name);
+    };
+
+    // 添加内存绑定
+    FixCache.prototype.bindMemory = function (name, memory) {
+        this._memCache.set(name, memory);
+    };
+
+    // 获取内存
+    FixCache.prototype.getMemory = function (name) {
+        return this._memCache.get(name);
+    };
+
+    // 添加sql执行回调
+    FixCache.prototype.bindCallback = function (name, callback) {
+        if (!this._callbackCache.get(name)) {
+            this._callbackCache.set(name, []);
+        }
+
+        var handlers = this._callbackCache.get(name);
+        handlers.push(callback);
+    };
+
+    // 执行回调
+    FixCache.prototype.runCallback = function (name, data) {
+        if (!this._callbackCache.get(name)) {
+            return;
+        }
+        var handlers = this._callbackCache.get(name);
+        for (var i = 0; i < handlers.length; i++) {
+            handlers[i](data);
+        }
+
+        this._callbackCache.set(name, null);
+    };
+
+    // 查询数据
+    FixCache.prototype.query = function (name, sql, callback) {
+        if (!name || !sql) {
+            return;
+        }
+        var oldSQL = this.getSQL(name);
+        if (oldSQL !== undefined && oldSQL !== sql) {
+            console.log("Exists Name In Cache.Name:{0}, LastSQL : {1}, NewSQL : {2}".format(name, oldSQL, sql));
+            return;
+        }
+        this.bindCallback(name, callback);
+        if (oldSQL !== undefined) {
+            this.runCallback(name, this.getMemory(name));
+            return;
+        }
+        this.bindSQL(name, sql);
+        var memCache = this;
+        mysql.query(sql, function (err, values, fields) {
+            if (err) {
+                memCache.bindMemory(name, null);
+            } else {
+                var dataAry = [];
+                for (var i = 0; i < values.length; i++) {
+                    var data = [];
+                    for (var j = 0; j < fields.length; j++) {
+                        data.push(values[i][fields[j].name]);
+                    }
+                    dataAry.push(data);
+                }
+                memCache.bindMemory(name, dataAry);
+            }
+
+            memCache.runCallback(name, memCache.getMemory(name));
+        });
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    function createFixCache() {
+        return new FixCache();
+    }
+
+
     var db = require("mysql");
     var pool = null;
     var mysql = {
+        createFixCache : createFixCache,
+
         // 初始化
         init : function(dbConfig) {
             pool = pool || (function (params) {

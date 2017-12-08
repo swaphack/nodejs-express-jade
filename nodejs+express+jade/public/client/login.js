@@ -1,7 +1,7 @@
 (function () {
     $(document).ready(function () {
-        $("#login_username").val(lg.user.get("name"));
-        $("#login_password").val(lg.user.get("pwd"));
+        $("#login_username").val(lg.userData.get("name", ""));
+        $("#login_password").val(lg.userData.get("pwd", ""));
 
         $("#login_form").submit(function () {
             var name = $("#login_username").val();
@@ -16,14 +16,15 @@
             p.setValue("name", name);
             p.setValue("pwd", pwd);
 
-            lg.user.set("name", name);
-            lg.user.set("pwd", pwd);
+            lg.userData.set("name", name);
+            lg.userData.set("pwd", pwd);
 
             lg.http.postLogic("data/user", p, function (error, data) {
                 if (error) {
                     alert(error);
                 } else {
-                    lg.user.set("id", data);
+                    lg.userData.set("id", data);
+                    lg.http.redirect("client/game");
                 }
             });
 
