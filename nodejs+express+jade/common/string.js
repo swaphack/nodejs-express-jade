@@ -1,7 +1,5 @@
 // 文本字符串相关
 (function () {
-    var base64 = Base64;
-
     var randLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     // 格式化文本，例如：string.format("a {0} on {1}", "apple", "desk");
@@ -47,14 +45,14 @@
 
     // url 编码
     String.encodeURI = function (value) {
-        var val = base64.encode(value);
+        var val = Base64.encode(value);
         return encodeURIComponent(val);
     };
 
     // url 解码
     String.decodeURI = function (value) {
         var val = decodeURIComponent(value);
-        return base64.decode(val);
+        return Base64.decode(val);
     };
 })();
 

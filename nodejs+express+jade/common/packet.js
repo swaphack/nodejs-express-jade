@@ -38,22 +38,22 @@
 
     // 设置错误时提示文本
     Packet.prototype.setError = function (value) {
-        this._data["error"] = value;
+        this.setValue("error", value);
     };
 
     // 获取错误时提示文本
     Packet.prototype.getError = function () {
-        return this._data["error"];
+        return this.getValue("error");
     };
 
     // 设置正确时的包内容
     Packet.prototype.setContent = function (value) {
-        this._data["content"] = value;
+        this.setValue("content", value);
     };
 
     // 获取正确时的包内容
     Packet.prototype.getContent = function () {
-        return this._data["content"];
+        return this.getValue("content");
     };
 
     // 数据
