@@ -1,5 +1,5 @@
 (function (mod) {
-    // 页结合
+    // 数据集合，按页获取
     var PageSet = function () {
         // 数据
         this._data = [];

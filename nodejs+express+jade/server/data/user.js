@@ -20,8 +20,7 @@ mod.register("signUp", function (packet, resp) {
         return;
     }
 
-    var sql = "select * from user where name={0}";
-    sql = lg.mysql.format(sql, name);
+    var sql = "select * from user where name={0}".formatSQL(name);
     lg.mysql.query(sql, function (serr, svalues, sfields) {
         if (serr) {
             resp.sendStatus(500);
@@ -30,8 +29,7 @@ mod.register("signUp", function (packet, resp) {
        if (svalues.length !== 0) { // 有数据
            resp.sendPacket(lg.packet.createErrorPacket("exists name"));
        } else {
-           sql = "insert into user(name, pwd) values({0}, {1})";
-           sql = lg.mysql.format(sql, name, pwd);
+           sql = "insert into user(name, pwd) values({0}, {1})".formatSQL(name, pwd);
            lg.mysql.query(sql, function (ierr, ivalues, ifields) {
                if (ierr) {
                    resp.sendStatus(500);
@@ -57,8 +55,7 @@ mod.register("signIn", function (packet, resp) {
         resp.sendStatus(400);
         return;
     }
-    var sql = "select * from user where name={0} and pwd={1}";
-    sql = lg.mysql.format(sql, name, pwd);
+    var sql = "select * from user where name={0} and pwd={1}".formatSQL(name, pwd);
     lg.mysql.query(sql, function (serr, svalues, sfields) {
         if (serr) {
             resp.sendStatus(500);

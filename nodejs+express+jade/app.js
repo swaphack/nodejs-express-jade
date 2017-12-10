@@ -7,17 +7,9 @@ function init() {
     // 搜索路径设置
     var root = lg.filePath.root();
     var searchPath = [];
-
-    searchPath.push(root + "/");
-    // 视图
-    //searchPath.push(root + "/views/");
-    // 页面资源
-    searchPath.push(root + "/public/");
-    // 文件资源
-    searchPath.push(root + "/files/");
-    // 公共代码
-    searchPath.push(root + "/common/");
-
+    for (var i in ini.res) {
+        searchPath.push(root + ini.res[i]);
+    }
     lg.filePath.setSearchPath(searchPath);
 }
 

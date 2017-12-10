@@ -1,24 +1,25 @@
 // 文本字符串相关
 (function () {
+    var base64 = Base64;
+
     var randLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     // 格式化文本，例如：string.format("a {0} on {1}", "apple", "desk");
     String.prototype.format = function (arg) {
-        var params = arguments;
-        if (params.length === 0) {
+        if (arguments.length === 0) {
             return String(this);
         }
         var args = null;
-        if (params.length === 1 && Array.isArray(params[0])) {
-            args = params[0];
+        if (arguments.length === 1 && Array.isArray(arguments[0])) {
+            args = arguments[0];
         } else {
-            for (var i = 0; i < params.length; i++) {
-                var type = typeof params[i];
+            for (var i = 0; i < arguments.length; i++) {
+                var type = typeof arguments[i];
                 if (type !== "number" && type !== "boolean" && type !== "string" ) {
                     throw new Error("Params must be one type of [number, boolean, string]");
                 }
             }
-            args = params;
+            args = arguments;
         }
         var pattern = new RegExp("{([0-9]+)}", "g");
         return String(this).replace(pattern, function (match, index) {
@@ -46,14 +47,14 @@
 
     // url 编码
     String.encodeURI = function (value) {
-        var val = Base64.encode(value);
+        var val = base64.encode(value);
         return encodeURIComponent(val);
     };
 
     // url 解码
     String.decodeURI = function (value) {
         var val = decodeURIComponent(value);
-        return Base64.decode(val);
+        return base64.decode(val);
     };
 })();
 

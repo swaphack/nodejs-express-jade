@@ -21,8 +21,7 @@ cache.set("files", null);
 // 菜单
 mod.register("menu", function (packet, resp) {
     if (cache.get("files")) {
-        var p = lg.packet.createPacket();
-        p.setContent(cache.get("files"));
+        var p = lg.packet.createPacket(cache.get("files"));
         resp.sendPacket(p);
         return;
     }
@@ -44,6 +43,7 @@ mod.register("menu", function (packet, resp) {
 mod.register("play", function (packet, resp) {
     var name = packet.getValue("name");
     name = String.decodeURI(name);
+    console.log("play music : " + name);
     if (!name) {
         resp.sendStatus(404);
         return;

@@ -6,10 +6,14 @@ module.exports = ini;
 
 // 资源路径
 ini.res = {
+    // 根目录
     root : "/",
+    // 通用代码
+    common : "/common/",
+    // 页面
     pubic : "/public/",
+    // 文件
     files : "/files/",
-    views : "/views/"
 };
 
 // 服务器

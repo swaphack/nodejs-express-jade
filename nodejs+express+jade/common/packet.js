@@ -62,28 +62,21 @@
     };
 
     ////////////////////////////////////////////////////////////////////
-    var ErrorPacket = function (msg) {
-        Packet.call(this);
 
-        this.setValue("error", msg);
-    };
-
-    ErrorPacket.prototype = new Packet();
-    ErrorPacket.prototype.constructor = ErrorPacket;
-
-    ////////////////////////////////////////////////////////////////////
-
-    function createPacket() {
-        return new Packet();
+    function createPacket(content) {
+        var p = new Packet();
+        p.setContent(content);
+        return p;
     }
 
     function createErrorPacket(msg) {
-        return new ErrorPacket(msg);
+        var p = new Packet();
+        p.setError(msg);
+        return p;
     }
 
     var packet = {
         Packet : Packet,
-        ErrorPacket : ErrorPacket,
         createPacket : createPacket ,
         createErrorPacket : createErrorPacket
     };

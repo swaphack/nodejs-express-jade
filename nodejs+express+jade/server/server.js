@@ -90,29 +90,24 @@ module.exports.init = function (server) {
         next();
     });
 
+    app.post("*", function (req, resp, next) {
+        console.log("post : " + req.url);
+        resp.header("Access-Control-Allow-Origin", "*");
+        resp.header("Access-Control-Allow-Headers", "X-Requested-With");
+        resp.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+        resp.header("X-Powered-By",' 3.2.1');
+        //resp.header("Content-Type", "application/json;charset=utf-8");
+        next();
+    });
+
     app.get("/", function (req, resp) {
         var url = baseUrl(req.url);
         if (path.extname(url)) {
             doRes(req, resp);
         } else {
-            var url = "welcome";
+            url = "welcome";
             resp.render(url);
         }
-    });
-
-    // 视图
-    app.get("/views/*", function (req, resp) {
-        var url = baseUrl(req.url);
-        if (path.extname(url)) {
-            doRes(req, resp);
-        } else {
-            doView(req, resp);
-        }
-    });
-
-    // 逻辑数据
-    app.get("/logic/*", function (req, resp) {
-        doData(req, resp);
     });
 
     // 公共文件
@@ -130,15 +125,20 @@ module.exports.init = function (server) {
         doRes(req, resp);
     });
 
-    //////////////////////////////////////////////////////////////////////
-    app.post("*", function (req, resp, next) {
-        console.log("post : " + req.url);
-        resp.header("Access-Control-Allow-Origin", "*");
-        resp.header("Access-Control-Allow-Headers", "X-Requested-With");
-        resp.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-        resp.header("X-Powered-By",' 3.2.1');
-        //resp.header("Content-Type", "application/json;charset=utf-8");
-        next();
+    /////////////////////////////////////////////////////////////////////
+    // 视图
+    app.get("/views/*", function (req, resp) {
+        var url = baseUrl(req.url);
+        if (path.extname(url)) {
+            doRes(req, resp);
+        } else {
+            doView(req, resp);
+        }
+    });
+
+    // 逻辑数据
+    app.get("/logic/*", function (req, resp) {
+        doData(req, resp);
     });
 
     app.post("/logic/*", function (req, resp) {

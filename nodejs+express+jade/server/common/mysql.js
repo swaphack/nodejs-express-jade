@@ -91,7 +91,6 @@
         return new FixCache();
     }
 
-
     var db = require("mysql");
     var pool = null;
     var mysql = {
@@ -105,7 +104,7 @@
                     console.log("connect database failure");
                 }
                 return connect;
-            }(dbConfig));
+            })(dbConfig);
         },
         // 查询
         query :  function (sql, func) {
@@ -136,8 +135,12 @@
             if (!sql) {
                 return sql;
             }
-
-            var args = arguments;
+            var args = null;
+            if (arguments.length === 1 && Array.isArray(arguments[0])) {
+                args = arguments[0];
+            } else {
+                args = arguments;
+            }
             var ary = [];
             for (var i = 1; i < args.length; i++) {
                 ary.push(pool.escape(args[i]));
@@ -153,6 +156,11 @@
             pool.end();
             pool = null;
         }
+    };
+
+    // mysql 格式化
+    String.prototype.formatSQL = function (arg) {
+        return mysql.format(this, arguments);
     };
 
     if (typeof module !== 'undefined' && module.exports) {
