@@ -19,12 +19,12 @@
             lg.userData.set("name", name);
             lg.userData.set("pwd", pwd);
 
-            lg.http.postLogic("data/user", p, function (error, data) {
+            lg.http.postLogic("sample/user", p, function (error, data) {
                 if (error) {
                     alert(error);
                 } else {
-                    lg.userData.set("id", data);
-                    lg.http.redirect("client/game");
+                    lg.userData.flush(data);
+                    lg.http.redirect("sample/game");
                 }
             });
 

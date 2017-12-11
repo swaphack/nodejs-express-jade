@@ -25,6 +25,14 @@ body {
     background-color: #a7dbd8;
 }
 
+#shop_item {
+    border-top: 1px darkslategrey solid;
+}
+
+table {
+    width: 100%;
+}
+
 #user {
     height: inherit;
     margin-left: 200px;

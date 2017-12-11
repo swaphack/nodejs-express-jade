@@ -32,13 +32,11 @@
             return;
         }
 
-        var params = [];
-        if (arguments.length === 1 && Array.isArray(arguments[0])) {
+        var params = null;
+        if (arguments.length === 1 && tool.isDictionary(arguments[0])) {
             params = arguments[0];
         } else {
-            for (var i = 0; i < arguments.length; i++) {
-                params.push(arguments[i]);
-            }
+            params = arguments;
         }
         var item = this._itemModel.format(params);
         this._items.push(item);
@@ -84,10 +82,29 @@
         ListView.call(this);
 
         this.setMark("table");
+
+        this._header = "";
     };
 
     TableView.prototype = new ListView();
     TableView.prototype.constructor = TableView;
+
+    TableView.prototype.setHeader = function (header) {
+        this._header = header;
+    };
+
+    // 刷新
+    TableView.prototype.flush = function () {
+        if (!this._parent) {
+            return;
+        }
+        this._parent.empty();
+        var lst = this._beginMark;
+        lst += this._header;
+        lst += this._items.join("");
+        lst += this._endMark;
+        this._parent.append(lst);
+    };
 
     //////////////////////////////////////////////////////////////
     var ui = {

@@ -15,7 +15,7 @@ module.exports = function (req, resp) {
 // 数据
 var cache = lg.cache.createCache();
 cache.set("dir", "E:/CloudMusic/");
-cache.set("dir", "I:/KuGou/");
+//cache.set("dir", "I:/KuGou/");
 cache.set("files", null);
 
 // 菜单
@@ -42,7 +42,7 @@ mod.register("menu", function (packet, resp) {
 // 播放音乐
 mod.register("play", function (packet, resp) {
     var name = packet.getValue("name");
-    name = String.decodeURI(name);
+    name = tool.decodeURI(name);
     console.log("play music : " + name);
     if (!name) {
         resp.sendStatus(404);

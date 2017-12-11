@@ -130,7 +130,9 @@
     } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define([], function(){ return set });
-    } else if (mod) {
+    }
+
+    if (mod) {
         mod.set = set;
     }
 })(typeof self !== 'undefined' ? self

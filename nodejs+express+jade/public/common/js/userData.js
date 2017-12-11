@@ -14,6 +14,13 @@
                 return;
             }
             localStorage.setItem(key, value);
+        },
+
+        // 填充数值
+        flush : function (data) {
+            for (var key in data) {
+                this.set(key, data[key]);
+            }
         }
     };
 

@@ -73,9 +73,9 @@
             } else {
                 var dataAry = [];
                 for (var i = 0; i < values.length; i++) {
-                    var data = [];
+                    var data = {};
                     for (var j = 0; j < fields.length; j++) {
-                        data.push(values[i][fields[j].name]);
+                        data[j] = values[i][fields[j].name];
                     }
                     dataAry.push(data);
                 }
@@ -130,24 +130,6 @@
                 })
             });
         },
-        // 拼接查询语句
-        format : function (sql, params) {
-            if (!sql) {
-                return sql;
-            }
-            var args = null;
-            if (arguments.length === 1 && Array.isArray(arguments[0])) {
-                args = arguments[0];
-            } else {
-                args = arguments;
-            }
-            var ary = [];
-            for (var i = 1; i < args.length; i++) {
-                ary.push(pool.escape(args[i]));
-            }
-
-            return sql.format(ary);
-        },
         // 关闭
         close : function () {
             if (!pool) {
@@ -158,9 +140,24 @@
         }
     };
 
-    // mysql 格式化
+    // mysql 格式化查询语句
     String.prototype.formatSQL = function (arg) {
-        return mysql.format(this, arguments);
+        if (!pool) {
+            return;
+        }
+        var params = null;
+        if (arguments.length === 1 && tool.isDictionary(arguments[0])) {
+            params = arguments[0];
+        } else {
+            params = arguments;
+        }
+
+        var ary = {};
+        for (var i = 0; i < params.length; i++) {
+            ary[i] = pool.escape(params[i]);
+        }
+
+        return this.format(ary);
     };
 
     if (typeof module !== 'undefined' && module.exports) {

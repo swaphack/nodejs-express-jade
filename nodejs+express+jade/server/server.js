@@ -1,7 +1,7 @@
 // 加载通用资源
 require("../common/base64");
-require("../common/string");
 require("../common/packet");
+require("../common/tool");
 
 var express = require('express');
 var session = require('express-session');
@@ -64,6 +64,7 @@ function doData(req, resp) {
 
 module.exports.init = function (server) {
     var app = express();
+
     // 视图引擎设置
     app.set('views', './views');
     app.set('view engine', 'jade');
@@ -71,7 +72,7 @@ module.exports.init = function (server) {
 
     // session
     app.use(session({
-        secret: String.randomWord(20),
+        secret: tool.randomWord(20),
         cookie: {maxAge: 60 * 1000 * 30},
         resave: false,
         saveUninitialized: true

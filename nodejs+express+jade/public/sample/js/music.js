@@ -14,8 +14,8 @@
     function playMusic(index) {
         var name = _musicData.getItemData(index);
         if (name) {
-            name = String.encodeURI(name);
-            _video.attr("src", lg.http.getLogicURI("data/music?action=play&name="+ name));
+            name = tool.encodeURI(name);
+            _video.attr("src", lg.http.getLogicURI("sample/music?action=play&name="+ name));
         }
         var str = "li[index={0}]";
         var lastChild = _listRoot.find(str.format(_musicData.getItemIndex()));
@@ -100,7 +100,7 @@
         var p = packet.createPacket();
         p.setValue("action", "menu");
 
-        lg.http.getLogic("data/music", p, function (error, data) {
+        lg.http.getLogic("sample/music", p, function (error, data) {
             if (!data) {
                 return;
             }

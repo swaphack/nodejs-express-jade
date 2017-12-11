@@ -15,10 +15,6 @@ module.exports = function (req, resp) {
 mod.register("signUp", function (packet, resp) {
     var name = packet.getValue("name");
     var pwd = packet.getValue("pwd");
-    if (!name || !pwd) {
-        resp.sendStatus(400);
-        return;
-    }
 
     var sql = "select * from user where name={0}".formatSQL(name);
     lg.mysql.query(sql, function (serr, svalues, sfields) {
@@ -39,7 +35,7 @@ mod.register("signUp", function (packet, resp) {
                    resp.sendStatus(500);
                } else {
                    var p = lg.packet.createPacket();
-                   p.setContent(ivalues[0]["id"]);
+                   p.setContent(ivalues[0]);
                    resp.sendPacket(p);
                }
            });
@@ -51,19 +47,16 @@ mod.register("signUp", function (packet, resp) {
 mod.register("signIn", function (packet, resp) {
     var name = packet.getValue("name");
     var pwd = packet.getValue("pwd");
-    if (!name || !pwd) {
-        resp.sendStatus(400);
-        return;
-    }
+
     var sql = "select * from user where name={0} and pwd={1}".formatSQL(name, pwd);
-    lg.mysql.query(sql, function (serr, svalues, sfields) {
-        if (serr) {
+    lg.mysql.query(sql, function (err, values, fields) {
+        if (err) {
             resp.sendStatus(500);
             return;
         }
-        if (svalues.length !== 0) {
+        if (values.length !== 0) {
             var p = new lg.packet.Packet();
-            p.setContent(svalues[0]["id"]);
+            p.setContent(values[0]);
             resp.sendPacket(p);
         } else {
             resp.sendPacket(lg.packet.createErrorPacket("not exists this role"));
@@ -74,4 +67,11 @@ mod.register("signIn", function (packet, resp) {
 // 请求基础信息
 mod.register("userInfo", function (packet, resp) {
     var id = packet.getValue("id");
+
+    var sql = "select * from user where id = {0}".formatSQL(id);
+    lg.mysql.query(sql, function (err, values, fields) {
+        var p = new lg.packet.Packet();
+        p.setContent(values[0]);
+        resp.sendPacket(p);
+    });
 });

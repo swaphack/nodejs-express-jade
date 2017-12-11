@@ -2,16 +2,12 @@ doctype html
 html
     head
         title welcome
-        script(type="text/javascript", src="common/string.js")
-        script(type="text/javascript", src="common/packet.js")
-        script(type="text/javascript", src="public/common/scheduler.js")
-        script(type="text/javascript", src="common/jquery-3.2.1.js")
-        script(type="text/javascript", src="common/base64.js")
+        include libclient
     body
         ol
             li
-                a(href="views/client/login") login
+                a(href="views/sample/login") login
             li
-                a(href="views/client/game") game
+                a(href="views/sample/game") game
             li
-                a(href="views/client/music") music
+                a(href="views/sample/music") music

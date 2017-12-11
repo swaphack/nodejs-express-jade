@@ -80,6 +80,7 @@
         try {
             this._protocls[id](packet, this);
         } catch (e) {
+            console.log(e.message);
             resp.sendStatus(400);
         }
     };

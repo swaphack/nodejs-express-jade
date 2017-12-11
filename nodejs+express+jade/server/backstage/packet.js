@@ -1,6 +1,6 @@
-var Protocol = new require("../common/protocol").Protocol;
+var lg = require("../common/index");
 
-var mod = new Protocol();
+var mod = new lg.protocol.createProtocol();
 mod.setID("action");
 
 module.exports = function (req, resp) {
