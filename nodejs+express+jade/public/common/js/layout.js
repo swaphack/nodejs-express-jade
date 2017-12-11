@@ -48,12 +48,50 @@
             "left": (parent.width() - child.outerWidth()) * 0.5,
             "top": (parent.height() - child.outerHeight()) * 0.5
         });
-    };
+    }
+
+    function setValue(id, value) {
+        if ($(id)) {
+            $(id).val(value);
+        }
+    }
+
+    function getValue(id) {
+        if ($(id)) {
+            return $(id).val();
+        }
+        return null;
+    }
+
+    function click(id, func) {
+        if ($(id)) {
+            $(id).click(func);
+        }
+    }
+
+    function isVisible(id) {
+        if ($(id)) {
+            return $(id).is(":visible");
+        }
+        return false;
+    }
+
+    function isHidden() {
+        if ($(id)) {
+            return $(id).is(":hidden");
+        }
+        return false;
+    }
 
      var layout = {
          setMaxHeight : setMaxHeight,
          setMaxWidth : setMaxWidth,
-         setCenter : setCenter
+         setCenter : setCenter,
+         setValue : setValue,
+         getValue : getValue,
+         isVisible : isVisible,
+         isHidden : isHidden,
+         click : click
      };
 
      if (mod) {

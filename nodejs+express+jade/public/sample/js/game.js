@@ -26,7 +26,7 @@
             if (error) {
                 alert(error);
             } else {
-                _shopData.setData(data);
+                _shopData.setData(data["items"]);
                 _tableView.flushData(_shopData.getPageData(0));
             }
         });
@@ -38,6 +38,9 @@
         p.setValue("id", lg.userData.get("id"));
         lg.http.postLogic("sample/user", p, function (error, data) {
             _userData = data;
+            $("#info").empty();
+            var info = "<a>Name:{0} Vip:{1} Level:{2} Gold:{3}</a>".format(data["name"], data["vip"], data["level"], data["gold"]);
+            $("#info").append(info);
         });
     }
 

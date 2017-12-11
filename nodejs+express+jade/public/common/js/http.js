@@ -41,7 +41,7 @@
         $.get(httpUrl, value, function (result) {
             console.log(result);
             if (callback) {
-                callback(result.error, result.content);
+                callback(result.error, result);
             }
         }, 'json');
     }
@@ -59,7 +59,7 @@
         $.post(httpUrl, value, function (result) {
             console.log(result);
             if (callback) {
-                callback(result.error, result.content);
+                callback(result.error, result);
             }
         }, 'json');
     }

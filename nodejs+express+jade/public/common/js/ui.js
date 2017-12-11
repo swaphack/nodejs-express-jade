@@ -109,7 +109,7 @@
     //////////////////////////////////////////////////////////////
     var ui = {
         ListView : ListView,
-        TableView : TableView
+        TableView : TableView,
     };
 
     if (mod) {

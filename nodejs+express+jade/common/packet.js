@@ -46,14 +46,15 @@
         return this.getValue("error");
     };
 
-    // 设置正确时的包内容
-    Packet.prototype.setContent = function (value) {
-        this.setValue("content", value);
-    };
+    // 填充数据
+    Packet.prototype.flushData = function (data) {
+        if (!tool.isDictionary(data)) {
+            return;
+        }
 
-    // 获取正确时的包内容
-    Packet.prototype.getContent = function () {
-        return this.getValue("content");
+        for (var key in data) {
+            this.setValue(key, data[key]);
+        }
     };
 
     // 数据
@@ -63,10 +64,10 @@
 
     ////////////////////////////////////////////////////////////////////
 
-    function createPacket(content) {
+    function createPacket(data) {
         var p = new Packet();
-        if (content !== null && content !== undefined){
-            p.setContent(content);
+        if (data !== null && data !== undefined){
+            p.flushData(data);
         }
         return p;
     }

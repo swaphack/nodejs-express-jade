@@ -21,7 +21,8 @@ cache.set("files", null);
 // 菜单
 mod.register("menu", function (packet, resp) {
     if (cache.get("files")) {
-        var p = lg.packet.createPacket(cache.get("files"));
+        var p = lg.packet.createPacket();
+        p.setValue("files", cache.get("files"));
         resp.sendPacket(p);
         return;
     }
@@ -33,7 +34,7 @@ mod.register("menu", function (packet, resp) {
             resp.sendPacket(p);
         } else {
             cache.set("files", files);
-            p.setContent(cache.get("files"));
+            p.setValue("files", cache.get("files"));
             resp.sendPacket(p);
         }
     });

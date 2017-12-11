@@ -108,14 +108,14 @@
         },
         // 查询
         query :  function (sql, func) {
-            if (!sql || !func) {
+            if (!sql) {
                 return;
             }
             if (!pool) {
                 return;
             }
             pool.getConnection(function (err, connection) {
-                if (err) {
+                if (err && func) {
                     return func(err, null, null);
                 }
                 connection.query(sql, function (qerr, values, fields) {
@@ -123,9 +123,13 @@
                     if (qerr) {
                         console.log(qerr.message);
                         console.log(qerr.sql);
-                        func(qerr, null, null);
+                        if (func) {
+                            func(qerr, null, null);
+                        }
                     } else {
-                        func(qerr, values, fields);
+                        if (func) {
+                            func(qerr, values, fields);
+                        }
                     }
                 })
             });

@@ -1,0 +1,26 @@
+doctype html
+html
+    head
+        title Login
+        include ../libclient
+        script(type="text/javascript", src="sample/js/login.js")
+        link(type="text/css", rel="stylesheet", href="sample/css/login.css")
+    body
+        div#left
+        div#center
+            form#login_form
+                table
+                    tr#block_username
+                        td username
+                        td
+                            input#username(type="text")
+                    tr#block_password
+                        td password
+                        td
+                            input#password(type="password")
+                    tr
+                        td(colspan=2)
+                            input#signIn(type="button" value="sign in")
+        div#right
+
+

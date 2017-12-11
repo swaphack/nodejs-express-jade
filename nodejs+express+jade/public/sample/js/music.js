@@ -101,10 +101,10 @@
         p.setValue("action", "menu");
 
         lg.http.getLogic("sample/music", p, function (error, data) {
-            if (!data) {
+            if (error) {
                 return;
             }
-            _musicData.setData(data);
+            _musicData.setData(data["files"]);
             refreshMusicPage(0);
             playMusic(0);
         });
