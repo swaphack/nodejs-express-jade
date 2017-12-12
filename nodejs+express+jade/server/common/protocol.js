@@ -4,8 +4,6 @@
     var Protocol = function () {
         this._protocls = {};
         this._id = "";
-        this._req = null;
-        this._resp = null;
     };
 
     Protocol.prototype.setID = function (id) {
@@ -14,10 +12,6 @@
 
     Protocol.prototype.getID = function () {
         return this._id;
-    };
-
-    Protocol.prototype.getRequest = function () {
-        return this._req;
     };
 
     Protocol.prototype.register = function (id, handler) {
@@ -40,8 +34,6 @@
             resp.sendStatus(500);
             return;
         }
-        this._req = req;
-        this._resp = resp;
 
         var query = null;
         if (req.method === "GET") {
@@ -78,63 +70,11 @@
         });
 
         try {
-            this._protocls[id](packet, this);
+            this._protocls[id](packet, resp);
         } catch (e) {
             console.log(e.message);
             resp.sendStatus(400);
         }
-    };
-
-    // 发送包
-    Protocol.prototype.sendPacket = function (packet) {
-        if (!this._resp) {
-            return;
-        }
-        if (packet === null || packet === undefined) {
-            return;
-        }
-
-        if (! (packet instanceof gpacket.Packet)) {
-            return;
-        }
-
-        this._resp.send(packet.data());
-    };
-
-    // 发送状态
-    Protocol.prototype.sendStatus = function (number) {
-        if (!this._resp) {
-            return;
-        }
-        if (number === null || number === undefined) {
-            return;
-        }
-
-        this._resp.sendStatus(number);
-    };
-
-    // 发送数据
-    Protocol.prototype.sendData = function (data) {
-        if (!this._resp) {
-            return;
-        }
-        if (data === null || data === undefined) {
-            return;
-        }
-
-        this._resp.send(data);
-    };
-
-    // 发送文件
-    Protocol.prototype.sendFile = function (fileName) {
-        if (!this._resp) {
-            return;
-        }
-        if (fileName === null || fileName === undefined) {
-            return;
-        }
-
-        this._resp.sendFile(fileName);
     };
 
     //////////////////////////////////////////////////////////////////////

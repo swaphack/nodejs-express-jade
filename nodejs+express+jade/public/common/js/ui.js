@@ -105,7 +105,6 @@
         lst += this._endMark;
         this._parent.append(lst);
     };
-
     //////////////////////////////////////////////////////////////
     var ui = {
         ListView : ListView,

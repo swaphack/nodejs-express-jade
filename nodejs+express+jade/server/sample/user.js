@@ -11,6 +11,8 @@ module.exports = function (req, resp) {
     mod.hand(req, resp);
 };
 
+var mysql = lg.mysql.getDB("user");
+
 //////////////////////////////////////////////////////////////////
 // 注册
 mod.register("signUp", function (packet, resp) {
@@ -18,7 +20,7 @@ mod.register("signUp", function (packet, resp) {
     var pwd = packet.getValue("pwd");
 
     var sql = "select * from user where name={0}".formatSQL(name);
-    lg.mysql.query(sql, function (serr, svalues) {
+    mysql.query(sql, function (serr, svalues) {
         if (serr) {
             resp.sendStatus(500);
             return;
@@ -27,13 +29,13 @@ mod.register("signUp", function (packet, resp) {
             resp.sendPacket(lg.packet.createErrorPacket("exists name"));
         } else {
             sql = "insert into user(name, pwd) values({0}, {1})".formatSQL(name, pwd);
-            lg.mysql.query(sql, function (ierr, ivalues, ifields) {
+            mysql.query(sql, function (ierr, ivalues, ifields) {
                 if (ierr) {
                     resp.sendStatus(500);
                     return;
                 }
                 sql = "select * from user where name={0}".formatSQL(name);
-                lg.mysql.query(sql, function (err, values) {
+                mysql.query(sql, function (err, values) {
                     if (ierr) {
                         resp.sendStatus(500);
                         return;
@@ -45,7 +47,7 @@ mod.register("signUp", function (packet, resp) {
                     }
 
                     sql = "insert into user_info(id) values({0})".formatSQL(values[0]["id"]);
-                    lg.mysql.query(sql);
+                    mysql.query(sql);
 
                     var t = {"id" : values[0]["id"]};
                     var p = lg.packet.createPacket(t);
@@ -62,7 +64,7 @@ mod.register("signIn", function (packet, resp) {
     var pwd = packet.getValue("pwd");
 
     var sql = "select * from user where name={0} and pwd={1}".formatSQL(name, pwd);
-    lg.mysql.query(sql, function (err, values) {
+    mysql.query(sql, function (err, values) {
         if (err) {
             resp.sendStatus(500);
             return;
@@ -82,7 +84,7 @@ mod.register("userInfo", function (packet, resp) {
     var id = packet.getValue("id");
 
     var sql = "select u.name, ui.vip, ui.level, ui.exp, ui.gold from user u, user_info ui where u.id = {0} and ui.id = {0}".formatSQL(id);
-    lg.mysql.query(sql, function (err, values) {
+    mysql.query(sql, function (err, values) {
         if (err) {
             resp.sendStatus(500);
             return;

@@ -3,8 +3,20 @@
     margin: 0;
 }
 body {
-    width: 100%;
+    width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
+}
+
+table {
+    width: 100%;
+}
+
+#body {
+    text-align: center;
+    height: 500px;
+    background-color: #4dc71f;
 }
 
 #header {
@@ -13,45 +25,58 @@ body {
     background-color: silver;
 }
 
-#body {
-    height: 500px;
-    background-color: #4dc71f;
+#info {
+    float: left;
+    height: 50px;
 }
 
-#shop {
+#time {
+    float: right;
+    height: 50px;
+}
+
+#hot_item {
     float: left;
-    width: 200px;
+    width: 210px;
     height: 100%;
     background-color: #a7dbd8;
 }
 
-#shop_item {
-    border-top: 1px darkslategrey solid;
+#new_item {
+    float: right;
+    margin-left: auto;
+    margin-right: auto;
+    width: 800px;
+    height: 200px;
+    background-color: #a7dbd8;
 }
 
-table {
+#new_item td {
+    height: 180px;
+}
+
+#new_item .new_item_img {
+    float: left;
+}
+
+#new_item .new_item_info {
+    float: left;
+    position: relative;
+}
+
+#new_item .new_item_name .new_item_price {
     width: 100%;
+    text-align: left;
 }
 
-#user {
-    height: inherit;
-    margin-left: 200px;
-    background-color: #abef98;
+#new_item .new_item_name a{
+    float: left;
+    text-align: left;
 }
 
-#info {
-    width: 100%;
-    height: 50px;
-    background-color: darkgray;
-}
-
-#bag {
-    height: 100%;
-    background-color: burlywood;
-}
-
-#bag a {
-    bottom: 0;
+#new_item .new_item_price a{
+    float: left;
+    text-align: left;
 }
 
 #footer {

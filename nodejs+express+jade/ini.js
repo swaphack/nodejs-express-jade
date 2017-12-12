@@ -33,11 +33,30 @@ ini.url = {
 
 // 数据库
 ini.database = {
-    host : 'localhost',
-    port : 3306,
-    user : 'root',
-    password : '123456',
-    database : 'game'
+    // 数据
+    data : {
+        host : 'localhost',
+        port : 3306,
+        user : 'root',
+        password : '123456',
+        database : 'sample_data'
+    },
+    // 用户
+    user : {
+        host : 'localhost',
+        port : 3306,
+        user : 'root',
+        password : '123456',
+        database : 'sample_user'
+    },
+    // 日志
+    log : {
+        host : 'localhost',
+        port : 3306,
+        user : 'root',
+        password : '123456',
+        database : 'sample_log'
+    },
 };
 
 ini.xmlConfig = {

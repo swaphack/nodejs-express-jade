@@ -11,13 +11,25 @@ module.exports = function (req, resp) {
     mod.hand(req, resp);
 };
 //////////////////////////////////////////////////////////////////
-// 数据
-var fixCache = lg.mysql.createFixCache();
+// 固定数据
+var fixCache = lg.mysql.createFixCache("data");
 
-// 菜单
-mod.register("menu", function (packet, resp) {
-    var sql = "select * from db_shop_item";
-    fixCache.query("shop_items", sql, function (data) {
+var log = lg.mysql.getDB("log");
+
+// 热销物品
+mod.register("hot_item", function (packet, resp) {
+    var sql = "select si.id, i.name, si.price  from item i, shop_item si where i.id = si.item_id and si.type = {0}".formatSQL(1);
+    fixCache.query("shop_item", sql, function (data) {
+        var p = lg.packet.createPacket();
+        p.setValue("items", data);
+        resp.sendPacket(p);
+    });
+});
+
+// 新物品
+mod.register("new_item", function (packet, resp) {
+    var sql = "select si.id, i.name, si.price, i.icon  from item i, shop_item si where i.id = si.item_id and si.type = {0}".formatSQL(2);
+    fixCache.query("new_item", sql, function (data) {
         var p = lg.packet.createPacket();
         p.setValue("items", data);
         resp.sendPacket(p);
@@ -37,10 +49,10 @@ mod.register("buy", function (packet, resp) {
 
     var timestamp = Date.now();
     var sql = "insert into bill(user_id, datetime) values({0},{1})".formatSQL(userId, timestamp);
-    lg.mysql.query(sql);
+    log.query(sql);
 
     sql = "select id from bill where user_id={0} and datetime={1}".formatSQL(userId, timestamp);
-    lg.mysql.query(sql, function (err, values, fields) {
+    log.query(sql, function (err, values, fields) {
         if (err) {
             resp.sendStatus(500);
             return;
@@ -51,7 +63,7 @@ mod.register("buy", function (packet, resp) {
         } else {
             var billId = values[0]["id"];
             sql = "insert into bill_item(bill_id, user_id, item_id, item_count) values({0}, {1}, {2}, {3}, {4})".formatSQL(billId, userId, itemId, itemCount);
-            lg.mysql.query(sql);
+            log.query(sql);
 
             var p = lg.packet.createPacket();
             p.setValue("id", billId);

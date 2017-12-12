@@ -10,6 +10,19 @@ var bodyParser = require('body-parser');
 var path = require("path");
 var lg = require("./common/index");
 
+// 发送包
+express.response.sendPacket = function (packet) {
+    if (packet === null || packet === undefined) {
+        return;
+    }
+
+    if (! (packet instanceof lg.packet.Packet)) {
+        return;
+    }
+
+    this.send(packet.data());
+};
+
 // 请求网址
 function baseUrl(url) {
     var spot = url.indexOf("?");

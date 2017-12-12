@@ -1,10 +1,11 @@
 (function () {
     var cache = require("./cache");
     // 固定mysql缓存
-    var FixCache = function () {
+    var FixCache = function (dbName) {
         this._sqlCache = cache.createCache();
         this._callbackCache = cache.createCache();
         this._memCache = cache.createCache();
+        this._dbName = dbName;
     };
 
     // 添加sql绑定
@@ -55,9 +56,14 @@
         if (!name || !sql) {
             return;
         }
+
+        var mysqlPool = getDB(this._dbName);
+        if (!mysqlPool) {
+            return;
+        }
         var oldSQL = this.getSQL(name);
         if (oldSQL !== undefined && oldSQL !== sql) {
-            console.log("Exists Name In Cache.Name:{0}, LastSQL : {1}, NewSQL : {2}".format(name, oldSQL, sql));
+            console.error("Exists Name In Cache.Name:{0}, LastSQL : {1}, NewSQL : {2}".format(name, oldSQL, sql));
             return;
         }
         this.bindCallback(name, callback);
@@ -67,7 +73,7 @@
         }
         this.bindSQL(name, sql);
         var memCache = this;
-        mysql.query(sql, function (err, values, fields) {
+        mysqlPool.query(sql, function (err, values, fields) {
             if (err) {
                 memCache.bindMemory(name, null);
             } else {
@@ -87,68 +93,86 @@
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    function createFixCache() {
-        return new FixCache();
+    var db = require("mysql");
+    var Pool = function (dbConfig) {
+        this._pool = null;
+
+        this.init(dbConfig);
+    };
+
+    // 初始化
+    Pool.prototype.init = function(dbConfig) {
+        this._pool = this._pool || (function (params) {
+            var connect = db.createPool(params);
+            if (!connect) {
+                console.error("connect database failure");
+            }
+            return connect;
+        })(dbConfig);
+    };
+
+    // 查询
+    Pool.prototype.query = function (sql, func) {
+        if (!sql) {
+            return;
+        }
+        if (!this._pool) {
+            return;
+        }
+        this._pool.getConnection(function (err, connection) {
+            if (err && func) {
+                return func(err, null, null);
+            }
+            connection.query(sql, function (qerr, values, fields) {
+                connection.release();
+                if (qerr) {
+                    console.error(qerr.message);
+                    console.error(qerr.sql);
+                    if (func) {
+                        func(qerr, null, null);
+                    }
+                } else {
+                    if (func) {
+                        func(qerr, values, fields);
+                    }
+                }
+            })
+        });
+    };
+
+    // 关闭
+    Pool.prototype.close = function () {
+        if (!this._pool) {
+            return;
+        }
+        this._pool.end();
+        this._pool = null;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    function createFixCache(dbName) {
+        return new FixCache(dbName);
     }
 
-    var db = require("mysql");
-    var pool = null;
+    var dbPool = {};
+    function init(dbConfigs) {
+        for (var key in dbConfigs) {
+            dbPool[key] = new Pool(dbConfigs[key]);
+        }
+    }
+
+    function getDB(dbName) {
+        return dbPool[dbName];
+    }
+
     var mysql = {
         createFixCache : createFixCache,
-
-        // 初始化
-        init : function(dbConfig) {
-            pool = pool || (function (params) {
-                var connect = db.createPool(params);
-                if (!connect) {
-                    console.log("connect database failure");
-                }
-                return connect;
-            })(dbConfig);
-        },
-        // 查询
-        query :  function (sql, func) {
-            if (!sql) {
-                return;
-            }
-            if (!pool) {
-                return;
-            }
-            pool.getConnection(function (err, connection) {
-                if (err && func) {
-                    return func(err, null, null);
-                }
-                connection.query(sql, function (qerr, values, fields) {
-                    connection.release();
-                    if (qerr) {
-                        console.log(qerr.message);
-                        console.log(qerr.sql);
-                        if (func) {
-                            func(qerr, null, null);
-                        }
-                    } else {
-                        if (func) {
-                            func(qerr, values, fields);
-                        }
-                    }
-                })
-            });
-        },
-        // 关闭
-        close : function () {
-            if (!pool) {
-                return;
-            }
-            pool.end();
-            pool = null;
-        }
+        init : init,
+        getDB : getDB,
     };
 
     // mysql 格式化查询语句
     String.prototype.formatSQL = function (arg) {
-        if (!pool) {
-            return;
-        }
         var params = null;
         if (arguments.length === 1 && tool.isDictionary(arguments[0])) {
             params = arguments[0];
@@ -158,7 +182,7 @@
 
         var ary = {};
         for (var i = 0; i < params.length; i++) {
-            ary[i] = pool.escape(params[i]);
+            ary[i] = db.escape(params[i]);
         }
 
         return this.format(ary);
