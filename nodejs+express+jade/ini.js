@@ -14,6 +14,8 @@ ini.res = {
     pubic : "/public/",
     // 文件
     files : "/files/",
+    // 界面
+    jade : "/views/",
 };
 
 // 服务器

@@ -1,4 +1,6 @@
 (function () {
+    var filePath = require("./filePath");
+
     function View() {
         // 处理接收到的请求
         this.do = function(req, resp) {
@@ -9,6 +11,10 @@
     // 直接访问
     function direct(req, resp) {
         var url = req.params[0];
+        var fullPath = filePath.getFullPath(url + ".jade");
+        if (!fullPath) {
+            throw new Error("Not Exists View : " + url);
+        }
         resp.render(url);
     }
 

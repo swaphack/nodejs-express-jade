@@ -1,17 +1,13 @@
 (function () {
-    function onSignUp() { // 注册
-        var name = lg.layout.getValue("#username");
+    function onSignUp(name, pwd, pwd2) { // 注册
         if (!name) {
             alert("username is null");
             return;
         }
-        var pwd = lg.layout.getValue("#password");
         if (!pwd) {
             alert("password is null");
             return;
         }
-
-        var pwd2 = lg.layout.getValue("#confirm_password");
         if (!pwd) {
             alert("confirm password is null");
             return;
@@ -40,13 +36,11 @@
         });
     }
 
-    function onSignIn() { // 登录
-        var name = lg.layout.getValue("#username");
+    function onSignIn(name, pwd) { // 登录
         if (!name) {
             alert("username is null");
             return;
         }
-        var pwd = lg.layout.getValue("#password");
         if (!pwd) {
             alert("password is null");
             return;
@@ -76,11 +70,16 @@
         lg.layout.setValue("#confirm_password", lg.userData.get("pwd", ""));
 
         lg.layout.click("#signIn", function () {
-            onSignIn();
+            var name = lg.layout.getValue("#username");
+            var pwd = lg.layout.getValue("#password");
+            onSignIn(name, pwd);
         });
 
         lg.layout.click("#signUp", function () {
-            onSignUp();
+            var name = lg.layout.getValue("#username");
+            var pwd = lg.layout.getValue("#password");
+            var pwd2 = lg.layout.getValue("#password");
+            onSignUp(name,pwd,pwd2);
         });
     });
 })();

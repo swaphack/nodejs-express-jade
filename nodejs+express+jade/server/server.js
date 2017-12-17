@@ -52,7 +52,7 @@ function doView(req, resp) {
     try {
         lg.view.direct(req, resp);
     } catch (err) {
-        resp.sendStatus(200);
+        resp.sendStatus(404);
     }
 }
 
